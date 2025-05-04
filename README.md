@@ -4,5 +4,5 @@
 
 如果发生了糟糕如之前的事情，我会直接删除此仓库，在此之前你可以保存所有的源代码
 
-有事https://t.me/MikoBuild见
+有事 https://t.me/MikoBuild 见
 
