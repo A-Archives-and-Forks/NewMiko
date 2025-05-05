@@ -6,3 +6,6 @@
 
 有事 https://t.me/MikoBuild 见
 
+编译：
+- jdk 17
+- ndk 24
