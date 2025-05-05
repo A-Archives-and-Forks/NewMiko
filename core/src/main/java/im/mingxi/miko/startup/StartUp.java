@@ -1,18 +1,21 @@
 package im.mingxi.miko.startup;
 
+import static im.mingxi.loader.util.Constants.QQ_PACKAGENAME;
+import static im.mingxi.loader.util.Constants.WECHAT_PACKAGENAME;
+
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
+
 import com.tencent.mmkv.MMKV;
-import im.mingxi.loader.bridge.XPBridge;
-import static im.mingxi.loader.util.Constants.QQ_PACKAGENAME;
-import static im.mingxi.loader.util.Constants.WECHAT_PACKAGENAME;
+
 import im.mingxi.loader.XposedPackage;
-import im.mingxi.miko.startup.util.XRes;
+import im.mingxi.loader.bridge.XPBridge;
 import im.mingxi.miko.util.HookEnv;
 import im.mingxi.miko.util.Reflex;
 import im.mingxi.miko.util.dexkit.NativeLoader;
+
 import java.io.File;
 import java.lang.reflect.Method;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -84,21 +87,29 @@ public class StartUp {
         Method moduleLoadMeth = null;
         try {
             moduleLoadMeth =
-                    Class.forName("im.mingxi.miko.MainActivity").getDeclaredMethod("onCreate",Bundle.class);
+                    Class.forName("im.mingxi.miko.MainActivity")
+                            .getDeclaredMethod("onCreate", Bundle.class);
         } catch (ClassNotFoundException | NoSuchMethodException e) {
             // 理论不应该出现的错误
-            throw new RuntimeException("Do not find MainActivity class or onCreate Method"+e);
+            throw new RuntimeException("Do not find MainActivity class or onCreate Method" + e);
         }
-        XPBridge.hookAfter(moduleLoadMeth,param->{
-            try {
-            	param.thisObject.getClass().getDeclaredMethod("onModuleLoad").invoke(param.thisObject);
-            } catch(Exception ignored) {
-            	//理论不应该出现的错误
-            }
-        });
+        XPBridge.hookAfter(
+                moduleLoadMeth,
+                param -> {
+                    try {
+                        param.thisObject
+                                .getClass()
+                                .getDeclaredMethod("onModuleLoad")
+                                .invoke(param.thisObject);
+                    } catch (Exception ignored) {
+                        // 理论不应该出现的错误
+                    }
+                });
     }
 
     private static void initializeMMKV(Context ctx) {
+        // 由于Miko的hotPatch基于dexClassLoader并且没有传入library参数，所以必须提前加载libmmkv.so
+        // 防止mmkv#initialize自载造成闪退
         NativeLoader.loadLibrary("libmmkv.so");
         File dataDir = ctx.getDataDir();
         File filesDir = ctx.getFilesDir();
