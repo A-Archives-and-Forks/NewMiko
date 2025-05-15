@@ -58,6 +58,7 @@ public class HotPatch {
         }
     }
 
+
     private static String getSign() {
         return "(version = " + 666 + ")";
     }
