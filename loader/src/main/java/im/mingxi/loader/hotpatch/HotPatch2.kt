@@ -12,17 +12,22 @@ object HotPatch2 {
     val hotPatchPath: String = PathUtil.dataPath + "HotPatch/"
     val hotPatchAPKPath: String = hotPatchPath + "release.apk"
 
-    fun onLoad() : Boolean {
+    fun onLoad(): Boolean {
         // 如果是调试模式直接加载模块
         if (BuildConfig.DEBUG) {
             doLoadModuleLocal()
             return true
         }
         // 拉取云端版本
-        val cloudVersion = HttpUtil.sendDataRequest("\"http://miao.yuexinya.top/HotPatch/versions.txt\"")
+        val cloudVersion =
+            HttpUtil.sendDataRequest("\"http://miao.yuexinya.top/HotPatch/versions.txt\"")
+        if (cloudVersion == null) return false
+        else {
 
+        }
         return true
     }
+
     // Load Module from local
     // Only can invoke by debug mode
     fun doLoadModuleLocal() {
@@ -38,8 +43,14 @@ object HotPatch2 {
         }
     }
 
-    // 拉去本地标签
-    fun getSign() : String {
+    // 拉取本地标签
+    fun getSign(): String {
         return FileUtil.readFileString("${hotPatchPath}sign.data") ?: "NO_SIGN"
+    }
+
+    // 加载从云端下载的dex并启动StartUp
+    // 由StartUp自行完成res和so的加载
+    fun doLoadModuleCloud() {
+
     }
 }
