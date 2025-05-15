@@ -1,4 +1,4 @@
-package im.mingxi.loader.lsp100.impl;
+package im.mingxi.loader.bridge.impl;
 
 import android.util.Log;
 import im.mingxi.loader.bridge.XPBridge;

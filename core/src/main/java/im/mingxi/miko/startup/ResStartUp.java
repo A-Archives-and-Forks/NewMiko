@@ -5,6 +5,6 @@ import im.mingxi.miko.startup.util.XRes;
 
 public class ResStartUp {
     public static void doLoad(Context ctx){
-        XRes.addAssetsPath(ctx,HotPatch.hotPatchAPKPath);
+        XRes.addAssetsPath(ctx, HotPatch.hotPatchAPKPath);
     }
 }

@@ -1,4 +1,4 @@
-package im.mingxi.loader.xp82.impl;
+package im.mingxi.loader.bridge.impl;
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;

@@ -3,16 +3,12 @@ package im.mingxi.loader.hotpatch;
 import android.util.Log;
 import dalvik.system.DexClassLoader;
 import im.mingxi.loader.bridge.XPBridge;
-import im.mingxi.loader.util.ActivityUtil;
-import im.mingxi.loader.util.FileUtil;
 import im.mingxi.loader.util.HttpUtil;
 import im.mingxi.loader.util.PathUtil;
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Method;
-import java.nio.file.Files;
 import java.nio.file.Path;
-
+@Deprecated(since = "构思，重构")
 public class HotPatch {
     public static final String hotPatchPath = PathUtil.dataPath + "HotPatch/";
     public static final String hotPatchAPKPath = hotPatchPath + "release.apk";

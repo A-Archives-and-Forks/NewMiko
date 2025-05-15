@@ -3,7 +3,7 @@ package im.mingxi.loader.lsp100
 import im.mingxi.loader.HookInit
 import im.mingxi.loader.XposedPackage
 import im.mingxi.loader.bridge.XPBridge
-import im.mingxi.loader.lsp100.impl.LSPBridge100Impl
+import im.mingxi.loader.bridge.impl.LSPBridge100Impl
 import im.mingxi.loader.util.PathUtil
 import io.github.libxposed.api.XposedInterface
 import io.github.libxposed.api.XposedModule

@@ -1,6 +1,6 @@
 package im.mingxi.loader
 
-import im.mingxi.loader.hotpatch.HotPatch
+import im.mingxi.loader.hotpatch.HotPatch2
 import im.mingxi.loader.util.PathUtil
 
 object HookInit {
@@ -9,7 +9,7 @@ object HookInit {
         PathUtil.apkPath = XposedPackage.appInfo.sourceDir
         PathUtil.appPath =
             "/storage/emulated/0/Android/data/" + XposedPackage.packageName + "/Miko/"
-        HotPatch.onLoad()
+        HotPatch2.onLoad()
     }
 
     fun onLoad() {

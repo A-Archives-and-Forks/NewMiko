@@ -8,7 +8,6 @@ import im.mingxi.loader.bridge.XPBridge;
 import im.mingxi.loader.hotpatch.HotPatch;
 import im.mingxi.loader.util.DataUtil;
 import im.mingxi.loader.util.FileUtil;
-import im.mingxi.loader.util.PathUtil;
 import im.mingxi.miko.util.HookEnv;
 import java.io.File;
 
