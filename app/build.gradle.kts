@@ -50,8 +50,6 @@ android {
 }
 
 dependencies {
-
-
     implementation(libs.material)
     implementation(libs.constraintlayout)
     implementation(project(":core"))
