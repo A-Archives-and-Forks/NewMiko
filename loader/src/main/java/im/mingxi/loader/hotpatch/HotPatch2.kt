@@ -2,11 +2,14 @@ package im.mingxi.loader.hotpatch
 
 
 import android.util.Log
+import dalvik.system.DexClassLoader
 import im.mingxi.loader.BuildConfig
 import im.mingxi.loader.bridge.XPBridge
 import im.mingxi.loader.util.FileUtil
 import im.mingxi.loader.util.HttpUtil
+import im.mingxi.loader.util.HttpUtil.sendDataRequest
 import im.mingxi.loader.util.PathUtil
+import java.io.File
 
 object HotPatch2 {
     val hotPatchPath: String = PathUtil.dataPath + "HotPatch/"
@@ -15,17 +18,27 @@ object HotPatch2 {
     fun onLoad(): Boolean {
         // 如果是调试模式直接加载模块
         if (BuildConfig.DEBUG) {
-            doLoadModuleLocal()
+            this.doLoadModuleLocal()
             return true
         }
         // 拉取云端版本
-        val cloudVersion =
-            HttpUtil.sendDataRequest("\"http://miao.yuexinya.top/HotPatch/versions.txt\"")
-        if (cloudVersion == null) return false
-        else {
+        val cloudVersionSign =
+            sendDataRequest("\"http://miao.yuexinya.top/HotPatch/versions.txt\"") ?: return false
+        if (this.getSign() == cloudVersionSign) { //签名正确则加载模块
+                this.doLoadModuleCloud()
+                return true
+            }
+        val file: File = File(hotPatchAPKPath)
+        if (!file.exists()) file.createNewFile()
+        HttpUtil.downloadToFile(
+            "http://miao.yuexinya.top/HotPatch/release.apk", hotPatchAPKPath
+        )
 
-        }
-        return true
+        /*懒得获取Context来调用 {@link im.mingxi.loader.util.ActivityUtil#killAppProcess(Context)}，所以我们暴力点*/
+        System.exit(0)
+
+
+        return false
     }
 
     // Load Module from local
@@ -51,6 +64,20 @@ object HotPatch2 {
     // 加载从云端下载的dex并启动StartUp
     // 由StartUp自行完成res和so的加载
     fun doLoadModuleCloud() {
-
+        val dexClassLoader =
+            DexClassLoader(
+                hotPatchAPKPath,
+                hotPatchPath + "Optimized",
+                null,
+                HotPatch2.javaClass.classLoader
+            )
+        try {
+            val startupClass = dexClassLoader.loadClass("im.mingxi.miko.startup.StartUp")
+            val initMet = startupClass.getDeclaredMethod("doLoad")
+            initMet.isAccessible = true
+            initMet.invoke(null)
+        } catch (err: java.lang.Exception) {
+            XPBridge.log(Log.getStackTraceString(err))
+        }
     }
 }
