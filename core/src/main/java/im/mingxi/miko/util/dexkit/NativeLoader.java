@@ -33,7 +33,7 @@ public abstract class NativeLoader {
     }
 
     private static void outputLibToCache(String cachePath, String name) {
-        String apkPath = HotPatch.hotPatchAPKPath;
+        String apkPath = HotPatch.INSTANCE.getHotPatchAPKPath();
         try {
             ZipInputStream zInp = new ZipInputStream(new FileInputStream(apkPath));
             ZipEntry entry;

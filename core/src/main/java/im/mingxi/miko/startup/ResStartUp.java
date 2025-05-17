@@ -1,10 +1,11 @@
 package im.mingxi.miko.startup;
+
+import static im.mingxi.miko.startup.util.XRes.*;
 import android.content.Context;
 import im.mingxi.loader.hotpatch.HotPatch;
-import im.mingxi.miko.startup.util.XRes;
 
 public class ResStartUp {
     public static void doLoad(Context ctx){
-        XRes.addAssetsPath(ctx, HotPatch.hotPatchAPKPath);
+        addAssetsPath(ctx, HotPatch.INSTANCE.getHotPatchAPKPath());
     }
 }

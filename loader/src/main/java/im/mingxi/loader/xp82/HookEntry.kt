@@ -5,7 +5,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam
 import im.mingxi.loader.HookInit
 import im.mingxi.loader.XposedPackage
 import im.mingxi.loader.bridge.XPBridge
-import im.mingxi.loader.xp82.impl.XPBridge82Impl
+import im.mingxi.loader.bridge.impl.XPBridge82Impl
 
 class HookEntry : IXposedHookLoadPackage {
     override fun handleLoadPackage(loadPackageParam: LoadPackageParam) {
