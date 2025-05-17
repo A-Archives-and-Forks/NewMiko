@@ -11,7 +11,7 @@ android {
     defaultConfig {
         
         minSdk = 26
-        targetSdk = 35
+
 
         vectorDrawables {
             useSupportLibrary = true
@@ -86,4 +86,6 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.13.2")
     annotationProcessor("com.github.bumptech.glide:compiler:4.13.1")
     implementation(project(":loader"))
+    annotationProcessor(project(":annotation"))
+    implementation(project(":annotation"))
 }

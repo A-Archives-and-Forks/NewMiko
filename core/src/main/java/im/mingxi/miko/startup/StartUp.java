@@ -80,6 +80,7 @@ public class StartUp {
                         ClassLoader xLoader = activity.getClassLoader();
                         if (xLoader != null) {
                             HookEnv.hostClassLoader = xLoader;
+
                             XPBridge.log("Load Successful!");
                         }
                     }

@@ -54,7 +54,6 @@ dependencies {
 
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation(project(":loader"))
     implementation(project(":core"))
     api("androidx.appcompat:appcompat:1.6.1")
 }

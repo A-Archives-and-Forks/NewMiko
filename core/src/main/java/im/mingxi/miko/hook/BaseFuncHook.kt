@@ -1,11 +1,26 @@
-package im.mingxi.miko.hook;
-import java.util.ArrayList;
+package im.mingxi.miko.hook
 
-public abstract class BaseFuncHook {
-    public final String KEY = this.getClass().getName();
-    public final ArrayList<Throwable> mErrors = new ArrayList<>();
-    
-    public abstract boolean initOnce() throws Throwable;
-    
-    
+import android.util.Log
+import im.mingxi.loader.bridge.XPBridge
+
+abstract class BaseFuncHook(val defaultEnabled: Boolean = false) {
+    val TAG: String = this.javaClass.name
+    val mErrors: ArrayList<Throwable> = ArrayList()
+    var isInitialize: Boolean = false
+
+    @Throws(Throwable::class)
+    abstract fun initOnce(): Boolean
+
+    fun isEnabled(): Boolean {
+        return defaultEnabled
+    }
+
+    fun initialize() {
+        try {
+            initOnce()
+        } catch (e: Throwable) {
+            mErrors.add(e)
+            XPBridge.log(Log.getStackTraceString(e))
+        }
+    }
 }
