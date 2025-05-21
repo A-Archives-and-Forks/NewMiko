@@ -20,7 +20,7 @@ object StartUp {
 
     @JvmField
     var hostType: Int = -1
-
+    @JvmStatic
     fun doLoad() {
         HookEnv.moduleClassLoader = StartUp::class.java.classLoader
 
@@ -35,9 +35,6 @@ object StartUp {
             hostType = 1
             mmClass
         }
-
-        Reflex.loadClass("com.tencent.mm.app.Application")
-            ?: Reflex.loadClass("com.tencent.mobileqq.qfix.QFixApplication")
 
         if (appClass == null) // 可能也许大概应该用的到这段
             appClass = Class.forName("android.app.Application")

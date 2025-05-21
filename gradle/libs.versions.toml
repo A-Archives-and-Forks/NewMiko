@@ -9,11 +9,14 @@ okhttp = "4.12.0"
 material = "1.11.0"
 appcompat = "1.6.1"
 constraintlayout = "2.1.4"
+symbolProcessingApi = "2.1.20-2.0.1"
 
 [plugins]
 agp-lib = { id = "com.android.library", version.ref = "agp" }
 agp-app = { id = "com.android.application", version.ref = "agp" }
 kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "symbolProcessingApi" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 
 [libraries]
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
@@ -26,3 +29,5 @@ glidecompiler = { module = "com.github.bumptech.glide:compiler", version.ref = "
 material = { module = "com.google.android.material:material", version.ref = "material" }
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 constraintlayout = {module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
+symbol-processing-api = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "symbolProcessingApi" }
+kotlinpoet-ksp = { module = "com.squareup:kotlinpoet-ksp", version = "2.1.0" }

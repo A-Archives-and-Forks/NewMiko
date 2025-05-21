@@ -4,10 +4,12 @@ import android.provider.Settings;
 import android.util.Log;
 import androidx.annotation.NonNull;
 
+import im.mingxi.core.BuildConfig;
 import im.mingxi.loader.bridge.XPBridge;
 import im.mingxi.loader.hotpatch.HotPatch;
 import im.mingxi.loader.util.DataUtil;
 import im.mingxi.loader.util.FileUtil;
+import im.mingxi.loader.util.PathUtil;
 import im.mingxi.miko.util.HookEnv;
 import java.io.File;
 
@@ -33,7 +35,8 @@ public abstract class NativeLoader {
     }
 
     private static void outputLibToCache(String cachePath, String name) {
-        String apkPath = HotPatch.INSTANCE.getHotPatchAPKPath();
+        String apkPath = BuildConfig.DEBUG ? PathUtil.moduleApkPath : HotPatch.INSTANCE.getHotPatchAPKPath();
+
         try {
             ZipInputStream zInp = new ZipInputStream(new FileInputStream(apkPath));
             ZipEntry entry;
