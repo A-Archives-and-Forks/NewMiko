@@ -1,6 +1,7 @@
 package im.mingxi.miko.startup
 
 import im.mingxi.miko.hook.BaseFuncHook
+import im.mingxi.mm.hook.AutoClickWinLogin
 import im.mingxi.mm.hook.inject.PlusMenuInject
 
 object HookInstaller {
@@ -10,6 +11,7 @@ object HookInstaller {
     fun scanAndInstall(){
         if(StartUp.hostType == 1){
             PlusMenuInject().initialize()
+            AutoClickWinLogin().initialize()
         }
     }
 
