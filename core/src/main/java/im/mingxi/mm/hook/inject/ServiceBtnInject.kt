@@ -11,7 +11,7 @@ class ServiceBtnInject : BaseFuncHook() {
     override fun initOnce(): Boolean {
 
         val viewClass = Reflex.loadClass("com.tencent.mm.ui.widget.listview.PullDownListView")
-        val onLongClickMet = Reflex.findMethod(viewClass).setMethodName("onItemLongClick")
+        val onLongClickMet = Reflex.findMethod(viewClass).setMethodName("onItemLongClick").get()
         
         XPBridge.hookAfter(onLongClickMet) {
                 XPBridge.log("ServiceBtnInject Successful!")
