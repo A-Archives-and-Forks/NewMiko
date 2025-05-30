@@ -78,7 +78,7 @@ object StartUp {
         // 由于Miko的hotPatch基于dexClassLoader并且没有传入library参数，所以必须提前加载libmmkv.so
         // 防止mmkv#initialize自载造成闪退
         NativeLoader.loadLibrary("libmmkv.so")
-        val dataDir = ctx.dataDir
+
         val filesDir = ctx.filesDir
         val mmkvDir = File(filesDir, "Miko_MMKV")
         if (!mmkvDir.exists()) {
