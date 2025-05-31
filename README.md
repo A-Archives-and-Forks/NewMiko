@@ -6,8 +6,7 @@
 
 ## 使用方法
 
--
-获取最新版本： [![GitHub release](https://img.shields.io/github/release/hiatus169/Miko-Public.svg)](https://github.com/Jasmine2008xyz/Camellia/releases/latest)
+- 获取最新版本： [![GitHub release](https://img.shields.io/github/release/hiatus169/Miko-Public.svg)](https://github.com/Jasmine2008xyz/Camellia/releases/latest)
 
 - 建议您使用 **[LSPosed](https://github.com/LSPosed/LSPosed)** ，请勾选模块作用域 **QQ/TIM/微信**
 
