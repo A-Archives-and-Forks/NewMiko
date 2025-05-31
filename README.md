@@ -6,8 +6,7 @@
 
 ## 使用方法
 
--
-获取最新版本： [![GitHub release](https://img.shields.io/github/release/hiatus169/Miko-Public.svg)](https://github.com/Jasmine2008xyz/Camellia/releases/latest)
+-获取最新版本： [![GitHub release](https://img.shields.io/github/release/hiatus169/Miko-Public.svg)](https://github.com/Jasmine2008xyz/Camellia/releases/latest)
 - 建议您使用 **[Lsposed](https://github.com/LSPosed/LSPosed)** ，请勾选模块作用域 **QQ/TIM/微信**
 
 ## 编译
@@ -27,5 +26,6 @@
 - 没学过风水，遇到问题时无法提供日志的免ROOT框架勿扰
 
 ## 交流讨论
+
 - 电报讨论组 [@MikoBuild](https://t.me/MikoBuild)
 - 电报通知组 [@wsy666HD](https://t.me/wsy666HD)
