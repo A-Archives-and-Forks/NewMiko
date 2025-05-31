@@ -5,12 +5,11 @@ import im.mingxi.loader.bridge.XPBridge
 import im.mingxi.miko.annotation.FunctionHookEntry
 import im.mingxi.miko.hook.BaseFuncHook
 import im.mingxi.miko.util.Reflex
+import im.mingxi.mm.struct.albumPreviewUIClass
 
 @FunctionHookEntry(itemName = "自动原图/跳过视频大小限制", itemType = FunctionHookEntry.WECHAT_ITEM)
 class AutoSendRawPic : BaseFuncHook(defaultEnabled = true) {
     override fun initOnce(): Boolean {
-        val albumPreviewUIClass =
-            Reflex.loadClass("com.tencent.mm.plugin.gallery.ui.AlbumPreviewUI")
         val targetMet = Reflex.findMethod(albumPreviewUIClass).setMethodName("onCreate").get()
         XPBridge.hookBefore(targetMet) {
             val activity = it.thisObject as Activity

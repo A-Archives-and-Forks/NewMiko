@@ -1,4 +1,5 @@
 package im.mingxi.mm.struct
 
-object Struct {
+abstract class Struct {
+    abstract val hostClass: Class<*>
 }

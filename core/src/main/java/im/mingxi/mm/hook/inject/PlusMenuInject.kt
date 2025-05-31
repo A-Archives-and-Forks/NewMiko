@@ -14,7 +14,9 @@ class PlusMenuInject : BaseFuncHook() {
         val constructor = viewClass.declaredConstructors[0]
 
         XPBridge.hookAfter(constructor) {
-            val viewInst: View = it.thisObject as View
+            val viewInst: View =
+                Reflex.findMethodObj(it.thisObject).setReturnType(View::class.java).get()
+                    .invoke(it.thisObject) as View
             viewInst.setOnLongClickListener {
                 XPBridge.log("PlusMenuInject Successful!")
                 true
