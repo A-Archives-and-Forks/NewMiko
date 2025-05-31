@@ -1,8 +1,8 @@
 package im.mingxi.miko.startup
 
-import im.mingxi.miko.hook.BaseFuncHook
 import im.mingxi.mm.hook.AutoClickWinLogin
 import im.mingxi.mm.hook.inject.PlusMenuInject
+import im.mingxi.mm.hook.inject.ServiceBtnInject
 
 object HookInstaller {
 
@@ -11,6 +11,7 @@ object HookInstaller {
     fun scanAndInstall(){
         if(StartUp.hostType == 1){
             PlusMenuInject().initialize()
+            ServiceBtnInject().initialize()
             AutoClickWinLogin().initialize()
         }
     }
