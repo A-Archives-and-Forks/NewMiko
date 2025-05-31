@@ -1,4 +1,6 @@
-# NewMiko
+<div align="center">
+    <h1> NewMiko </h1>
+</div>
 
 ## 简介
 
