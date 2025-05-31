@@ -27,6 +27,5 @@
 - 没学过风水，遇到问题时无法提供日志的免ROOT框架勿扰
 
 ## 交流讨论
-
 - 电报讨论组 [@MikoBuild](https://t.me/MikoBuild)
-- 电报交流组 [@wsy666HD](https://t.me/wsy666HD)
+- 电报通知组 [@wsy666HD](https://t.me/wsy666HD)
