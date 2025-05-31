@@ -27,6 +27,12 @@
 - 本人无兴趣收购腾讯，不要提离谱/违反法律规定的功能请求。
 - 没学过风水，遇到问题时无法提供日志的免ROOT框架勿扰。
 
+## 特别鸣谢
+
+- [Miko Contributors](https://github.com/hiatus169/Miko-Public/graphs/contributors)
+- [QAuxiliary](https://github.com/cinit/QAuxiliary)
+- [TimTool](https://github.com/suzhelan/TimTool)
+
 ## 交流讨论
 
 - 电报讨论组 [@MikoBuild](https://t.me/MikoBuild)
