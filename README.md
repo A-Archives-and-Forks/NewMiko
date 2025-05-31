@@ -13,7 +13,7 @@
 ## 编译
 
 - JDK >= 17
-- 贡献请参考 [贡献指南](https://github.com/hiatus169/Miko-Public/blob/main/CONTRIBUTING.md)
+- 贡献请参考 [贡献指南](https://github.com/hiatus169/Miko-Public/blob/main/.github/CONTRIBUTING.md)
 
 ## 额外说明
 
