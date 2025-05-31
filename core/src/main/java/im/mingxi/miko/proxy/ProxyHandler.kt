@@ -32,8 +32,9 @@ class ProxyHandler(private val mDefault: Handler.Callback?) : Handler.Callback {
                     // 设置
                     if (bundle != null) {
                         bundle.classLoader = ActivityProxyManager.HostClassLoader
-                        if (intent.hasExtra("随便填点，检测用的")) {
-                            val rIntent = intent.getParcelableExtra<Intent>("随便填点，检测用的")
+                        if (intent.hasExtra("miko_activity_proxy_intent")) {
+                            val rIntent =
+                                intent.getParcelableExtra<Intent>("miko_activity_proxy_intent")
                             fIntent[record] = rIntent
                         }
                     }

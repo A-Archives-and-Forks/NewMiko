@@ -37,7 +37,7 @@ class IActivityManagerHandler(private val activityManager: Any) : InvocationHand
                                     ActivityProxyManager.HostActivityClassName!!
                                 )
                                 wrapper.putExtra(
-                                    "随便填点，检测用的",
+                                    "miko_activity_proxy_intent",
                                     pair.second
                                 )
                                 args[pair.first] = wrapper
