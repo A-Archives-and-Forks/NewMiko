@@ -1,6 +1,8 @@
 package im.mingxi.miko.startup
 
 import im.mingxi.mm.hook.AutoClickWinLogin
+import im.mingxi.mm.hook.AutoSendRawPic
+import im.mingxi.mm.hook.FuckPicCountLimit
 import im.mingxi.mm.hook.inject.PlusMenuInject
 import im.mingxi.mm.hook.inject.ServiceBtnInject
 
@@ -12,6 +14,8 @@ object HookInstaller {
         if(StartUp.hostType == 1){
             PlusMenuInject().initialize()
             ServiceBtnInject().initialize()
+            AutoSendRawPic().initialize()
+            FuckPicCountLimit().initialize()
             AutoClickWinLogin().initialize()
         }
     }

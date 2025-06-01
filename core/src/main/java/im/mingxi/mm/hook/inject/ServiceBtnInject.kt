@@ -6,13 +6,14 @@ import im.mingxi.miko.annotation.FunctionHookEntry
 import im.mingxi.miko.hook.BaseFuncHook
 import im.mingxi.miko.util.Reflex.findMethod
 import im.mingxi.miko.util.Reflex.findMethodObj
+import im.mingxi.miko.util.hookAfterIfEnable
 import im.mingxi.mm.struct.pullDownListViewClass
 
 @FunctionHookEntry(itemName = "微信服务按钮注入", itemType = FunctionHookEntry.WECHAT_ITEM)
 class ServiceBtnInject : BaseFuncHook() {
     override fun initOnce(): Boolean {
 
-        XPBridge.hookAfter(
+        hookAfterIfEnable(
             findMethod(pullDownListViewClass).setMethodName("onItemLongClick").get()
         ) {
             val adapterView = it.args[0] as AdapterView<*>

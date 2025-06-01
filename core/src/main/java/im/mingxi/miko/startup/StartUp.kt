@@ -4,9 +4,14 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import com.tencent.mmkv.MMKV
+import im.mingxi.core.BuildConfig
+import im.mingxi.core.R
 import im.mingxi.loader.XposedPackage
 import im.mingxi.loader.bridge.XPBridge
 import im.mingxi.loader.bridge.XPBridge.HookParam
+import im.mingxi.loader.hotpatch.HotPatch.hotPatchAPKPath
+import im.mingxi.loader.util.PathUtil
+import im.mingxi.miko.proxy.ActivityProxyManager
 import im.mingxi.miko.startup.HookInstaller.scanAndInstall
 import im.mingxi.miko.util.HookEnv
 import im.mingxi.miko.util.Reflex
@@ -20,6 +25,7 @@ object StartUp {
 
     @JvmField
     var hostType: Int = -1
+
     @JvmStatic
     fun doLoad() {
         HookEnv.moduleClassLoader = StartUp::class.java.classLoader
@@ -48,6 +54,11 @@ object StartUp {
             HookEnv.hostContext = context
             HookEnv.hostApplication = param.thisObject as Application
             ResStartUp.doLoad(context) // 重复注入资源防止部分免root框架注入资源异常
+            ActivityProxyManager.initActivityProxyManager(
+                context,
+                if (BuildConfig.DEBUG) PathUtil.moduleApkPath else hotPatchAPKPath,
+                R.string.app_name
+            )
             if (!isMMKVInit.getAndSet(true)) initializeMMKV(
                 context
             )

@@ -5,6 +5,7 @@ import im.mingxi.loader.bridge.XPBridge
 import im.mingxi.miko.annotation.FunctionHookEntry
 import im.mingxi.miko.hook.BaseFuncHook
 import im.mingxi.miko.util.Reflex
+import im.mingxi.miko.util.hookAfterIfEnable
 
 @FunctionHookEntry(itemName = "mm加号菜单注入", itemType = FunctionHookEntry.WECHAT_ITEM)
 class PlusMenuInject : BaseFuncHook() {
@@ -13,7 +14,7 @@ class PlusMenuInject : BaseFuncHook() {
         val viewClass = Reflex.loadClass("com.tencent.mm.ui.HomeUI\$PlusActionView")
         val constructor = viewClass.declaredConstructors[0]
 
-        XPBridge.hookAfter(constructor) {
+        hookAfterIfEnable(constructor) {
             val viewInst: View =
                 Reflex.findMethodObj(it.thisObject).setReturnType(View::class.java).get()
                     .invoke(it.thisObject) as View
