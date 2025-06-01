@@ -63,6 +63,18 @@ public abstract class XPBridge {
 
         public abstract void unhook();
 
+        public void resultNull() {
+            setResult(null);
+        }
+
+        public void resultTrue() {
+            setResult(true);
+        }
+
+        public void resultFalse() {
+            setResult(false);
+        }
+
         @Override
         public String toString() {
             return "HookParam[args="

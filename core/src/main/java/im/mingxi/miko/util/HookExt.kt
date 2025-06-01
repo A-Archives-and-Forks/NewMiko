@@ -1,5 +1,6 @@
 package im.mingxi.miko.util
 
+
 import com.tencent.mmkv.MMKV
 import im.mingxi.loader.bridge.XPBridge.HookCallback
 import im.mingxi.loader.bridge.XPBridge.hookAfter
@@ -22,3 +23,9 @@ fun BaseFuncHook.hookAfterIfEnable(member: Member, callback: HookCallback) {
         callback.onInvoke(it)
     }
 }
+
+fun Member.hookBeforeIfEnable(baseFuncHook: BaseFuncHook, callback: HookCallback) =
+    baseFuncHook.hookBeforeIfEnable(this, callback)
+
+fun Member.hookAfterIfEnable(baseFuncHook: BaseFuncHook, callback: HookCallback) =
+    baseFuncHook.hookAfterIfEnable(this, callback)
