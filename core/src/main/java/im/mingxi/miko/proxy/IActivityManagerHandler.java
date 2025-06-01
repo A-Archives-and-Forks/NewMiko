@@ -14,6 +14,7 @@ public class IActivityManagerHandler implements InvocationHandler {
 
     public IActivityManagerHandler(Object activityManager) {
         this.activityManager = activityManager;
+        a
     }
 
     public static boolean isModuleActivity(String className) {
