@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 @SuppressLint({"DiscouragedPrivateApi", "PrivateApi"})
 public class ActivityProxyManager {
-    a
+
     public static final String TAG = "ActivityProxyManager(活动代理管理器)";
     private static final AtomicBoolean Initialized = new AtomicBoolean();
     public static int ResId;

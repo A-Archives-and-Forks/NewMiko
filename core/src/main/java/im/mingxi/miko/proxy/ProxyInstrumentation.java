@@ -24,7 +24,7 @@ import im.mingxi.miko.startup.util.XRes;
 
 
 public class ProxyInstrumentation extends Instrumentation {
-    a
+
     private final Instrumentation mBase;
 
     public ProxyInstrumentation(Instrumentation mInstrumentation) {
