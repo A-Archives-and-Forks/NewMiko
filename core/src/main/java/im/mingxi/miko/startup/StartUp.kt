@@ -78,6 +78,7 @@ object StartUp {
                 val xLoader = activity.classLoader
                 if (xLoader != null) {
                     HookEnv.hostClassLoader = xLoader
+                    Reflex.setHostClassLoader(xLoader)
                     scanAndInstall()
                     XPBridge.log("Load Successful!")
                 }

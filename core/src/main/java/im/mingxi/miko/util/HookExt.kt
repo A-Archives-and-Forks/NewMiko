@@ -11,14 +11,14 @@ val config = MMKV.mmkvWithID("global_config")
 
 fun BaseFuncHook.hookBeforeIfEnable(member: Member, callback: HookCallback) {
     hookBefore(member) {
-        if (!config.decodeBool(this.javaClass.name, false)) return@hookBefore
+        if (!isEnabled()) return@hookBefore
         callback.onInvoke(it)
     }
 }
 
 fun BaseFuncHook.hookAfterIfEnable(member: Member, callback: HookCallback) {
     hookAfter(member) {
-        if (!config.decodeBool(this.javaClass.name, false)) return@hookAfter
+        if (!isEnabled()) return@hookAfter
         callback.onInvoke(it)
     }
 }
