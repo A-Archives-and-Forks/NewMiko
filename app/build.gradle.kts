@@ -18,6 +18,9 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        ndk {
+            abiFilters.add("arm64-v8a")
+        }
     }
 
     compileOptions {
@@ -50,6 +53,7 @@ android {
             "--package-id", "0x78"
         )
     }
+
 }
 
 dependencies {

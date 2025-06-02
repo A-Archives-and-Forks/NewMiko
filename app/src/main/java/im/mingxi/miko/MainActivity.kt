@@ -100,6 +100,9 @@ class MainActivity : AppCompatActivity() {
         // 更新日志
         binding.btnChangelog.setOnClickListener {
             if (isFastClick()) return@setOnClickListener
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.setData("https://github.com/hiatus169/Miko-Public/tree/main/docs/release".toUri())
+            startActivity(intent)
         }
     }
 
