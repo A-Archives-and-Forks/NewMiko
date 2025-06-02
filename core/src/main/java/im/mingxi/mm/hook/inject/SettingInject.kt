@@ -30,18 +30,17 @@ class SettingInject : BaseFuncHook(defaultEnabled = true), IFinder {
                         .contains("com.tencent.mm.plugin.setting.ui.setting.SettingsUI.onCreate")
                 ) return@hookAfterIfEnable
                 val app = HookEnv.hostActivity
+                // 创建basePreference对象
                 val preference =
                     preferenceClass.getDeclaredConstructor(Context::class.java).newInstance(app)
+                //设置preference的key
+                //其实这一句应该已经没用了
+                //旧Miko的逻辑就是用key判断点击事件
                 findMethodObj(preference).setReturnType(Void.TYPE).setParams(String::class.java)
                     .get().invoke(preference, "new_miko_entry")
-                /*    for (method in preference.javaClass.declaredMethods) {
-                     if (method.parameterCount == 1 && method.parameterTypes[0] == CharSequence::class.java) {
-                         method.isAccessible = true
-                         method.invoke(preference, "NewMiko")
-                         break
-                     }
-                 }*/
+                //设置标题
                 preferenceTitle.toMethod(loader).invoke(preference, "NewMiko")
+                // 通过反射添加进适配器
                 for (method in param.thisObject.javaClass.declaredMethods) {
                     if (method.parameterCount == 2
                         && method.getParameterTypes()[0]
@@ -92,7 +91,6 @@ class SettingInject : BaseFuncHook(defaultEnabled = true), IFinder {
 
             }
         }
-
 
     }
 }

@@ -1,8 +1,6 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
-    <style
-        name="Base.AppTheme"
-        parent="Theme.Material3.DynamicColors.Light">
+    <style name="Base.AppTheme" parent="Theme.Material3.DynamicColors.Light">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionModeOverlay">true</item>
@@ -14,26 +12,24 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style
-        name="AppTheme"
-        parent="Base.AppTheme" />
-    
-    
+    <style name="AppTheme" parent="Base.AppTheme" />
+
+
     <style name="CustomSwitchStyle">
         <item name="colorControlNormal">#E076C4F5</item>
         <item name="colorControlActivated">#AAA</item>
         <item name="android:thumbTint">#FFFFFF</item>
-      
-    
-    </style>
-  
 
-<style name="TextButton" parent="Widget.MaterialComponents.Button.TextButton">
-    <item name="android:minWidth">0dp</item>
-    <item name="android:minHeight">0dp</item>
-    <item name="android:insetTop">0dp</item>
-    <item name="android:insetBottom">0dp</item>
-    <item name="cornerRadius">8dp</item>
-    <item name="android:textColor">@color/colorPrimaryDark</item>
-</style>
+
+    </style>
+
+
+    <style name="TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
 </resources>
