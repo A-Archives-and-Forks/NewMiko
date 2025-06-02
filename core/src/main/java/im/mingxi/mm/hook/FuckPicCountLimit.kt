@@ -6,11 +6,15 @@ import im.mingxi.miko.hook.BaseFuncHook
 import im.mingxi.miko.util.Reflex
 import im.mingxi.miko.util.hookBeforeIfEnable
 
-@FunctionHookEntry(/*项目内部名称，可选*/itemName = "去你妈的图片数量限制",/*作用宿主，默认均可作用*/ itemType = FunctionHookEntry.WECHAT_ITEM)
-class FuckPicCountLimit : BaseFuncHook(defaultEnabled = true)/*目前你继承im.mingxi.miko.hook下的哪个都没啥用，没写界面，只能默认打开*/ {
+@FunctionHookEntry(/*项目内部名称，可选*/itemName = "去你妈的图片数量限制",/*作用宿主，默认均可作用*/
+    itemType = FunctionHookEntry.WECHAT_ITEM
+)
+class FuckPicCountLimit :
+    BaseFuncHook(defaultEnabled = true)/*目前你继承im.mingxi.miko.hook下的哪个都没啥用，没写界面，只能默认打开*/ {
     override fun initOnce(): Boolean {
         // 通过Reflex类获取Class对象
-        val albumPreviewUIClass = Reflex.loadClass("com.tencent.mm.plugin.gallery.ui.AlbumPreviewUI")
+        val albumPreviewUIClass =
+            Reflex.loadClass("com.tencent.mm.plugin.gallery.ui.AlbumPreviewUI")
         // 获取方法
         val targetMet = Reflex.findMethod(albumPreviewUIClass).setMethodName("onCreate").get()
         hookBeforeIfEnable(targetMet) {

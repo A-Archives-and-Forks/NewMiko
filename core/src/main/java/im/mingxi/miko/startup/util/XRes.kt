@@ -11,6 +11,7 @@ object XRes {
     fun addAssetsPath(context: Context) {
         addAssetsPath(context.resources, PathUtil.moduleApkPath)
     }
+
     @JvmStatic
     fun addAssetsPath(context: Context, path: String?) {
         addAssetsPath(context.resources, path)
@@ -20,9 +21,9 @@ object XRes {
     @JvmStatic
     @Throws(Exception::class)
     fun addAssetsPath(resources: Resources, str: String?) {
-            val method =
-                AssetManager::class.java.getDeclaredMethod("addAssetPath", String::class.java)
-            method.isAccessible = true
-            method.invoke(resources.assets, str)
+        val method =
+            AssetManager::class.java.getDeclaredMethod("addAssetPath", String::class.java)
+        method.isAccessible = true
+        method.invoke(resources.assets, str)
     }
 }

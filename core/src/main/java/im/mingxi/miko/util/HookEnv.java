@@ -1,4 +1,5 @@
 package im.mingxi.miko.util;
+
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;

@@ -1,7 +1,7 @@
 package im.mingxi.miko.util;
 
-import android.util.Log;
 import androidx.annotation.NonNull;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -90,7 +90,7 @@ public class Reflex {
 
         public MethodMatcher(@NonNull Class<?> clz) {
             this.reflexMethod = new ReflexMethod();
-            this.reflexMethod.setClassName(new Class[] {clz});
+            this.reflexMethod.setClassName(new Class[]{clz});
         }
 
         public MethodMatcher(@NonNull Class<?>[] clz) {
@@ -111,7 +111,7 @@ public class Reflex {
         }
 
         public MethodMatcher setClassName(@NonNull Class<?> clz) {
-            this.reflexMethod.setClassName(new Class[] {clz});
+            this.reflexMethod.setClassName(new Class[]{clz});
             return this;
         }
 
@@ -192,7 +192,7 @@ public class Reflex {
                 }
                 if (temp.size() == 0) {
                     this.reflexMethod.setClassName(
-                            new Class[] {this.reflexMethod.getClassName()[0].getSuperclass()});
+                            new Class[]{this.reflexMethod.getClassName()[0].getSuperclass()});
                     return get();
                 } else {
                     var result = temp.get(0);
@@ -224,7 +224,8 @@ public class Reflex {
             this.paramsLength = paramsLength;
         }
 
-        public ReflexMethod() {}
+        public ReflexMethod() {
+        }
 
         public Class<?>[] getClassName() {
             return this.className;
@@ -288,7 +289,7 @@ public class Reflex {
 
         public FieldMatcher(@NonNull Class<?> clz) {
             this.reflexField = new ReflexField();
-            this.reflexField.setClassName(new Class[] {clz});
+            this.reflexField.setClassName(new Class[]{clz});
         }
 
         public static FieldMatcher create(@NonNull Class<?> clz) {
@@ -300,7 +301,7 @@ public class Reflex {
         }
 
         public FieldMatcher setClassName(@NonNull Class<?> clz) {
-            this.reflexField.setClassName(new Class[] {clz});
+            this.reflexField.setClassName(new Class[]{clz});
             return this;
         }
 
@@ -357,7 +358,7 @@ public class Reflex {
                 }
                 if (temp.size() == 0) {
                     this.reflexField.setClassName(
-                            new Class[] {this.reflexField.getClassName()[0].getSuperclass()});
+                            new Class[]{this.reflexField.getClassName()[0].getSuperclass()});
                     return get();
                 } else {
                     var result = temp.get(0);
@@ -379,7 +380,8 @@ public class Reflex {
             this.returnType = returnType;
         }
 
-        public ReflexField() {}
+        public ReflexField() {
+        }
 
         public Class<?>[] getClassName() {
             return this.className;

@@ -32,7 +32,7 @@ class DexMethodDescriptor : Serializable {
     val cache = MMKV.mmkvWithID("global_cache")
 
 
-    constructor(mConfig: String, mBaseFuncHook: BaseFuncHook) {
+    constructor(mBaseFuncHook: BaseFuncHook, mConfig: String) {
 
         declaringClass = ""
         name = ""
@@ -108,6 +108,13 @@ class DexMethodDescriptor : Serializable {
         val isInDexSearch = config != null
         if (isInDexSearch) {
             val desc: String = cache.decodeString(config, "")!!
+            if (desc == "") {
+                if (baseFuncHook is IFinder) {
+
+                    (baseFuncHook as IFinder).dexFind(DexFinder())
+                    return toMethod(classLoader)
+                }
+            }
             val a = desc.indexOf("->")
             val b = desc.indexOf('(', a)
             require(!(a < 0 || b < 0)) { desc }

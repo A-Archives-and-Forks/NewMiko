@@ -11,5 +11,5 @@ abstract class BaseComponentHook : BaseFuncHook() {
      */
     open val description: CharSequence? = null
 
-    abstract val uiItemLocation : Array<String>
+    abstract val uiItemLocation: Array<String>
 }

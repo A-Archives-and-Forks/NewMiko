@@ -2,7 +2,13 @@ package im.mingxi.miko.util.dexkit;
 
 import android.provider.Settings;
 import android.util.Log;
+
 import androidx.annotation.NonNull;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import im.mingxi.core.BuildConfig;
 import im.mingxi.loader.bridge.XPBridge;
@@ -11,11 +17,6 @@ import im.mingxi.loader.util.DataUtil;
 import im.mingxi.loader.util.FileUtil;
 import im.mingxi.loader.util.PathUtil;
 import im.mingxi.miko.util.HookEnv;
-import java.io.File;
-
-import java.util.zip.ZipInputStream;
-import java.io.FileInputStream;
-import java.util.zip.ZipEntry;
 
 public abstract class NativeLoader {
     private NativeLoader() {

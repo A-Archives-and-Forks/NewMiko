@@ -21,8 +21,10 @@ class ServiceBtnInject : BaseFuncHook(defaultEnabled = true) {
             val position = it.args[2] as Int
             val preference = findMethodObj(adapter).setMethodName("getItem").get()
             val preferenceInst = preference.invoke(adapter, position)
-            if ("服务" == preferenceInst.toString()) {
-                HomeController.openHomeActivity()
+            if (preferenceInst != null) {
+                if ("服务" == preferenceInst.toString()) {
+                    HomeController.openHomeActivity()
+                }
             }
         }
         return true

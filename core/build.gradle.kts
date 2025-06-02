@@ -10,7 +10,7 @@ android {
     ndkVersion = "24.0.8215888"
 
     defaultConfig {
-        
+
         minSdk = 26
 
 
@@ -27,7 +27,7 @@ android {
     buildTypes {
         getByName("debug") {
             isMinifyEnabled = false
-            
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -35,7 +35,7 @@ android {
         }
         getByName("release") {
             isMinifyEnabled = true
-            
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -59,7 +59,7 @@ android {
         jvmTarget = "17"
     }
 
-    
+
 
     buildFeatures {
         viewBinding = true
@@ -69,7 +69,7 @@ android {
 
     externalNativeBuild {
         cmake {
-          //  path = file("src/main/cpp/CMakeLists.txt")
+            //  path = file("src/main/cpp/CMakeLists.txt")
         }
     }
 }

@@ -7,14 +7,14 @@ object DebugUtil {
     fun printAllFieldStatic(clz: Class<*>) {
         clz.declaredFields.forEach {
             it.isAccessible = true
-            XPBridge.log(it.get(null))
+            XPBridge.log("${it.name}->${it.get(null)}")
         }
     }
 
     fun printAllField(obj: Any) {
         obj.javaClass.declaredFields.forEach {
             it.isAccessible = true
-            XPBridge.log(it.get(obj))
+            XPBridge.log("${it.name}->${it.get(obj)}")
         }
     }
 
