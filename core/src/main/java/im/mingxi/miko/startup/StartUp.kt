@@ -16,6 +16,8 @@ import im.mingxi.miko.startup.HookInstaller.scanAndInstall
 import im.mingxi.miko.util.HookEnv
 import im.mingxi.miko.util.Reflex
 import im.mingxi.miko.util.dexkit.NativeLoader
+import im.mingxi.net.Beans
+import im.mingxi.net.bean.ModuleInfo
 import java.io.File
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -79,6 +81,7 @@ object StartUp {
                 if (xLoader != null) {
                     HookEnv.hostClassLoader = xLoader
                     Reflex.setHostClassLoader(xLoader)
+                    registerModuleInfo()
                     scanAndInstall()
                     XPBridge.log("Load Successful!")
                 }
@@ -104,5 +107,17 @@ object StartUp {
         MMKV.initialize(ctx, mmkvDir.absolutePath)
         MMKV.mmkvWithID("global_config", MMKV.MULTI_PROCESS_MODE)
         MMKV.mmkvWithID("global_cache", MMKV.MULTI_PROCESS_MODE)
+    }
+    private fun registerModuleInfo() {
+        if (Beans.containsBean(ModuleInfo::class.java)) return
+        val versionNameField =
+            Class.forName("im.mingxi.miko.BuildConfig").getDeclaredField("VERSION_NAME")
+        val versionCodeField =
+            Class.forName("im.mingxi.miko.BuildConfig").getDeclaredField("VERSION_CODE")
+        versionNameField.isAccessible = true
+        versionCodeField.isAccessible = true
+        val versionName = versionNameField.get(null) as String
+        val versionCode = versionCodeField.get(null) as Int
+        Beans.registerBean(ModuleInfo(versionName, versionCode))
     }
 }

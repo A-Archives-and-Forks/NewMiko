@@ -8,11 +8,11 @@ object Beans {
      * @param cls The class of the bean to get.
      * @return The bean of the class.
      */
-    fun <T> getBean(cls: Class<T>): T? {
+    fun <T> getBean(cls: Class<T>): T {
         synchronized(Beans::class) {
             for (bean in mBeans) {
                 if (cls.isInstance(bean)) {
-                    return cls.cast(bean)
+                    return cls.cast(bean)!!
                 }
             }
             throw RuntimeException("Bean not found: " + cls.name)
@@ -26,5 +26,14 @@ object Beans {
         }
     }
 
-
+    fun containsBean(cls: Class<*>): Boolean {
+        synchronized(Beans::class) {
+            for (bean in mBeans) {
+                if (cls.isInstance(bean)) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
 }

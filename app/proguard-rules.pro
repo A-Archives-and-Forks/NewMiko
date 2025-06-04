@@ -19,3 +19,31 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-dontwarn java.**
+-dontwarn javax.**
+-dontwarn com.sun.**
+-dontwarn com.sun.**
+-dontwarn edu.umd.**
+
+
+-keep class net.bytebuddy.** {*;}
+
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+-keep class * implements android.os.Parcelable {
+  public static final android.os.Parcelable$Creator *;
+}
+-keep class * implements java.io.Serializable { *; }
+
+-keep class * extends android.app.Activity {*;}
+
+-dontpreverify
+-optimizationpasses 5
+-dontskipnonpubliclibraryclassmembers
+-verbose
+
+-renamesourcefileattribute SourceFile
+-dontwarn com.android.dx.**

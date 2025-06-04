@@ -45,7 +45,7 @@ android {
 
     buildFeatures {
         viewBinding = true
-
+        buildConfig = true
     }
     androidResources {
         additionalParameters += arrayOf(

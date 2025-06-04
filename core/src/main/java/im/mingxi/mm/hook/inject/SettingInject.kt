@@ -15,17 +15,22 @@ import im.mingxi.miko.util.hookAfterIfEnable
 import im.mingxi.miko.util.hookBeforeIfEnable
 import im.mingxi.mm.struct.MMPreferenceAdapter
 import im.mingxi.mm.struct.preferenceClass
+import im.mingxi.net.Beans
+import im.mingxi.net.bean.ModuleInfo
+import java.lang.reflect.Method
 
 @FunctionHookEntry(itemName = "设置注入", itemType = FunctionHookEntry.WECHAT_ITEM)
 class SettingInject : BaseFuncHook(defaultEnabled = true), IFinder {
     private val preferenceTitle = DexMethodDescriptor(this, "${simpleTAG}.Method.preferenceTitle")
+    private val settingName = "NewMiko"
+    private val settingTip = Beans.getBean(ModuleInfo::class.java).versionName
     override fun initOnce(): Boolean {
 
         // 创建入口
         val ctors = MMPreferenceAdapter.hostClass.declaredConstructors
         ctors.forEach {
             it.hookAfterIfEnable(this) { param ->
-                // 排除非设置防止卡顿
+                // 排除非设置防止全部注入
                 if (!XPHelper.getStackData()
                         .contains("com.tencent.mm.plugin.setting.ui.setting.SettingsUI.onCreate")
                 ) return@hookAfterIfEnable
@@ -39,7 +44,9 @@ class SettingInject : BaseFuncHook(defaultEnabled = true), IFinder {
                 findMethodObj(preference).setReturnType(Void.TYPE).setParams(String::class.java)
                     .get().invoke(preference, "new_miko_entry")
                 //设置标题
-                preferenceTitle.toMethod(loader).invoke(preference, "NewMiko")
+                preferenceTitle.toMethod(loader).invoke(preference, settingName)
+                // 设置右侧提示
+                findTipMethod().invoke(preference, settingTip)
                 // 通过反射添加进适配器
                 for (method in param.thisObject.javaClass.declaredMethods) {
                     if (method.parameterCount == 2
@@ -68,7 +75,7 @@ class SettingInject : BaseFuncHook(defaultEnabled = true), IFinder {
             val preference = findMethodObj(adapter).setMethodName("getItem").get()
             val preferenceInst = preference.invoke(adapter, position)
             if (preferenceInst != null) {
-                if ("NewMiko" == preferenceInst.toString()) {
+                if ("$settingName $settingTip" == preferenceInst.toString()) {
                     HomeController.openHomeActivity()
                     it.resultNull()
                 }
@@ -92,5 +99,18 @@ class SettingInject : BaseFuncHook(defaultEnabled = true), IFinder {
             }
         }
 
+    }
+
+    private fun findTipMethod(): Method {
+        val tipCls = preferenceTitle.toMethod(loader).declaringClass
+        tipCls.declaredMethods.forEach {
+            if (it.parameterCount == 1 && it.parameterTypes[0] == CharSequence::class.java) {
+                if (it != preferenceTitle.toMethod(loader)) {
+                    it.isAccessible = true
+                    return it
+                }
+            }
+        }
+        throw RuntimeException("未找到tip方法")
     }
 }
