@@ -38,12 +38,12 @@ class SettingInject : BaseFuncHook(defaultEnabled = true), IFinder {
                 // 创建basePreference对象
                 val preference =
                     preferenceClass.getDeclaredConstructor(Context::class.java).newInstance(app)
-                //设置preference的key
-                //其实这一句应该已经没用了
-                //旧Miko的逻辑就是用key判断点击事件
+                // 设置preference的key
+                // 其实这一句应该已经没用了
+                // 旧Miko的逻辑就是用key判断点击事件
                 findMethodObj(preference).setReturnType(Void.TYPE).setParams(String::class.java)
                     .get().invoke(preference, "new_miko_entry")
-                //设置标题
+                // 设置标题
                 preferenceTitle.toMethod(loader).invoke(preference, settingName)
                 // 设置右侧提示
                 findTipMethod().invoke(preference, settingTip)
