@@ -9,6 +9,5 @@ object HomeController {
         val activity = HookEnv.hostActivity
         val intent = Intent(activity, HomeActivity::class.java)
         activity.startActivity(intent)
-
     }
 }

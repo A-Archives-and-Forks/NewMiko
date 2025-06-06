@@ -67,9 +67,9 @@ object StartUp {
         }
 
         /*
- * To prevent the framework from passing the wrong class loader,
- *  we use {@link #getClassLoader()} to get the class loader.
- */
+         * To prevent the framework from passing the wrong class loader,
+         *  we use {@link #getClassLoader()} to get the class loader.
+         */
         XPBridge.hookAfter(
             Reflex.findMethod(Activity::class.java).setMethodName("onResume").get()
         ) { param: HookParam ->

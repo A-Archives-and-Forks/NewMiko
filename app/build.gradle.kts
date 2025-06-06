@@ -60,5 +60,6 @@ dependencies {
     implementation(libs.material)
     implementation(libs.constraintlayout)
     implementation(project(":core"))
-    api(libs.appcompat)
+    implementation(project(":native"))
+    implementation(libs.appcompat)
 }

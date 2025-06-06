@@ -11,8 +11,6 @@ import im.mingxi.miko.util.Reflex.findMethodObj
 import im.mingxi.miko.util.dexkit.DexFinder
 import im.mingxi.miko.util.dexkit.DexMethodDescriptor
 import im.mingxi.miko.util.dexkit.IFinder
-import im.mingxi.miko.util.hookAfterIfEnable
-import im.mingxi.miko.util.hookBeforeIfEnable
 import im.mingxi.mm.struct.MMPreferenceAdapter
 import im.mingxi.mm.struct.preferenceClass
 import im.mingxi.net.Beans
@@ -29,7 +27,7 @@ class SettingInject : BaseFuncHook(defaultEnabled = true), IFinder {
         // 创建入口
         val ctors = MMPreferenceAdapter.hostClass.declaredConstructors
         ctors.forEach {
-            it.hookAfterIfEnable(this) { param ->
+            it.hookAfterIfEnable { param ->
                 // 排除非设置防止全部注入
                 if (!XPHelper.getStackData()
                         .contains("com.tencent.mm.plugin.setting.ui.setting.SettingsUI.onCreate")
@@ -68,7 +66,7 @@ class SettingInject : BaseFuncHook(defaultEnabled = true), IFinder {
         // 处理点击事件
         DexMethodDescriptor(desc = "Lcom/tencent/mm/ui/widget/listview/PullDownListView;->onItemClick(Landroid/widget/AdapterView;Landroid/view/View;IJ)V").toMethod(
             loader
-        ).hookBeforeIfEnable(this) {
+        ).hookBeforeIfEnable {
             val adapterView = it.args[0] as AdapterView<*>
             val adapter = adapterView.adapter
             val position = it.args[2] as Int

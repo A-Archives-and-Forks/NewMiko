@@ -6,25 +6,26 @@ import im.mingxi.miko.util.dexkit.DexFinder
 import im.mingxi.miko.util.dexkit.DexMethodDescriptor
 import im.mingxi.miko.util.dexkit.IFinder
 
-@FunctionHookEntry(itemName = "强制平板模式", itemType = FunctionHookEntry.WECHAT_ITEM)
-class FocusPadMode : BaseFuncHook(defaultEnabled = true), IFinder {
-    private val isPadDevice =
-        DexMethodDescriptor(mConfig = "${simpleTAG}.Method.isPadDevice", mBaseFuncHook = this)
+
+@FunctionHookEntry(itemName = "劫持语音时长", itemType = FunctionHookEntry.WECHAT_ITEM)
+class VoiceTimeHook : BaseFuncHook(defaultEnabled = true), IFinder {
+    private val voiceStorageSym = DexMethodDescriptor(this, "${simpleTAG}.Method.voiceStorageSym")
 
     override fun initOnce(): Boolean {
-        isPadDevice.toMethod(loader).hookBeforeIfEnable {
-            it.resultTrue()
+        voiceStorageSym.toMethod(loader).hookBeforeIfEnable {
+
         }
         return true
     }
 
     override fun dexFind(finder: DexFinder) {
         with(finder) {
-            isPadDevice.findDexMethod {
+            voiceStorageSym.findDexMethod {
                 matcher {
-                    usingStrings("Lenovo TB-9707F")
+                    usingStrings("MicroMsg.VoiceStorage", "update failed, no values set")
                 }
             }
         }
+
     }
 }

@@ -7,7 +7,7 @@ plugins {
 android {
     namespace = "im.mingxi.core"
     compileSdk = 35
-    ndkVersion = "24.0.8215888"
+  
 
     defaultConfig {
 
