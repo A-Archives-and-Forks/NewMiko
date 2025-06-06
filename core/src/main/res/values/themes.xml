@@ -15,4 +15,9 @@
 
     <style name="AppTheme" parent="Base.AppTheme" />
 
+    <style name="CustomSwitchStyle">
+        <item name="colorControlNormal">#94C5FF</item>
+        <item name="colorControlActivated">#AAA</item>
+        <item name="android:thumbTint">#FFFFFF</item>
+    </style>
 </resources>
