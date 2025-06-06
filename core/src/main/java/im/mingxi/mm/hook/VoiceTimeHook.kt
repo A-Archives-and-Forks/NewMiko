@@ -2,6 +2,7 @@ package im.mingxi.mm.hook
 
 import im.mingxi.miko.annotation.FunctionHookEntry
 import im.mingxi.miko.hook.BaseFuncHook
+import im.mingxi.miko.util.Reflex
 import im.mingxi.miko.util.dexkit.DexFinder
 import im.mingxi.miko.util.dexkit.DexMethodDescriptor
 import im.mingxi.miko.util.dexkit.IFinder
@@ -13,7 +14,14 @@ class VoiceTimeHook : BaseFuncHook(defaultEnabled = true), IFinder {
 
     override fun initOnce(): Boolean {
         voiceStorageSym.toMethod(loader).hookBeforeIfEnable {
-
+            Reflex.findFieldObj(
+                it.args[0]
+            ).setFieldName(
+                "l"
+            ).get().set(
+                it.args[0],
+                60
+            )
         }
         return true
     }
