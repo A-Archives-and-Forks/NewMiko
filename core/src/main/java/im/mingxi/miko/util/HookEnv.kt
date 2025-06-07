@@ -1,13 +1,16 @@
-package im.mingxi.miko.util;
+package im.mingxi.miko.util
 
-import android.app.Activity;
-import android.app.Application;
-import android.content.Context;
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.Application
+import android.content.Context
 
-public class HookEnv {
-    public static Context hostContext;
-    public static Activity hostActivity;
-    public static Application hostApplication;
-    public static ClassLoader hostClassLoader;
-    public static ClassLoader moduleClassLoader;
+
+@SuppressLint("StaticFieldLeak")
+object HookEnv {
+    lateinit var hostContext: Context
+    lateinit var hostActivity: Activity
+    lateinit var hostApplication: Application
+    lateinit var hostClassLoader: ClassLoader
+    lateinit var moduleClassLoader: ClassLoader
 }

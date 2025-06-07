@@ -46,10 +46,6 @@ public abstract class NativeLoader {
                         && entry.getName().startsWith("lib/arm64-v8a/" + name)) {
                     FileUtil.writeToFile(cachePath, DataUtil.readAllBytes(zInp));
                     break;
-                } else if (!android.os.Process.is64Bit()
-                        && entry.getName().startsWith("lib/armeabi-v7a/" + name)) {
-                    FileUtil.writeToFile(cachePath, DataUtil.readAllBytes(zInp));
-                    break;
                 } else if (entry.getName().startsWith("assets/native/" + name)) {
                     FileUtil.writeToFile(cachePath, DataUtil.readAllBytes(zInp));
                     break;
