@@ -2,11 +2,11 @@ package im.mingxi.mm.hook
 
 import android.app.Activity
 import android.content.Intent
-import im.mingxi.loader.bridge.XPBridge
-import im.mingxi.loader.bridge.XPBridge.HookParam
+import androidx.core.net.toUri
 import im.mingxi.miko.annotation.FunctionHookEntry
 import im.mingxi.miko.hook.SwitchHook
 import im.mingxi.miko.util.Reflex
+import im.mingxi.miko.util.hookAfterIfEnable
 
 
 @FunctionHookEntry
@@ -17,11 +17,16 @@ class BrowserHook : SwitchHook() {
         get() = arrayOf("娱乐", "其他")
 
     override fun initOnce(): Boolean {
-        XPBridge.hookAfter(
-            Reflex.findMethod(Activity::class.java).setMethodName("getIntent").get()
-        ) { param: HookParam ->
-
-            XPBridge.log((param.result as Intent).extras.toString())
+        hookAfterIfEnable(
+            Reflex.findMethod(
+                loader.loadClass("com.tencent.mm.plugin.webview.ui.tools.WebViewUI")
+            ).setMethodName("onCreate").get()
+        ) {
+            val app = it.thisObject as Activity
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.setData(app.intent.getStringExtra("rawUrl")!!.toUri())
+            app.startActivity(intent)
+            app.finish()
         }
         return true
     }
