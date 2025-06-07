@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.Switch
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.tencent.mmkv.MMKV
 import im.mingxi.core.R
 import im.mingxi.miko.hook.SwitchHook
 
@@ -35,7 +36,10 @@ class MainAdapter(private val dataSet: List<SwitchHook>) :
             switch.isChecked = currentItem.isEnabled()
             switch.setOnCheckedChangeListener { _, isChecked ->
                 with(currentItem) {
-                    if (isChecked) initialize() else unInitialize()
+                    if (isChecked) {
+                        MMKV.mmkvWithID("global_config").encode(TAG, true)
+                        initialize()
+                    } else unInitialize()
                 }
             }
         }
