@@ -1,57 +1,56 @@
-package im.mingxi.mm.hook.inject
+package im.mingxi.mm.hook
 
+import android.app.Activity
 import android.content.Context
 import android.widget.AdapterView
 import im.mingxi.loader.bridge.XPHelper
 import im.mingxi.miko.annotation.FunctionHookEntry
-import im.mingxi.miko.controller.HomeController
 import im.mingxi.miko.hook.SwitchHook
 import im.mingxi.miko.util.HookEnv
+import im.mingxi.miko.util.Reflex
 import im.mingxi.miko.util.Reflex.findMethodObj
-import im.mingxi.miko.util.dexkit.DexFinder
+import im.mingxi.miko.util.dexkit.DexKit
 import im.mingxi.miko.util.dexkit.DexMethodDescriptor
-import im.mingxi.miko.util.dexkit.IFinder
+import im.mingxi.miko.util.hookAfterIfEnable
 import im.mingxi.mm.struct.MMPreferenceAdapter
 import im.mingxi.mm.struct.preferenceClass
-import im.mingxi.net.Beans
-import im.mingxi.net.bean.ModuleInfo
-import java.lang.reflect.Method
 
-@FunctionHookEntry(itemName = "设置注入", itemType = FunctionHookEntry.WECHAT_ITEM)
-class SettingInject : SwitchHook(defaultEnabled = true), IFinder {
-    private val preferenceTitle = DexMethodDescriptor(this, "${simpleTAG}.Method.preferenceTitle")
-    private val settingName = "NewMiko"
+@FunctionHookEntry
+class DisplayFriendInfo : SwitchHook() {
+    private lateinit var friendInfo: String
     private var mCacheItem: Any? = null
-    private val settingTip = Beans.getBean(ModuleInfo::class.java).versionName
     override val name: String
-        get() = "设置条目注入"
+        get() = "展示好友详细信息"
     override val uiItemLocation: Array<String>
-        get() = arrayOf("模块设置及调试", "注入")
+        get() = arrayOf("联系人", "信息")
 
     override fun initOnce(): Boolean {
-
+        // 建一个钩子去获取最近打开的联系人信息
+        // 虽然这段很草台班子
+        hookAfterIfEnable(Reflex.findMethod(Activity::class.java).setMethodName("onCreate").get()) {
+            val intent = (it.thisObject as Activity).intent
+            val user = intent.getStringExtra("Contact_User")
+            if (user != null) friendInfo = user
+        }
         // 创建入口
         val ctors = MMPreferenceAdapter.hostClass.declaredConstructors
         ctors.forEach {
             it.hookAfterIfEnable { param ->
                 if (mCacheItem != null) return@hookAfterIfEnable
-                // 排除非设置防止全部注入
                 if (!XPHelper.getStackData()
-                        .contains("com.tencent.mm.plugin.setting.ui.setting.SettingsUI.onCreate")
+                        .contains("com.tencent.mm.plugin.profile.ui.ProfileSettingUI.onCreate")
                 ) return@hookAfterIfEnable
                 val app = HookEnv.hostActivity
-                // 创建basePreference对象
+
                 val preference =
                     preferenceClass.getDeclaredConstructor(Context::class.java).newInstance(app)
-                // 设置preference的key
-                // 其实这一句应该已经没用了
-                // 旧Miko的逻辑就是用key判断点击事件
+
                 findMethodObj(preference).setReturnType(Void.TYPE).setParams(String::class.java)
-                    .get().invoke(preference, "new_miko_entry")
-                // 设置标题
-                preferenceTitle.toMethod(loader).invoke(preference, settingName)
-                // 设置右侧提示
-                findTipMethod().invoke(preference, settingTip)
+                    .get().invoke(preference, "new_miko_friend_hook")
+
+                DexKit.requireMethodFromCache("SettingInject.Method.preferenceTitle")
+                    .toMethod(loader).invoke(preference, friendInfo)
+
                 // 通过反射添加进适配器
                 for (method in param.thisObject.javaClass.declaredMethods) {
                     if (method.parameterCount == 2
@@ -65,10 +64,10 @@ class SettingInject : SwitchHook(defaultEnabled = true), IFinder {
                     }
 
                 }
+
                 mCacheItem = preference
             }
         }
-
 
         // 处理点击事件
         DexMethodDescriptor(desc = "Lcom/tencent/mm/ui/widget/listview/PullDownListView;->onItemClick(Landroid/widget/AdapterView;Landroid/view/View;IJ)V").toMethod(
@@ -80,42 +79,11 @@ class SettingInject : SwitchHook(defaultEnabled = true), IFinder {
             val preference = findMethodObj(adapter).setMethodName("getItem").get()
             val preferenceInst = preference.invoke(adapter, position)
             if (preferenceInst != null) {
-                if ("$settingName $settingTip" == preferenceInst.toString()) {
-                    HomeController.openHomeActivity()
+                if ("展示好友信息" == preferenceInst.toString()) {
                     it.resultNull()
                 }
             }
         }
         return true
-    }
-
-    override fun dexFind(finder: DexFinder) {
-        with(finder) {
-            preferenceTitle.findDexMethod {
-                searchPackages("com.tencent.mm.ui.base.preference")
-
-                matcher {
-                    usingNumbers(0)
-                    returnType(Void.TYPE)
-                    paramCount(1)
-                    paramTypes(CharSequence::class.java)
-                }
-
-            }
-        }
-
-    }
-
-    private fun findTipMethod(): Method {
-        val tipCls = preferenceTitle.toMethod(loader).declaringClass
-        tipCls.declaredMethods.forEach {
-            if (it.parameterCount == 1 && it.parameterTypes[0] == CharSequence::class.java) {
-                if (it != preferenceTitle.toMethod(loader)) {
-                    it.isAccessible = true
-                    return it
-                }
-            }
-        }
-        throw RuntimeException("未找到tip方法")
     }
 }
