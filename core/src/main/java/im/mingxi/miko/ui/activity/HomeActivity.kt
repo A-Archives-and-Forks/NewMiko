@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import im.mingxi.core.R
+import im.mingxi.miko.hook.SwitchHook
 import im.mingxi.miko.proxy.BaseActivity
 import im.mingxi.miko.startup.HookInstaller
 import im.mingxi.miko.ui.adapter.MainAdapter
@@ -18,7 +19,7 @@ class HomeActivity : BaseActivity() {
         recyclerView = findViewById(R.id.home_recyclerview)
 
         recyclerView!!.layoutManager = LinearLayoutManager(this)
-        recyclerView!!.adapter = MainAdapter(HookInstaller.uiList)
+        recyclerView!!.adapter = MainAdapter(HookInstaller.uiList as ArrayList<SwitchHook>)
 
     }
 }

@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import android.widget.Switch
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.tencent.mmkv.MMKV
 import im.mingxi.core.R
+import im.mingxi.miko.hook.SwitchHook
 
-class MainAdapter(private val dataSet: List<String>) :
+class MainAdapter(private val dataSet: List<SwitchHook>) :
     RecyclerView.Adapter<MainAdapter.MyViewHolder>() {
 
 
@@ -30,9 +30,14 @@ class MainAdapter(private val dataSet: List<String>) :
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
         val currentItem = dataSet[position]
-        holder.textView.text = currentItem
-        holder.switch.setOnCheckedChangeListener { _, isChecked ->
-            MMKV.mmkvWithID("global_config").encode(currentItem, isChecked)
+        with(holder) {
+            textView.text = currentItem.name
+            switch.isChecked = currentItem.isEnabled()
+            switch.setOnCheckedChangeListener { _, isChecked ->
+                with(currentItem) {
+                    if (isChecked) initialize() else unInitialize()
+                }
+            }
         }
     }
 

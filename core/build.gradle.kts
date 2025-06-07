@@ -88,5 +88,6 @@ dependencies {
     annotationProcessor(libs.glidecompiler)
     implementation(project(":loader"))
     //ksp(project(":annotation"))
+    ksp(project(":annotation"))
     implementation(project(":annotation"))
 }

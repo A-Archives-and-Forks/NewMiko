@@ -4,7 +4,7 @@ package im.mingxi.miko.annotation
 @Retention(AnnotationRetention.SOURCE)
 annotation class FunctionHookEntry(
     val itemName: String = "NonName",  // 项目内部名称，可不填
-    val itemType: Int = COMMON_ITEM// 项目类型，默认为通用项目
+    val itemType: Int = COMMON_ITEM// 项目类型，默认为通用项目，可不填
 ) {
     companion object {
         const val COMMON_ITEM: Int = 0

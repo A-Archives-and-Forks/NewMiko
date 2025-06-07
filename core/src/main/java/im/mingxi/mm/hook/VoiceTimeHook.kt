@@ -1,7 +1,7 @@
 package im.mingxi.mm.hook
 
 import im.mingxi.miko.annotation.FunctionHookEntry
-import im.mingxi.miko.hook.BaseFuncHook
+import im.mingxi.miko.hook.SwitchHook
 import im.mingxi.miko.util.Reflex
 import im.mingxi.miko.util.dexkit.DexFinder
 import im.mingxi.miko.util.dexkit.DexMethodDescriptor
@@ -9,8 +9,12 @@ import im.mingxi.miko.util.dexkit.IFinder
 
 
 @FunctionHookEntry(itemName = "劫持语音时长", itemType = FunctionHookEntry.WECHAT_ITEM)
-class VoiceTimeHook : BaseFuncHook(defaultEnabled = true), IFinder {
+class VoiceTimeHook : SwitchHook(), IFinder {
     private val voiceStorageSym = DexMethodDescriptor(this, "${simpleTAG}.Method.voiceStorageSym")
+    override val name: String
+        get() = "劫持语音时长"
+    override val uiItemLocation: Array<String>
+        get() = arrayOf("聊天", "语音")
 
     override fun initOnce(): Boolean {
         voiceStorageSym.toMethod(loader).hookBeforeIfEnable {

@@ -2,7 +2,7 @@ package im.mingxi.mm.hook
 
 import android.app.Activity
 import im.mingxi.miko.annotation.FunctionHookEntry
-import im.mingxi.miko.hook.BaseFuncHook
+import im.mingxi.miko.hook.SwitchHook
 import im.mingxi.miko.util.Reflex
 import im.mingxi.miko.util.hookBeforeIfEnable
 
@@ -10,7 +10,12 @@ import im.mingxi.miko.util.hookBeforeIfEnable
     itemType = FunctionHookEntry.WECHAT_ITEM
 )
 class FuckPicCountLimit :
-    BaseFuncHook(defaultEnabled = true)/*目前你继承im.mingxi.miko.hook下的哪个都没啥用，没写界面，只能默认打开*/ {
+    SwitchHook()/*目前你继承im.mingxi.miko.hook下的哪个都没啥用，没写界面，只能默认打开*/ {
+    override val name: String
+        get() = "去除发送图片数量限制"
+    override val uiItemLocation: Array<String>
+        get() = arrayOf("聊天", "图片视频")
+
     override fun initOnce(): Boolean {
         // 通过Reflex类获取Class对象
         val albumPreviewUIClass =

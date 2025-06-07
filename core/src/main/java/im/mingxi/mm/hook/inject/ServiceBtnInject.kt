@@ -3,14 +3,20 @@ package im.mingxi.mm.hook.inject
 import android.widget.AdapterView
 import im.mingxi.miko.annotation.FunctionHookEntry
 import im.mingxi.miko.controller.HomeController
-import im.mingxi.miko.hook.BaseFuncHook
+import im.mingxi.miko.hook.SwitchHook
 import im.mingxi.miko.util.Reflex.findMethod
 import im.mingxi.miko.util.Reflex.findMethodObj
 import im.mingxi.miko.util.hookAfterIfEnable
 import im.mingxi.mm.struct.pullDownListViewClass
 
 @FunctionHookEntry(itemName = "微信服务按钮注入", itemType = FunctionHookEntry.WECHAT_ITEM)
-class ServiceBtnInject : BaseFuncHook(defaultEnabled = true) {
+class ServiceBtnInject(
+    override val name: String = "注入微信服务长按",
+    override val uiItemLocation: Array<String> = arrayOf(
+        "模块设置及调试",
+        "注入"
+    )
+) : SwitchHook(defaultEnabled = true) {
     override fun initOnce(): Boolean {
 
         hookAfterIfEnable(

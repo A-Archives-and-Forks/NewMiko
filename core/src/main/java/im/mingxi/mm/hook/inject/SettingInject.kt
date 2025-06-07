@@ -5,7 +5,7 @@ import android.widget.AdapterView
 import im.mingxi.loader.bridge.XPHelper
 import im.mingxi.miko.annotation.FunctionHookEntry
 import im.mingxi.miko.controller.HomeController
-import im.mingxi.miko.hook.BaseFuncHook
+import im.mingxi.miko.hook.SwitchHook
 import im.mingxi.miko.util.HookEnv
 import im.mingxi.miko.util.Reflex.findMethodObj
 import im.mingxi.miko.util.dexkit.DexFinder
@@ -18,10 +18,15 @@ import im.mingxi.net.bean.ModuleInfo
 import java.lang.reflect.Method
 
 @FunctionHookEntry(itemName = "设置注入", itemType = FunctionHookEntry.WECHAT_ITEM)
-class SettingInject : BaseFuncHook(defaultEnabled = true), IFinder {
+class SettingInject : SwitchHook(defaultEnabled = true), IFinder {
     private val preferenceTitle = DexMethodDescriptor(this, "${simpleTAG}.Method.preferenceTitle")
     private val settingName = "NewMiko"
     private val settingTip = Beans.getBean(ModuleInfo::class.java).versionName
+    override val name: String
+        get() = "设置条目注入"
+    override val uiItemLocation: Array<String>
+        get() = arrayOf("模块设置及调试", "注入")
+
     override fun initOnce(): Boolean {
 
         // 创建入口

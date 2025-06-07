@@ -1,6 +1,7 @@
 package im.mingxi.miko.hook
 
-abstract class BaseComponentHook : BaseFuncHook() {
+abstract class BaseComponentHook(defaultEnabled: Boolean = false) : BaseFuncHook(defaultEnabled) {
+
     /**
      * Name of the function.
      */

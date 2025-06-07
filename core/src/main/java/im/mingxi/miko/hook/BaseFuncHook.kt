@@ -38,6 +38,12 @@ abstract class BaseFuncHook(val defaultEnabled: Boolean = false) {
         }
     }
 
+    fun unInitialize() {
+        if (!isInitialize) return
+        this.isInitialize = false
+        mConfig.encode(TAG, false)
+    }
+
     fun Member.hookBeforeIfEnable(callback: HookCallback) =
         this.hookBeforeIfEnable(this@BaseFuncHook, callback)
 
