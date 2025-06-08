@@ -74,6 +74,7 @@ object StartUp {
             Reflex.findMethod(Activity::class.java).setMethodName("onResume").get()
         ) { param: HookParam ->
             val activity = param.thisObject as Activity
+            if (activity != null) {
             HookEnv.hostActivity = activity
             ResStartUp.doLoad(activity) // 重复注入资源防止部分免root框架注入资源异常
             if (!isActInit.getAndSet(true)) {
@@ -86,6 +87,7 @@ object StartUp {
                     XPBridge.log("Load Successful!")
                 }
             }
+        }
         }
     }
 

@@ -17,30 +17,37 @@ class DexFinder {
 
     @Throws(Throwable::class)
     inline fun DexMethodDescriptor.findDexMethod(findMethod: FindMethod.() -> Unit) {
+
         val dexKit = DexKitBridge.create(PathUtil.apkPath!!)
         dexKit.use { dexKitBridge ->
             val descriptor = dexKitBridge.findMethod(findMethod).single().descriptor
             cache.encode(this.config, descriptor)
         }
+
     }
 
     @SuppressLint("DuplicateCreateDexKit")
     @Throws(Throwable::class)
     inline fun DexMethodDescriptor.findDexClass(findClass: FindClass.() -> Unit) {
+
         val dexKit = DexKitBridge.create(PathUtil.apkPath!!)
         dexKit.use { dexKitBridge ->
             val descriptor = dexKitBridge.findClass(findClass).single().descriptor
             cache.encode(this.config, descriptor)
         }
+
     }
 
     @SuppressLint("DuplicateCreateDexKit")
     @Throws(Throwable::class)
     inline fun DexMethodDescriptor.findDexField(findField: FindField.() -> Unit) {
+
         val dexKit = DexKitBridge.create(PathUtil.apkPath!!)
         dexKit.use { dexKitBridge ->
             val descriptor = dexKitBridge.findField(findField).single().descriptor
             cache.encode(this.config, descriptor)
         }
+
     }
+
 }
