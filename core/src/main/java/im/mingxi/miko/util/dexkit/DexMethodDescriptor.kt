@@ -118,10 +118,9 @@ class DexMethodDescriptor : Serializable {
             if (desc == "") {
                 if (baseFuncHook is IFinder) {
                     val dialog = showProcessDialog()
-                    dialog.setOnShowListener {
-                        (baseFuncHook as IFinder).dexFind(DexFinder())
-                    }
                     dialog.show()
+                        (baseFuncHook as IFinder).dexFind(DexFinder())
+
 
 
                     dialog.dismiss()
