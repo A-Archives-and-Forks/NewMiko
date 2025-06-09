@@ -117,13 +117,12 @@ class DexMethodDescriptor : Serializable {
             val desc: String = cache.decodeString(config, "")!!
             if (desc == "") {
                 if (baseFuncHook is IFinder) {
-                    val dialog = showProcessDialog()
-                    dialog.show()
+                    // val dialog = showProcessDialog()
+                    // dialog.show()
                         (baseFuncHook as IFinder).dexFind(DexFinder())
 
 
-
-                    dialog.dismiss()
+                    // dialog.dismiss()
                     return toMethod(classLoader)
                 }
             }
