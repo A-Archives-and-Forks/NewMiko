@@ -1,6 +1,8 @@
 package im.mingxi.miko
 
+import android.content.ComponentName
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -11,6 +13,7 @@ import androidx.core.net.toUri
 import com.google.android.material.color.DynamicColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import im.mingxi.miko.databinding.ActivityMainBinding
+
 
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
@@ -50,6 +53,39 @@ class MainActivity : AppCompatActivity() {
         }
 
         setupButtonClickListeners()
+
+        val hide_main_icon = binding.checkboxIcon
+        val pm = packageManager
+        val componentName = ComponentName(this, "im.mingxi.miko.MainActivity")
+        val HideName = ComponentName(this, "im.mingxi.miko.MainActivity.Hide")
+        hide_main_icon.isChecked =
+            pm.getComponentEnabledSetting(HideName) == PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+        hide_main_icon.setOnCheckedChangeListener { _, isChecked: Boolean ->
+            if (isChecked) {
+                pm.setComponentEnabledSetting(
+                    componentName,
+                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                    PackageManager.DONT_KILL_APP
+                )
+                pm.setComponentEnabledSetting(
+                    HideName,
+                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                    PackageManager.DONT_KILL_APP
+                )
+            } else {
+                pm.setComponentEnabledSetting(
+                    componentName,
+                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                    PackageManager.DONT_KILL_APP
+                )
+                pm.setComponentEnabledSetting(
+                    HideName,
+                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                    PackageManager.DONT_KILL_APP
+                )
+            }
+        }
+
     }
 
     override fun onDestroy() {

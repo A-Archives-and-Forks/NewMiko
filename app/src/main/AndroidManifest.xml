@@ -18,6 +18,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity-alias
+            android:name="im.mingxi.miko.MainActivity.Hide"
+            android:exported="true"
+            android:label="Miko"
+            android:targetActivity="im.mingxi.miko.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="de.robv.android.xposed.category.MODULE_SETTINGS" />
+
+            </intent-filter>
+        </activity-alias>
         <activity android:name=".ui.activity.HomeActivity" />
 
         <meta-data
