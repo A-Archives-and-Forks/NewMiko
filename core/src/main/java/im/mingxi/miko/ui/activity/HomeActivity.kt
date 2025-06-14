@@ -11,6 +11,7 @@ import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import im.mingxi.core.R
+import im.mingxi.miko.ui.util.ProxyActUtil
 
 class HomeActivity : AppCompatActivity() {
 
@@ -33,6 +34,8 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setTheme(R.style.AppHomeTheme)
         setContentView(R.layout.activity_home)
+
+        ProxyActUtil.mApp = this
 
         drawerLayout = findViewById(R.id.drawer_layout)
         navView = findViewById(R.id.nav_view)

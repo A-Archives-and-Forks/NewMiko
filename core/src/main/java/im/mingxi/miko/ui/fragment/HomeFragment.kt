@@ -1,5 +1,6 @@
 package im.mingxi.miko.ui.fragment
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,10 +28,12 @@ class HomeFragment : Fragment() {
         recyclerView.adapter = HomeAdapter(
             listOf(
                 HomeAdapter.Data("基本信息", ""),
-                HomeAdapter.Data("Host", "微信(com.tencent.mm)"),
-                HomeAdapter.Data("Module", "0.0.1"),
+                HomeAdapter.Data("FrameWork", "LSPosed-API100"),
+                HomeAdapter.Data("Host", "com.tencent.mm"),
+                HomeAdapter.Data("Module", "0.0.1(1)"),
                 HomeAdapter.Data("Android SDK", "35"),
-                HomeAdapter.Data("FrameWork", "LSPosed")
+                HomeAdapter.Data("ABI", Build.SUPPORTED_ABIS.contentToString()),
+
             )
         )
 

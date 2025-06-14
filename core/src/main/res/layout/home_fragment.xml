@@ -10,7 +10,7 @@
         android:id="@+id/home_main_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="16dp"
         android:background="@drawable/recyclerview_shape"
         android:orientation="vertical">
 
@@ -23,7 +23,7 @@
             <TextView
                 android:id="@+id/user_info"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="登录账号：小明(2*******02)"
                 android:textColor="#1A1A1A"
