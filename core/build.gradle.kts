@@ -85,6 +85,8 @@ dependencies {
     implementation(libs.dexkit)
     //implementation("net.bytebuddy:byte-buddy-android:1.14.10")
     implementation(libs.glide)
+    implementation(libs.navigation.ui.ktx)
+    implementation(libs.navigation.fragment.ktx)
     annotationProcessor(libs.glidecompiler)
     implementation(project(":loader"))
     //ksp(project(":annotation"))

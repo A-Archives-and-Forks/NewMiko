@@ -1,0 +1,11 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <!-- 圆角半径，可根据需要调整 -->
+    <corners android:radius="8dp" />
+    <!-- 填充色（如需透明可用@android:color/transparent） -->
+    <solid android:color="#fafafc" />
+    <!-- 1dp黑色描边 -->
+    <stroke
+        android:width="1px"
+        android:color="#EFEFF5" />
+</shape>

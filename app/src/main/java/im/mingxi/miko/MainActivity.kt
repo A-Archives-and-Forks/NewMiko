@@ -61,9 +61,12 @@ class MainActivity : AppCompatActivity() {
         // 使用说明
         binding.btnUsage.setOnClickListener {
             if (isFastClick()) return@setOnClickListener
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.setData("https://github.com/hiatus169/Miko-Public?tab=readme-ov-file#-newmiko-".toUri())
+            //val intent = Intent(Intent.ACTION_VIEW)
+            //intent.setData("https://github.com/hiatus169/Miko-Public?tab=readme-ov-file#-newmiko-".toUri())
+            //startActivity(intent)
+            val intent = Intent(this, Class.forName("im.mingxi.miko.ui.activity.HomeActivity"))
             startActivity(intent)
+
         }
 
         // 交流讨论

@@ -1,32 +1,68 @@
 package im.mingxi.miko.ui.activity
 
-import android.annotation.SuppressLint
-import android.app.Activity
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
+import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.navigation.NavigationView
 import im.mingxi.core.R
-import im.mingxi.miko.hook.SwitchHook
-import im.mingxi.miko.proxy.BaseActivity
-import im.mingxi.miko.startup.HookInstaller
-import im.mingxi.miko.ui.adapter.MainAdapter
 
-class HomeActivity : BaseActivity() {
-    private var recyclerView: RecyclerView? = null
+class HomeActivity : AppCompatActivity() {
 
-    companion object {
-        @SuppressLint("StaticFieldLeak")
-        lateinit var app: Activity
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navView: NavigationView
+    private lateinit var mAppBarConfiguration: AppBarConfiguration
+    private lateinit var imageBtn: ImageView
+    private lateinit var navController: NavController
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController: NavController =
+            Navigation.findNavController(this, R.id.nav_host_fragment_content_main)
+        return NavigationUI.navigateUp(
+            navController,
+            mAppBarConfiguration
+        ) || super.onSupportNavigateUp()
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        app = this
-        setTheme(R.style.AppTheme)
+        setTheme(R.style.AppHomeTheme)
         setContentView(R.layout.activity_home)
-        recyclerView = findViewById(R.id.home_recyclerview)
 
-        recyclerView!!.layoutManager = LinearLayoutManager(this)
-        recyclerView!!.adapter = MainAdapter(HookInstaller.uiList as ArrayList<SwitchHook>)
+        drawerLayout = findViewById(R.id.drawer_layout)
+        navView = findViewById(R.id.nav_view)
+        imageBtn = findViewById(R.id.image_btn)
 
+        mAppBarConfiguration = AppBarConfiguration.Builder(
+            R.id.nav_home,
+            R.id.nav_function,
+            R.id.nav_plugin,
+            R.id.nav_more
+        ).setOpenableLayout(drawerLayout).build()
+
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main)
+
+        //  NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration)
+        NavigationUI.setupWithNavController(navView, navController)
+
+
+        imageBtn.setOnClickListener {
+            drawerLayout.openDrawer(navView)
+        }
+    }
+
+
+    @Suppress("DEPRECATION")
+    override fun onBackPressed() {
+        if (drawerLayout.isDrawerOpen(RecyclerView(this))) {
+            drawerLayout.closeDrawers()
+            return
+        }
+        super.onBackPressed()
     }
 }

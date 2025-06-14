@@ -36,6 +36,7 @@
 - [Miko Contributors](https://github.com/hiatus169/Miko-Public/graphs/contributors)
 - [QAuxiliary](https://github.com/cinit/QAuxiliary)
 - [TimTool](https://github.com/suzhelan/TimTool)
+- [QTool](https://github.com/Hicores/QTool)
 
 ## 交流讨论
 

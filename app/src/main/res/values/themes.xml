@@ -10,18 +10,10 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="AppTheme" parent="Base.AppTheme" />
-
-
-    <style name="CustomSwitchStyle">
-        <item name="colorControlNormal">#E076C4F5</item>
-        <item name="colorControlActivated">#AAA</item>
-        <item name="android:thumbTint">#FFFFFF</item>
-
-
-    </style>
 
 
     <style name="TextButton" parent="Widget.MaterialComponents.Button.TextButton">
