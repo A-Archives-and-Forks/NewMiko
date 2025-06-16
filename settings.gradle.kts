@@ -16,5 +16,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Miko"
 
-include(":app", ":loader", ":core", ":annotation", ":native")
+include(":app", ":loader", ":core", ":annotation", ":native", ":service")
 

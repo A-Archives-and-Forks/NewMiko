@@ -62,4 +62,5 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":native"))
     implementation(libs.appcompat)
+    implementation(project(":service"))
 }

@@ -13,7 +13,8 @@ import androidx.core.net.toUri
 import com.google.android.material.color.DynamicColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import im.mingxi.miko.databinding.ActivityMainBinding
-
+import io.github.libxposed.service.XposedService
+import io.github.libxposed.service.XposedServiceHelper
 
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
@@ -21,7 +22,8 @@ class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
 
     private val binding: ActivityMainBinding
-        get() = checkNotNull(_binding) { "Activity has been destroyed" }
+        get() = checkNotNull(_binding) { "MainActivity has been destroyed" }
+    private lateinit var service: XposedService
 
     private var lastClickTime = 0L
     private val clickInterval = 1000L
@@ -54,13 +56,13 @@ class MainActivity : AppCompatActivity() {
 
         setupButtonClickListeners()
 
-        val hide_main_icon = binding.checkboxIcon
+        val hideMainIcon = binding.checkboxIcon
         val pm = packageManager
         val componentName = ComponentName(this, "im.mingxi.miko.MainActivity")
-        val HideName = ComponentName(this, "im.mingxi.miko.MainActivity.Hide")
-        hide_main_icon.isChecked =
-            pm.getComponentEnabledSetting(HideName) == PackageManager.COMPONENT_ENABLED_STATE_ENABLED
-        hide_main_icon.setOnCheckedChangeListener { _, isChecked: Boolean ->
+        val hideName = ComponentName(this, "im.mingxi.miko.MainActivity.Hide")
+        hideMainIcon.isChecked =
+            pm.getComponentEnabledSetting(hideName) == PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+        hideMainIcon.setOnCheckedChangeListener { _, isChecked: Boolean ->
             if (isChecked) {
                 pm.setComponentEnabledSetting(
                     componentName,
@@ -68,7 +70,7 @@ class MainActivity : AppCompatActivity() {
                     PackageManager.DONT_KILL_APP
                 )
                 pm.setComponentEnabledSetting(
-                    HideName,
+                    hideName,
                     PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                     PackageManager.DONT_KILL_APP
                 )
@@ -79,13 +81,22 @@ class MainActivity : AppCompatActivity() {
                     PackageManager.DONT_KILL_APP
                 )
                 pm.setComponentEnabledSetting(
-                    HideName,
+                    hideName,
                     PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                     PackageManager.DONT_KILL_APP
                 )
             }
         }
 
+        XposedServiceHelper.registerListener(object : XposedServiceHelper.OnServiceListener {
+            override fun onServiceBind(service: XposedService) {
+                binding.customText.text = "模块激活状态：已激活"
+            }
+
+            override fun onServiceDied(service: XposedService) {
+
+            }
+        })
     }
 
     override fun onDestroy() {
