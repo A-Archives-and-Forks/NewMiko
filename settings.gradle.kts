@@ -17,7 +17,4 @@ dependencyResolutionManagement {
 rootProject.name = "Miko"
 
 include(":app", ":loader", ":core", ":annotation", ":native")
-project(":loader").projectDir = file("loader/")
-project(":core").projectDir = file("core/")
-project(":annotation").projectDir = file("annotation/")
-project(":native").projectDir = file("native/")
+
