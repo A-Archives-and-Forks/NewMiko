@@ -40,4 +40,4 @@
 ## 交流讨论
 
 - 电报讨论组 [@MikoBuild](https://t.me/MikoBuild)
-- 电报通知组 [@wsy666HD](https://t.me/wsy666HD)
+- 电报通知组 [@wsy666HD](https://t.me/mingxi235)

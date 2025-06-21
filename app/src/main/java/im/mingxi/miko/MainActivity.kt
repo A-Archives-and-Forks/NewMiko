@@ -21,9 +21,8 @@ class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainBinding? = null
 
-    private val binding: ActivityMainBinding
+    internal val binding: ActivityMainBinding
         get() = checkNotNull(_binding) { "MainActivity has been destroyed" }
-    private lateinit var service: XposedService
 
     private var lastClickTime = 0L
     private val clickInterval = 1000L
@@ -108,12 +107,9 @@ class MainActivity : AppCompatActivity() {
         // 使用说明
         binding.btnUsage.setOnClickListener {
             if (isFastClick()) return@setOnClickListener
-            //val intent = Intent(Intent.ACTION_VIEW)
-            //intent.setData("https://github.com/hiatus169/Miko-Public?tab=readme-ov-file#-newmiko-".toUri())
-            //startActivity(intent)
-            val intent = Intent(this, Class.forName("im.mingxi.miko.ui.activity.HomeActivity"))
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.setData("https://github.com/dartcv/Miko-Public?tab=readme-ov-file#-newmiko-".toUri())
             startActivity(intent)
-
         }
 
         // 交流讨论
@@ -128,7 +124,7 @@ class MainActivity : AppCompatActivity() {
                     when (which) {
                         0 -> {
                             val intent = Intent(Intent.ACTION_VIEW)
-                            intent.setData("https://t.me/wsy666HD".toUri())
+                            intent.setData("https://t.me/mingxi235".toUri())
                             startActivity(intent)
                         }
 
@@ -140,7 +136,7 @@ class MainActivity : AppCompatActivity() {
 
                         2 -> {
                             val intent = Intent(Intent.ACTION_VIEW)
-                            intent.setData("https://github.com/hiatus169/Miko-Public/discussions".toUri())
+                            intent.setData("https://github.com/dartcv/Miko-Public/discussions".toUri())
                             startActivity(intent)
                         }
                     }
