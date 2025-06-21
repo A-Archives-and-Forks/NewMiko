@@ -1,11 +1,13 @@
 package im.mingxi.miko.startup
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application
 import android.content.Context
 import com.tencent.mmkv.MMKV
 import im.mingxi.core.BuildConfig
 import im.mingxi.core.R
+import im.mingxi.loader.HookInit
 import im.mingxi.loader.XposedPackage
 import im.mingxi.loader.bridge.XPBridge
 import im.mingxi.loader.bridge.XPBridge.HookParam
@@ -14,26 +16,29 @@ import im.mingxi.loader.util.PathUtil
 import im.mingxi.miko.proxy.ActivityProxyManager
 import im.mingxi.miko.startup.HookInstaller.scanAndInstall
 import im.mingxi.miko.util.HookEnv
+import im.mingxi.miko.util.HybridClassLoader
 import im.mingxi.miko.util.Reflex
 import im.mingxi.miko.util.dexkit.NativeLoader
 import im.mingxi.net.Beans
 import im.mingxi.net.bean.ModuleInfo
 import java.io.File
+import java.lang.reflect.Field
 import java.util.concurrent.atomic.AtomicBoolean
 
+
 object StartUp {
-    val isMMKVInit: AtomicBoolean = AtomicBoolean()
-    val isActInit: AtomicBoolean = AtomicBoolean()
+    private val isMMKVInit: AtomicBoolean = AtomicBoolean()
+    private val isActInit: AtomicBoolean = AtomicBoolean()
 
     @JvmField
     var hostType: Int = -1
 
     @JvmStatic
     fun doLoad() {
-        HookEnv.moduleClassLoader = StartUp::class.java.classLoader
-
+        HookEnv.moduleClassLoader = StartUp::class.java.classLoader as ClassLoader
         Reflex.setHostClassLoader(XposedPackage.classLoader)
-        var appClass: Class<*>? = null
+        // HybridClassLoader.setLoaderParentClassLoader(StartUp::class.java.classLoader)
+        var appClass: Class<*>?
         val mmClass = Reflex.loadClass("com.tencent.mm.app.Application")
         val mobileqqClass = Reflex.loadClass("com.tencent.mobileqq.qfix.QFixApplication")
         appClass = if (mobileqqClass != null) {
@@ -82,6 +87,8 @@ object StartUp {
                 if (xLoader != null) {
                     HookEnv.hostClassLoader = xLoader
                     Reflex.setHostClassLoader(xLoader)
+                    HybridClassLoader.hostClassLoader = xLoader
+                    injectClassLoader()
                     registerModuleInfo()
                     scanAndInstall()
                     XPBridge.log("Load Successful!")
@@ -121,5 +128,23 @@ object StartUp {
         val versionName = versionNameField.get(null) as String
         val versionCode = versionCodeField.get(null) as Int
         Beans.registerBean(ModuleInfo(versionName, versionCode))
+    }
+
+    @SuppressLint("DiscouragedPrivateApi")
+    private fun injectClassLoader() {
+        try {
+            val fParent: Field = ClassLoader::class.java.getDeclaredField("parent")
+            fParent.isAccessible = true
+            val mine = HookInit::class.java.classLoader
+            var curr: ClassLoader? = fParent.get(mine) as ClassLoader
+            if (curr == null) {
+                curr = XPBridge::class.java.classLoader
+            }
+            if (curr!!.javaClass.name != HybridClassLoader::class.java.getName()) {
+                HybridClassLoader.setLoaderParentClassLoader(curr)
+                fParent.set(mine, HybridClassLoader.INSTANCE)
+            }
+        } catch (_: Exception) {
+        }
     }
 }

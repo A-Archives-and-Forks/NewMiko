@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
 
         XposedServiceHelper.registerListener(object : XposedServiceHelper.OnServiceListener {
             override fun onServiceBind(service: XposedService) {
-                binding.customText.text = "模块激活状态：已激活"
+                binding.customText.text = "状态：已激活"
             }
 
             override fun onServiceDied(service: XposedService) {

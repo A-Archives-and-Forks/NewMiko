@@ -47,7 +47,7 @@
 
                 <TextView
                     android:id="@+id/custom_text"
-                    android:text="模块激活状态：未激活"
+                    android:text="状态：未激活"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"

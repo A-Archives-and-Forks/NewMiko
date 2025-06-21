@@ -1,19 +1,22 @@
 package im.mingxi.miko.ui.activity
 
+import android.content.Context
 import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import im.mingxi.core.R
+import im.mingxi.miko.proxy.BaseActivity
 import im.mingxi.miko.ui.util.ProxyActUtil
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : BaseActivity() {
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navView: NavigationView
@@ -30,16 +33,36 @@ class HomeActivity : AppCompatActivity() {
         ) || super.onSupportNavigateUp()
     }
 
+    private fun createNavigationView(context: Context): NavigationView {
+        val navView = NavigationView(context).apply {
+            id = View.generateViewId()
+            layoutParams = DrawerLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            ).apply {
+                gravity = GravityCompat.START
+            }
+            fitsSystemWindows = true
+            inflateMenu(R.menu.activity_main_drawer)
+
+        }
+        drawerLayout.addView(navView)
+        return navView
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.AppHomeTheme)
         setContentView(R.layout.activity_home)
 
+
         ProxyActUtil.mApp = this
 
         drawerLayout = findViewById(R.id.drawer_layout)
-        navView = findViewById(R.id.nav_view)
+        navView = createNavigationView(this)
         imageBtn = findViewById(R.id.image_btn)
+
+
 
         mAppBarConfiguration = AppBarConfiguration.Builder(
             R.id.nav_home,
@@ -62,7 +85,7 @@ class HomeActivity : AppCompatActivity() {
 
     @Suppress("DEPRECATION")
     override fun onBackPressed() {
-        if (drawerLayout.isDrawerOpen(RecyclerView(this))) {
+        if ((drawerLayout != null) && drawerLayout.isDrawerOpen(navView)) {
             drawerLayout.closeDrawers()
             return
         }

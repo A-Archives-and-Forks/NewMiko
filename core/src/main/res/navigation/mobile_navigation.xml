@@ -11,11 +11,11 @@
     <fragment
         android:id="@+id/nav_plugin"
         android:name="im.mingxi.miko.ui.fragment.PluginFragment"
-        android:label="自定义" />
+        android:label="插件" />
     <fragment
         android:id="@+id/nav_function"
         android:name="im.mingxi.miko.ui.fragment.CustomiseFragment"
-        android:label="插件" />
+        android:label="自定义" />
     <fragment
         android:id="@+id/nav_more"
         android:name="im.mingxi.miko.ui.fragment.AboutFragment"

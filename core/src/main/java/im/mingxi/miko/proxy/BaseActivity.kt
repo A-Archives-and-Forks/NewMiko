@@ -1,7 +1,6 @@
 package im.mingxi.miko.proxy
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -51,27 +50,36 @@ open class BaseActivity : AppCompatActivity() {
         private val mHostReferencer: ClassLoader? = ActivityProxyManager.HostClassLoader
 
         @Throws(ClassNotFoundException::class)
-        override fun loadClass(name: String, resolve: Boolean): Class<*>? {
+        override fun findClass(name: String): Class<*>? {
+            /*  try {
+                  if (name.startsWith("androidx.compose") ||
+                      name.startsWith("androidx.navigation") ||
+                      name.startsWith("androidx.activity") ||
+                      name.startsWith("com.google")
+                  ) {
+                      return mBaseReferencer.loadClass(name)
+                  }
+                  return Context::class.java.classLoader.loadClass(name)
+              } catch (ignored: ClassNotFoundException) {
+              }
+              try {
+                  if (name == "androidx.lifecycle.LifecycleOwner" ||
+                      name == "androidx.lifecycle.ViewModelStoreOwner" ||
+                      name == "androidx.savedstate.SavedStateRegistryOwner"
+                  ) {
+                      return mHostReferencer?.loadClass(name)
+                  }
+              } catch (ignored: ClassNotFoundException) {
+              }
+              return mBaseReferencer.loadClass(name)
+
+         */
             try {
-                if (name.startsWith("androidx.compose") ||
-                    name.startsWith("androidx.navigation") ||
-                    name.startsWith("androidx.activity")
-                ) {
-                    return mBaseReferencer.loadClass(name)
-                }
-                return Context::class.java.classLoader.loadClass(name)
-            } catch (ignored: ClassNotFoundException) {
+                return mBaseReferencer.loadClass(name)
+            } catch (_: Exception) {
+                return mHostReferencer?.loadClass(name)
             }
-            try {
-                if (name == "androidx.lifecycle.LifecycleOwner" ||
-                    name == "androidx.lifecycle.ViewModelStoreOwner" ||
-                    name == "androidx.savedstate.SavedStateRegistryOwner"
-                ) {
-                    return mHostReferencer?.loadClass(name)
-                }
-            } catch (ignored: ClassNotFoundException) {
-            }
-            return mBaseReferencer.loadClass(name)
+
         }
     }
 }
