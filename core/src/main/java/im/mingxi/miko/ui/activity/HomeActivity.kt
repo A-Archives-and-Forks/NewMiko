@@ -4,11 +4,12 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.navigation.NavigationView
@@ -23,10 +24,11 @@ class HomeActivity : BaseActivity() {
     private lateinit var mAppBarConfiguration: AppBarConfiguration
     private lateinit var imageBtn: ImageView
     private lateinit var navController: NavController
+    private lateinit var backBtn: Button
 
     override fun onSupportNavigateUp(): Boolean {
         val navController: NavController =
-            Navigation.findNavController(this, R.id.nav_host_fragment_content_main)
+            this.findNavController(R.id.nav_host_fragment_content_main)
         return NavigationUI.navigateUp(
             navController,
             mAppBarConfiguration
@@ -43,6 +45,7 @@ class HomeActivity : BaseActivity() {
                 gravity = GravityCompat.START
             }
             fitsSystemWindows = true
+            //itemBackground = context.getDrawable(R.drawable.blue_button)
             inflateMenu(R.menu.activity_main_drawer)
 
         }
@@ -61,7 +64,7 @@ class HomeActivity : BaseActivity() {
         drawerLayout = findViewById(R.id.drawer_layout)
         navView = createNavigationView(this)
         imageBtn = findViewById(R.id.image_btn)
-
+        backBtn = findViewById(R.id.back_btn)
 
 
         mAppBarConfiguration = AppBarConfiguration.Builder(
@@ -71,7 +74,7 @@ class HomeActivity : BaseActivity() {
             R.id.nav_more
         ).setOpenableLayout(drawerLayout).build()
 
-        navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main)
+        navController = this.findNavController(R.id.nav_host_fragment_content_main)
 
         //  NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration)
         NavigationUI.setupWithNavController(navView, navController)
@@ -80,12 +83,15 @@ class HomeActivity : BaseActivity() {
         imageBtn.setOnClickListener {
             drawerLayout.openDrawer(navView)
         }
+        backBtn.setOnClickListener {
+            finish()
+        }
     }
 
 
     @Suppress("DEPRECATION")
     override fun onBackPressed() {
-        if ((drawerLayout != null) && drawerLayout.isDrawerOpen(navView)) {
+        if (drawerLayout.isDrawerOpen(navView)) {
             drawerLayout.closeDrawers()
             return
         }

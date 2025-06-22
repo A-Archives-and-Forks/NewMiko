@@ -23,6 +23,7 @@ class DisplayFriendInfo : SwitchHook() {
         get() = "展示好友详细信息"
     override val uiItemLocation: Array<String>
         get() = arrayOf("联系人", "信息")
+    override val description: String = "如题"
 
     override fun initOnce(): Boolean {
         // 建一个钩子去获取最近打开的联系人信息

@@ -27,7 +27,7 @@ object UISetUp {
                 val pageName = uiItemLocation[0]
                 val wrapperName = uiItemLocation[1]
                 val name = it.name
-                if (uiItemLocation.size == 3) {
+                if (uiItemLocation.size == 2) {
                     if (!pageNames.contains(pageName)) {
                         val page = Page(pageName)
                         pages.add(page)

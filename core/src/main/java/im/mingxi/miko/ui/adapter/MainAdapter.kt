@@ -52,7 +52,10 @@ class MainAdapter(private val dataSet: List<BaseComponentHook>) :
             with(holder)
             {
                 name.text = currentItem.name
-                if (currentItem.description != null) description.text = currentItem.description
+                if (currentItem.description != null) {
+                    description.text = currentItem.description
+                    description.visibility = View.VISIBLE
+                }
                 switch.isChecked = currentItem.isEnabled()
                 switch.setOnCheckedChangeListener { _, isChecked ->
                     with(currentItem) {
