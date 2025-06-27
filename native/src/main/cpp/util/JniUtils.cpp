@@ -9,6 +9,9 @@
 #include <vector>
 #include <thread>
 
+using namespace std;
+
+
 // java.lang.String 2 char*
 
 char *jstring2Char(JNIEnv *env, jstring jstr) {
@@ -26,4 +29,8 @@ char *jstring2Char(JNIEnv *env, jstring jstr) {
     }
     env->ReleaseByteArrayElements(barr, ba, 0);
     return rtn;
+}
+
+jstring char2jstring(JNIEnv *env, const char *pat) {
+    return env->NewStringUTF(pat);
 }

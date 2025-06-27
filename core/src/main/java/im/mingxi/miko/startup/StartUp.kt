@@ -35,9 +35,10 @@ object StartUp {
 
     @JvmStatic
     fun doLoad() {
+        val startTime = System.currentTimeMillis()
         HookEnv.moduleClassLoader = StartUp::class.java.classLoader as ClassLoader
         Reflex.setHostClassLoader(XposedPackage.classLoader)
-        // HybridClassLoader.setLoaderParentClassLoader(StartUp::class.java.classLoader)
+        HybridClassLoader.setLoaderParentClassLoader(StartUp::class.java.classLoader!!)
         var appClass: Class<*>?
         val mmClass = Reflex.loadClass("com.tencent.mm.app.Application")
         val mobileqqClass = Reflex.loadClass("com.tencent.mobileqq.qfix.QFixApplication")
@@ -91,7 +92,7 @@ object StartUp {
                     injectClassLoader()
                     registerModuleInfo()
                     scanAndInstall()
-                    XPBridge.log("Load Successful!")
+                    XPBridge.log("模块装载完成（costTime = ${System.currentTimeMillis() - startTime}）")
                 }
             }
         }
@@ -117,6 +118,7 @@ object StartUp {
         MMKV.mmkvWithID("global_config", MMKV.MULTI_PROCESS_MODE)
         MMKV.mmkvWithID("global_cache", MMKV.MULTI_PROCESS_MODE)
     }
+
     private fun registerModuleInfo() {
         if (Beans.containsBean(ModuleInfo::class.java)) return
         val versionNameField =
@@ -131,8 +133,8 @@ object StartUp {
     }
 
     @SuppressLint("DiscouragedPrivateApi")
+    @Throws(Exception::class)
     private fun injectClassLoader() {
-        try {
             val fParent: Field = ClassLoader::class.java.getDeclaredField("parent")
             fParent.isAccessible = true
             val mine = HookInit::class.java.classLoader
@@ -144,7 +146,5 @@ object StartUp {
                 HybridClassLoader.setLoaderParentClassLoader(curr)
                 fParent.set(mine, HybridClassLoader.INSTANCE)
             }
-        } catch (_: Exception) {
-        }
     }
 }

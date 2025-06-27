@@ -1,6 +1,4 @@
-//
-// Created by admin on 2025/6/27.
-//
+
 
 #ifndef MIKO_JNIUTILS_H
 #define MIKO_JNIUTILS_H
@@ -10,6 +8,8 @@
 
 
 char *jstring2Char(JNIEnv *env, jstring jstr);
+
+jstring char2jstring(JNIEnv *env, const char *pat);
 
 
 #endif //MIKO_JNIUTILS_H
