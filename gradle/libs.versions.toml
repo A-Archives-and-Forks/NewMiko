@@ -1,10 +1,9 @@
 [versions]
 agp = "8.10.1"
-kotlin = "2.1.10"
-gson = "2.11.0"
-mmkv = "2.0.1"
-dexkit = "2.0.2"
-glide = "4.13.2"
+kotlin = "2.1.20"
+mmkv = "2.2.2"
+dexkit = "2.0.6"
+glide = "4.16.0"
 okhttp = "4.12.0"
 material = "1.12.0"
 appcompat = "1.7.1"
@@ -21,7 +20,6 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "symbolProcessingApi" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 
 [libraries]
-gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 dexkit = { module = "org.luckypray:dexkit", version.ref = "dexkit" }
 mmkv = { module = "com.tencent:mmkv", version.ref = "mmkv" }
