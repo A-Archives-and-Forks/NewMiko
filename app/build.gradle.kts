@@ -59,7 +59,7 @@ android {
     android.applicationVariants.all {
         outputs.all {
             if (this is ApkVariantOutputImpl)
-                outputFileName = "NewMiko(1.0.0)-1-output.APK"
+                outputFileName = "NewMiko(1.0.0)-2-output.APK"
         }
     }
 
