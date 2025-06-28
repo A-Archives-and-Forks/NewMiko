@@ -11,6 +11,8 @@ constraintlayout = "2.1.4"
 symbolProcessingApi = "2.1.20-2.0.1"
 navigationUiKtx = "2.9.0"
 navigationFragmentKtx = "2.9.0"
+blurView = "version-3.0.0"
+kavaref-core = "1.0.0"
 
 [plugins]
 agp-lib = { id = "com.android.library", version.ref = "agp" }
@@ -33,3 +35,5 @@ symbol-processing-api = { module = "com.google.devtools.ksp:symbol-processing-ap
 kotlinpoet-ksp = { module = "com.squareup:kotlinpoet-ksp", version = "2.1.0" }
 navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
 navigation_fragment_ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
+blurView = { group = "com.github.Dimezis", name = "BlurView", version.ref = "blurView" }
+kavaref-core = { module = "com.highcapable.kavaref:kavaref-core", version.ref = "kavaref-core" }

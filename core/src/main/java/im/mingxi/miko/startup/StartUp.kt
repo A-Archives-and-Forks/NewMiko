@@ -5,13 +5,13 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import com.tencent.mmkv.MMKV
-import im.mingxi.core.BuildConfig
 import im.mingxi.core.R
 import im.mingxi.loader.HookInit
 import im.mingxi.loader.XposedPackage
 import im.mingxi.loader.bridge.XPBridge
 import im.mingxi.loader.bridge.XPBridge.HookParam
 import im.mingxi.loader.hotpatch.HotPatch.hotPatchAPKPath
+import im.mingxi.loader.util.Constants
 import im.mingxi.loader.util.PathUtil
 import im.mingxi.miko.proxy.ActivityProxyManager
 import im.mingxi.miko.startup.HookInstaller.scanAndInstall
@@ -64,7 +64,7 @@ object StartUp {
             ResStartUp.doLoad(context) // 重复注入资源防止部分免root框架注入资源异常
             ActivityProxyManager.initActivityProxyManager(
                 context,
-                if (BuildConfig.DEBUG) PathUtil.moduleApkPath else hotPatchAPKPath,
+                if (Constants.isHotPatch) hotPatchAPKPath else PathUtil.moduleApkPath,
                 R.string.app_name
             )
             if (!isMMKVInit.getAndSet(true)) initializeMMKV(

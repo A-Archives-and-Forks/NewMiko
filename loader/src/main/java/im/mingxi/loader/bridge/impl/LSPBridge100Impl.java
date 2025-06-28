@@ -1,16 +1,18 @@
 package im.mingxi.loader.bridge.impl;
 
 import android.util.Log;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Member;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
+
 import im.mingxi.loader.bridge.XPBridge;
 import io.github.libxposed.api.XposedInterface;
 import io.github.libxposed.api.annotations.AfterInvocation;
 import io.github.libxposed.api.annotations.BeforeInvocation;
 import io.github.libxposed.api.annotations.XposedHooker;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Member;
-import java.lang.reflect.Method;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.ArrayList;
 
 public class LSPBridge100Impl extends XPBridge {
     private XposedInterface sApi;
@@ -25,8 +27,8 @@ public class LSPBridge100Impl extends XPBridge {
 
     @Override
     protected void hookAfterImpl(Member member, HookCallback hookCallback) {
-        if (member instanceof Method) this.sApi.hook((Method) member, 0, LSP100Hooker.class);
-        else this.sApi.hook((Constructor) member, 0, LSP100Hooker.class);
+        if (member instanceof Method) this.sApi.hook((Method) member, 50, LSP100Hooker.class);
+        else this.sApi.hook((Constructor) member, 50, LSP100Hooker.class);
         ArrayList<XPBridge.HookCallback> list =
                 afterCallbacks.computeIfAbsent(
                         member,
@@ -38,8 +40,8 @@ public class LSPBridge100Impl extends XPBridge {
 
     @Override
     protected void hookBeforeImpl(Member member, HookCallback hookCallback) {
-        if (member instanceof Method) this.sApi.hook((Method) member, 0, LSP100Hooker.class);
-        else this.sApi.hook((Constructor) member, 0, LSP100Hooker.class);
+        if (member instanceof Method) this.sApi.hook((Method) member, 50, LSP100Hooker.class);
+        else this.sApi.hook((Constructor) member, 50, LSP100Hooker.class);
         ArrayList<XPBridge.HookCallback> list =
                 beforeCallbacks.computeIfAbsent(
                         member,
@@ -154,5 +156,10 @@ public class LSPBridge100Impl extends XPBridge {
     @Override
     protected boolean isApi100Impl() {
         return true;
+    }
+
+    @Override
+    protected int getApiLevelImpl() {
+        return 100;
     }
 }

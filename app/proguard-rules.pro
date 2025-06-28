@@ -27,6 +27,9 @@
 
 
 -keep class net.bytebuddy.** {*;}
+-keep class im.** {*;}
+-dontwarn de.robv.**
+-dontwarn io.github.libxposed.**
 
 -keepclassmembers enum * {
     public static **[] values();

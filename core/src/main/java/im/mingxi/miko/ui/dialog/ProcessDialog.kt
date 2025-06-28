@@ -6,17 +6,17 @@ import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
 import android.widget.TextView
-import im.mingxi.core.databinding.DialogWaitBinding
+import im.mingxi.core.R
 import im.mingxi.miko.util.HookEnv
 
 
 class ProcessDialog(val appContext: Context, val message: String) : Dialog(appContext) {
 
-    private var _binding: DialogWaitBinding? = null
+    /* private var _binding: DialogWaitBinding? = null
 
-    private val binding: DialogWaitBinding
-        get() = checkNotNull(_binding) { "Activity has been destroyed" }
-
+     private val binding: DialogWaitBinding
+         get() = checkNotNull(_binding) { "Activity has been destroyed" }
+ */
     private lateinit var textView: TextView
 
 
@@ -26,16 +26,17 @@ class ProcessDialog(val appContext: Context, val message: String) : Dialog(appCo
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
 
-        this._binding = DialogWaitBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        //this._binding = DialogWaitBinding.inflate(layoutInflater)
+        //setContentView(binding.root)
+        setContentView(R.layout.dialog_wait)
 
         // Set feature of ProcessDialog
         setCanceledOnTouchOutside(false)
         setCancelable(false)
 
 
-
-        this.textView = binding.waitTv
+        //this.textView = binding.waitTv
+        this.textView = findViewById(R.id.wait_tv)
 
         this.textView.text = message
 

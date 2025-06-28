@@ -3,8 +3,8 @@ package im.mingxi.loader.hotpatch
 
 import android.util.Log
 import dalvik.system.DexClassLoader
-import im.mingxi.loader.BuildConfig
 import im.mingxi.loader.bridge.XPBridge
+import im.mingxi.loader.util.Constants
 import im.mingxi.loader.util.FileUtil
 import im.mingxi.loader.util.HttpUtil
 import im.mingxi.loader.util.HttpUtil.sendDataRequest
@@ -16,8 +16,7 @@ object HotPatch {
     val hotPatchAPKPath: String = hotPatchPath + "release.apk"
 
     fun onLoad(): Boolean {
-        // 如果是调试模式直接加载模块
-        if (BuildConfig.DEBUG) {
+        if (!Constants.isHotPatch) {
             this.doLoadModuleLocal()
             return true
         }

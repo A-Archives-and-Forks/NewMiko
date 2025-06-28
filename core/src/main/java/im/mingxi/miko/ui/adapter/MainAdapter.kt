@@ -1,6 +1,7 @@
 package im.mingxi.miko.ui.adapter
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,9 +14,23 @@ import im.mingxi.core.R
 import im.mingxi.miko.hook.BaseComponentHook
 import im.mingxi.miko.hook.CommonHook
 import im.mingxi.miko.hook.SwitchHook
+import im.mingxi.miko.ui.dialog.ProcessDialog
+import im.mingxi.miko.ui.util.ProxyActUtil
+import im.mingxi.miko.util.AppUtil
+import im.mingxi.miko.util.HookEnv
+import im.mingxi.miko.util.dexkit.DexFinder
+import im.mingxi.miko.util.dexkit.IFinder
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainAdapter(private val dataSet: List<BaseComponentHook>) :
     RecyclerView.Adapter<ViewHolder>() {
+
+    private val activityScope = CoroutineScope(Dispatchers.Main + Job())
     private val SWITCH_ITEM = 1
     private val COMMON_ITEM = 2
 
@@ -61,8 +76,34 @@ class MainAdapter(private val dataSet: List<BaseComponentHook>) :
                     with(currentItem) {
                         if (isChecked) {
                             MMKV.mmkvWithID("global_config").encode(TAG, true)
-                            initialize()
+
+                            if (currentItem is IFinder) {
+                                if (MMKV.mmkvWithID("global_config").decodeInt(
+                                        "${currentItem.TAG}.SIGN",
+                                        1
+                                    ) == AppUtil.getVersionCode(HookEnv.hostContext)
+                                ) {
+                                    initialize()
+                                } else {
+                                    MMKV.mmkvWithID("global_config").encode(
+                                        "${currentItem.TAG}.SIGN",
+                                        AppUtil.getVersionCode(HookEnv.hostContext)
+                                    )
+                                    val dialog = showProcessDialog()
+                                    activityScope.launch {
+                                        delay(500)
+                                        val result = withContext(Dispatchers.IO) {
+                                            onDexFinder(currentItem)
+                                            dialog.dismiss()
+                                            initialize()
+                                            "混淆方法查找完成"
+                                        }
+                                    }
+                                }
+                            } else initialize()
+
                         } else unInitialize()
+
                     }
                 }
             }
@@ -85,5 +126,19 @@ class MainAdapter(private val dataSet: List<BaseComponentHook>) :
         if (dataSet[position] is SwitchHook) return SWITCH_ITEM
         if (dataSet[position] is CommonHook) return COMMON_ITEM
         return super.getItemViewType(position)
+    }
+
+    private fun onDexFinder(finder: IFinder) {
+        finder.dexFind(DexFinder())
+    }
+
+    private fun showProcessDialog(): ProcessDialog {
+        val dialog =
+            ProcessDialog(
+                ProxyActUtil.mApp as Context,
+                "正在通过DexKit查找混淆方法，预计每个方法不超过30s，请耐心等待"
+            )
+        dialog.show()
+        return dialog
     }
 }

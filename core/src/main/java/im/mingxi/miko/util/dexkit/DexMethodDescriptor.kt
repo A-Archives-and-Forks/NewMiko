@@ -2,7 +2,6 @@ package im.mingxi.miko.util.dexkit
 
 import com.tencent.mmkv.MMKV
 import im.mingxi.miko.hook.BaseFuncHook
-import im.mingxi.miko.ui.dialog.ProcessDialog
 import java.io.Serializable
 import java.lang.reflect.Constructor
 import java.lang.reflect.Member
@@ -103,11 +102,7 @@ class DexMethodDescriptor : Serializable {
     override fun hashCode(): Int {
         return toString().hashCode()
     }
-    fun showProcessDialog(): ProcessDialog {
-        val dialog =
-            ProcessDialog("正在查找通过DexKit查找混淆方法，预计每个方法不超过30s，请耐心等待")
-        return dialog
-    }
+
 
     @Throws(NoSuchMethodException::class)
     fun toMethod(classLoader: ClassLoader): Method {
@@ -117,15 +112,11 @@ class DexMethodDescriptor : Serializable {
             val desc: String = cache.decodeString(config, "")!!
             if (desc == "") {
                 if (baseFuncHook is IFinder) {
-                    // val dialog = showProcessDialog()
-                    // dialog.show()
-                        (baseFuncHook as IFinder).dexFind(DexFinder())
-
-
-                    // dialog.dismiss()
+                    (baseFuncHook as IFinder).dexFind(DexFinder())
                     return toMethod(classLoader)
                 }
             }
+
             val a = desc.indexOf("->")
             val b = desc.indexOf('(', a)
             require(!(a < 0 || b < 0)) { desc }
@@ -157,11 +148,7 @@ class DexMethodDescriptor : Serializable {
                 }
             }
 
-            if (isInDexSearch && baseFuncHook is IFinder) {
 
-                (baseFuncHook as IFinder).dexFind(DexFinder())
-                return toMethod(classLoader)
-            }
             throw NoSuchMethodException("$declaringClass->$name$signature")
         } catch (e: ClassNotFoundException) {
             throw NoSuchMethodException(

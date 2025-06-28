@@ -7,6 +7,10 @@ public abstract class XPBridge {
 
     protected abstract boolean isApi100Impl();
 
+    public static int getApiLevel() {
+        return bridge.getApiLevelImpl();
+    }
+
     protected abstract void hookAfterImpl(Member member, HookCallback hookCallback);
 
     protected abstract void hookBeforeImpl(Member member, HookCallback hookCallback);
@@ -23,6 +27,8 @@ public abstract class XPBridge {
     public static boolean isApi100() {
         return bridge.isApi100Impl();
     }
+
+    protected abstract int getApiLevelImpl();
 
     public static void hookBefore(Member member, HookCallback hookCallback) {
         bridge.hookBeforeImpl(member, hookCallback);
@@ -86,4 +92,5 @@ public abstract class XPBridge {
                     + "]";
         }
     }
+
 }

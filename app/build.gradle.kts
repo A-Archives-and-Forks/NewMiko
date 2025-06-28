@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.api.ApkVariantOutputImpl
+
 plugins {
     alias(libs.plugins.agp.app)
     alias(libs.plugins.kotlin)
@@ -53,6 +55,14 @@ android {
             "--package-id", "0x78"
         )
     }
+
+    android.applicationVariants.all {
+        outputs.all {
+            if (this is ApkVariantOutputImpl)
+                outputFileName = "NewMiko(1.0.0)-1-output.APK"
+        }
+    }
+
 
 }
 

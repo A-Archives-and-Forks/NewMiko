@@ -59,18 +59,9 @@ android {
         jvmTarget = "17"
     }
 
-
-
     buildFeatures {
         viewBinding = true
         buildConfig = true
-    }
-
-
-    externalNativeBuild {
-        cmake {
-            //  path = file("src/main/cpp/CMakeLists.txt")
-        }
     }
 }
 
@@ -87,6 +78,8 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.navigation.ui.ktx)
     implementation(libs.navigation.fragment.ktx)
+    implementation(libs.blurView)
+    implementation(libs.kavaref.core)
     annotationProcessor(libs.glidecompiler)
     implementation(project(":loader"))
     //ksp(project(":annotation"))

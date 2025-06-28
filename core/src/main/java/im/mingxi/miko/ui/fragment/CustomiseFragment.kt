@@ -14,6 +14,9 @@ import im.mingxi.miko.ui.util.UISetUp
 
 
 class CustomiseFragment : Fragment() {
+    companion object {
+        var isInSubPage = false
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,11 +39,13 @@ class CustomiseFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                // 在这里自定义返回键行为
-                // 例如：关闭对话框、弹窗，或拦截返回
-                // 如果想返回上一层，用parentFragmentManager.popBackStack()
-                (view as RecyclerView).adapter =
-                    CustomiseAdapter(view as RecyclerView, UISetUp.pageNames)
+                if (isInSubPage) {
+                    isInSubPage = false
+                    (view as RecyclerView).adapter =
+                        CustomiseAdapter(view, UISetUp.pageNames)
+                } else {
+                    requireActivity().finish()
+                }
             }
         }
         // 注册回调到activity的OnBackPressedDispatcher

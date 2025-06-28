@@ -1,13 +1,13 @@
 package im.mingxi.miko.ui.util
 
 import android.annotation.SuppressLint
-import android.app.Activity
+import im.mingxi.miko.ui.activity.HomeActivity
 
 @SuppressLint("StaticFieldLeak")
 object ProxyActUtil {
-    var mApp: Activity? = null
+    var mApp: HomeActivity? = null
 
     fun isProxyActRunning(): Boolean {
-        return if (mApp == null || mApp!!.isDestroyed) return true else false
+        return if (mApp == null || mApp!!.isDestroyed) return false else true
     }
 }

@@ -26,6 +26,7 @@ class HomeActivity : BaseActivity() {
     private lateinit var navController: NavController
     private lateinit var backBtn: Button
 
+
     override fun onSupportNavigateUp(): Boolean {
         val navController: NavController =
             this.findNavController(R.id.nav_host_fragment_content_main)
@@ -45,7 +46,6 @@ class HomeActivity : BaseActivity() {
                 gravity = GravityCompat.START
             }
             fitsSystemWindows = true
-            //itemBackground = context.getDrawable(R.drawable.blue_button)
             inflateMenu(R.menu.activity_main_drawer)
 
         }
@@ -57,7 +57,6 @@ class HomeActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setTheme(R.style.AppHomeTheme)
         setContentView(R.layout.activity_home)
-
 
         ProxyActUtil.mApp = this
 
@@ -87,7 +86,6 @@ class HomeActivity : BaseActivity() {
             finish()
         }
     }
-
 
     @Suppress("DEPRECATION")
     override fun onBackPressed() {

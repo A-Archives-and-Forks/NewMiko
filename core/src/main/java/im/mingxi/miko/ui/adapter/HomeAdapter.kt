@@ -34,9 +34,7 @@ class HomeAdapter(private val dataSet: List<Data>) :
                 descView.visibility = View.GONE
                 textView.setPadding(0, dip2px(textView.context, 15f), 0, 0)
             } else descView.text = desc
-            if (position == dataSet.size - 1) {
-                itemView.findViewById<View>(R.id.divider).visibility = View.GONE
-            }
+
         }
     }
 

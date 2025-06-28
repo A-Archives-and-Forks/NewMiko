@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import im.mingxi.miko.ui.fragment.CustomiseFragment
 import im.mingxi.miko.ui.util.UISetUp
 
 class CustomiseAdapter(private val container: RecyclerView, private val dataSet: List<String>) :
@@ -26,6 +27,7 @@ class CustomiseAdapter(private val container: RecyclerView, private val dataSet:
             itemView.setOnClickListener {
                 container.adapter =
                     MainAdapter(UISetUp.pages[position].wrappers.find { true }!!.items)
+                CustomiseFragment.isInSubPage = true
             }
         }
     }

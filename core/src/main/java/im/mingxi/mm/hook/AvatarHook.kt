@@ -1,5 +1,6 @@
 package im.mingxi.mm.hook
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.BitmapShader
 import android.graphics.Canvas
@@ -44,6 +45,7 @@ class AvatarHook : SwitchHook(), IFinder {
         }
     }
 
+    @SuppressLint("UseKtx")
     fun createRoundedBitmap(bitmap: Bitmap, cornerRadius: Float): Bitmap {
         val width = bitmap.width
         val height = bitmap.height

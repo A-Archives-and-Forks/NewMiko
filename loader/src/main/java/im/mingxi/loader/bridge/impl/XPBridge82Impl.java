@@ -1,15 +1,14 @@
 package im.mingxi.loader.bridge.impl;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Member;
+import java.lang.reflect.Method;
+import java.util.concurrent.atomic.AtomicReference;
+
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.callbacks.IXUnhook;
-
 import im.mingxi.loader.bridge.XPBridge;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
-
-import java.lang.reflect.Member;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class XPBridge82Impl extends XPBridge {
 
@@ -21,7 +20,7 @@ public class XPBridge82Impl extends XPBridge {
         atomicReference.set(
                 XposedBridge.hookMethod(
                         member,
-                        new XC_MethodHook() {
+                        new XC_MethodHook(50) {
                             @Override
                             protected void afterHookedMethod(MethodHookParam param)
                                     throws Throwable {
@@ -39,7 +38,7 @@ public class XPBridge82Impl extends XPBridge {
         atomicReference.set(
                 XposedBridge.hookMethod(
                         member,
-                        new XC_MethodHook() {
+                        new XC_MethodHook(50) {
                             @Override
                             protected void beforeHookedMethod(MethodHookParam param)
                                     throws Throwable {
@@ -101,5 +100,10 @@ public class XPBridge82Impl extends XPBridge {
     @Override
     protected boolean isApi100Impl() {
         return false;
+    }
+
+    @Override
+    protected int getApiLevelImpl() {
+        return XposedBridge.getXposedVersion();
     }
 }
