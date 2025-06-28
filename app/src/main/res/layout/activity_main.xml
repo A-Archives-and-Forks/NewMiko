@@ -115,7 +115,7 @@
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Authed by 小明Github@mingxi169" />
+            android:text="Authed by 小明Github@dartcv" />
 
     </LinearLayout>
 
