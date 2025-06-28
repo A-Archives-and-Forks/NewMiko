@@ -13,7 +13,7 @@
 ## 使用方法
 
 -
-获取最新版本： [![GitHub release](https://img.shields.io/github/release/dartcv/Miko-Public.svg)](https://github.com/dartcv/Miko-Public/releases/latest)
+下载：[![GitHub release](https://img.shields.io/github/release/dartcv/Miko-Public.svg)](https://github.com/dartcv/Miko-Public/releases/latest)
 
 - 建议您使用 **[LSPosed](https://github.com/LSPosed/LSPosed)** ，请勾选模块作用域 **QQ/TIM/微信**
 
