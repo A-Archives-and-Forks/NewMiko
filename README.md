@@ -4,7 +4,7 @@
 
 ## 提示
 
-当前项目处于开发状态暂无release，请勿为此打扰开发者。
+右边有安装包，勿扰开发者。暂时不支持QQ/TIM，请手动取消勾选其作用域。
 
 ## 简介
 
@@ -12,7 +12,8 @@
 
 ## 使用方法
 
-- 获取最新版本： [![GitHub release](https://img.shields.io/github/release/hiatus169/Miko-Public.svg)](https://github.com/Jasmine2008xyz/Camellia/releases/latest)
+-
+获取最新版本： [![GitHub release](https://img.shields.io/github/release/dartcv/Miko-Public.svg)](https://github.com/dartcv/Miko-Public/releases/latest)
 
 - 建议您使用 **[LSPosed](https://github.com/LSPosed/LSPosed)** ，请勾选模块作用域 **QQ/TIM/微信**
 
@@ -29,6 +30,7 @@
 
 ## 问题反馈/功能请求
 
+- 在[Issue](https://github.com/dartcv/Miko-Public/issues)中提出，请遵守Issue规则
 - 模块目前不具备主动发送日志能力，所有问题反馈请在能找到我的地方或在此仓库Issue下详细描述问题+附上模块/框架日志。
 - 不接受违法功能请求，比如抢红包，群发等。
 - 遇到问题时无法提供日志的免ROOT框架勿扰。
