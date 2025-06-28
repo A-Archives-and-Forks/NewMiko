@@ -1,8 +1,6 @@
 package im.mingxi.miko
 
-import android.content.ComponentName
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -13,6 +11,7 @@ import androidx.core.net.toUri
 import com.google.android.material.color.DynamicColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import im.mingxi.miko.databinding.ActivityMainBinding
+import im.mingxi.miko.ui.activity.SettingActivity
 import io.github.libxposed.service.XposedService
 import io.github.libxposed.service.XposedServiceHelper
 
@@ -55,37 +54,6 @@ class MainActivity : AppCompatActivity() {
 
         setupButtonClickListeners()
 
-        val hideMainIcon = binding.checkboxIcon
-        val pm = packageManager
-        val componentName = ComponentName(this, "im.mingxi.miko.MainActivity")
-        val hideName = ComponentName(this, "im.mingxi.miko.MainActivity.Hide")
-        hideMainIcon.isChecked =
-            pm.getComponentEnabledSetting(hideName) == PackageManager.COMPONENT_ENABLED_STATE_ENABLED
-        hideMainIcon.setOnCheckedChangeListener { _, isChecked: Boolean ->
-            if (isChecked) {
-                pm.setComponentEnabledSetting(
-                    componentName,
-                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                    PackageManager.DONT_KILL_APP
-                )
-                pm.setComponentEnabledSetting(
-                    hideName,
-                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                    PackageManager.DONT_KILL_APP
-                )
-            } else {
-                pm.setComponentEnabledSetting(
-                    componentName,
-                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                    PackageManager.DONT_KILL_APP
-                )
-                pm.setComponentEnabledSetting(
-                    hideName,
-                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                    PackageManager.DONT_KILL_APP
-                )
-            }
-        }
 
         XposedServiceHelper.registerListener(object : XposedServiceHelper.OnServiceListener {
             override fun onServiceBind(service: XposedService) {
@@ -93,7 +61,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onServiceDied(service: XposedService) {
-
+                binding.customText.text = "状态：未激活"
             }
         })
     }
@@ -146,8 +114,7 @@ class MainActivity : AppCompatActivity() {
         // 更新日志
         binding.btnChangelog.setOnClickListener {
             if (isFastClick()) return@setOnClickListener
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.setData("https://github.com/hiatus169/Miko-Public/tree/main/docs/release".toUri())
+            val intent = Intent(this, SettingActivity::class.java)
             startActivity(intent)
         }
     }

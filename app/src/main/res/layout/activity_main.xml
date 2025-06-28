@@ -71,7 +71,7 @@
             style="@style/TextButton"
             android:layout_width="0dp"
             android:layout_height="48dp"
-            android:text="使用说明"
+            android:text="使用帮助"
             app:layout_constraintBottom_toTopOf="@id/btn_discussion"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -95,7 +95,7 @@
             style="@style/TextButton"
             android:layout_width="0dp"
             android:layout_height="48dp"
-            android:text="更新日志"
+            android:text="更多设置"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -115,12 +115,7 @@
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hide Desktop Icon" />
-
-        <CheckBox
-            android:id="@+id/checkbox_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:text="Authed by 小明Github@mingxi169" />
 
     </LinearLayout>
 

@@ -73,4 +73,5 @@ dependencies {
     implementation(project(":native"))
     implementation(libs.appcompat)
     implementation(project(":service"))
+    implementation(libs.preference.ktx)
 }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreferenceCompat
+        android:icon="@drawable/day_night_check_icon"
+        android:key="dark_mode"
+        android:summary="启用或禁用夜间模式"
+        android:title="夜间模式" />
+
+    <SwitchPreferenceCompat
+        android:icon="@drawable/hide_icon"
+        android:key="hide_desktop_icon"
+        android:title="隐藏桌面图标" />
+</PreferenceScreen>
