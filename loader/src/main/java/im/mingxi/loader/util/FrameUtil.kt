@@ -8,6 +8,7 @@ import java.lang.reflect.Field
 */
 object FrameUtil {
 
+    @JvmStatic
     fun getFrameName(): String {
         val tag = collectBridgeTag()
         if (tag == "BugHook") return "应用转生"
@@ -26,26 +27,14 @@ object FrameUtil {
     }
 
     private fun collectBridgeTag(): String {
-        val BUGTag = checkIsBugHook()
-            ?: try {
+        try {
                 val f: Field = XposedBridge::class.java.getField("TAG")
                 f.isAccessible = true
                 return f.get(null) as String
             } catch (e: Exception) {
                 return "未知"
             }
-        return BUGTag
     }
 
-    private fun checkIsBugHook(): String? {
-        val bridgeLoader = XposedBridge::class.java.classLoader
-        try {
-            val clz = bridgeLoader!!.loadClass("com.bug.hook.xposed.HookBridge")
-            val tag: Field = clz.getField("TAG")
-            tag.isAccessible = true
-            return tag.get(null) as String
-        } catch (_: Exception) {
-            return null
-        }
-    }
+
 }

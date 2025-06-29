@@ -30,6 +30,12 @@ public abstract class XPBridge {
 
     protected abstract int getApiLevelImpl();
 
+    public static String getFrameworkName() {
+        return bridge.getFrameworkNameImpl();
+    }
+
+    protected abstract String getFrameworkNameImpl();
+
     public static void hookBefore(Member member, HookCallback hookCallback) {
         bridge.hookBeforeImpl(member, hookCallback);
     }

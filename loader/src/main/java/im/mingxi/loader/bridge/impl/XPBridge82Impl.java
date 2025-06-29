@@ -9,6 +9,7 @@ import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.callbacks.IXUnhook;
 import im.mingxi.loader.bridge.XPBridge;
+import im.mingxi.loader.util.FrameUtil;
 
 public class XPBridge82Impl extends XPBridge {
 
@@ -105,5 +106,11 @@ public class XPBridge82Impl extends XPBridge {
     @Override
     protected int getApiLevelImpl() {
         return XposedBridge.getXposedVersion();
+    }
+
+
+    @Override
+    protected String getFrameworkNameImpl() {
+        return FrameUtil.getFrameName();
     }
 }

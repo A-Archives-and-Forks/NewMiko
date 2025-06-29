@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import im.mingxi.core.R
 import im.mingxi.miko.ui.fragment.CustomiseFragment
 import im.mingxi.miko.ui.util.UISetUp
 
@@ -12,12 +13,12 @@ class CustomiseAdapter(private val container: RecyclerView, private val dataSet:
     RecyclerView.Adapter<CustomiseAdapter.CustomViewHolder>() {
 
     class CustomViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val textView = view.findViewById<TextView>(android.R.id.text1)
+        val textView = view.findViewById<TextView>(R.id.setting_item_name)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(android.R.layout.simple_list_item_1, parent, false)
+            .inflate(R.layout.common_item, parent, false)
         return CustomViewHolder(view)
     }
 

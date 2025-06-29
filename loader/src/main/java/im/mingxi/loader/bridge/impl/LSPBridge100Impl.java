@@ -162,4 +162,9 @@ public class LSPBridge100Impl extends XPBridge {
     protected int getApiLevelImpl() {
         return 100;
     }
+
+    @Override
+    protected String getFrameworkNameImpl() {
+        return sApi.getFrameworkName();
+    }
 }

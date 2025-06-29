@@ -18,7 +18,6 @@ import com.google.android.material.snackbar.Snackbar
 import im.mingxi.core.R
 import im.mingxi.loader.XposedPackage
 import im.mingxi.loader.bridge.XPBridge
-import im.mingxi.loader.util.FrameUtil
 import im.mingxi.miko.ui.LayoutManager
 import im.mingxi.miko.ui.adapter.HomeAdapter
 import im.mingxi.miko.util.Util
@@ -71,7 +70,7 @@ class HomeFragment : Fragment() {
             listOf(
                 HomeAdapter.Data(
                     "FrameWork",
-                    "${FrameUtil.getFrameName()}-API${XPBridge.getApiLevel()}"
+                    "${XPBridge.getFrameworkName()}-API${XPBridge.getApiLevel()}"
                 ),
                 HomeAdapter.Data("Host", XposedPackage.packageName),
                 HomeAdapter.Data("Module", "${moduleInfo.versionName}(${moduleInfo.versionCode})"),

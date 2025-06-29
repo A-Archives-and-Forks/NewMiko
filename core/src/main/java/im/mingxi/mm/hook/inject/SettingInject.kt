@@ -7,6 +7,7 @@ import im.mingxi.miko.annotation.FunctionHookEntry
 import im.mingxi.miko.controller.HomeController
 import im.mingxi.miko.hook.SwitchHook
 import im.mingxi.miko.util.HookEnv
+import im.mingxi.miko.util.Reflex
 import im.mingxi.miko.util.Reflex.findMethodObj
 import im.mingxi.miko.util.dexkit.DexFinder
 import im.mingxi.miko.util.dexkit.DexMethodDescriptor
@@ -16,12 +17,18 @@ import im.mingxi.mm.struct.preferenceClass
 import im.mingxi.net.Beans
 import im.mingxi.net.bean.ModuleInfo
 import java.lang.reflect.Method
+import java.util.LinkedList
+
 
 @FunctionHookEntry(itemName = "设置注入", itemType = FunctionHookEntry.WECHAT_ITEM)
 class SettingInject : SwitchHook(defaultEnabled = true), IFinder {
     private val preferenceTitle = DexMethodDescriptor(this, "${simpleTAG}.Method.preferenceTitle")
     private val settingName = "NewMiko"
-    private var mCacheItem: Any? = null
+
+    /**
+     * 微信不会主动销毁缓存导致第二次进入设置无入口的问题
+     */
+    // private var mCacheItem: Any? = null
     private val settingTip = Beans.getBean(ModuleInfo::class.java).versionName
     override val name: String
         get() = "设置条目注入"
@@ -34,10 +41,19 @@ class SettingInject : SwitchHook(defaultEnabled = true), IFinder {
         val ctors = MMPreferenceAdapter.hostClass.declaredConstructors
         ctors.forEach {
             it.hookAfterIfEnable { param ->
-                if (mCacheItem != null) return@hookAfterIfEnable
+                //if (mCacheItem != null) return@hookAfterIfEnable
                 // 排除非设置防止全部注入
                 if (!XPHelper.getStackData()
                         .contains("com.tencent.mm.plugin.setting.ui.setting.SettingsUI.onCreate")
+                ) return@hookAfterIfEnable
+                // 新方案
+                // 具体原理我不记得了
+                // 去年写的，没写注解我也看不懂
+                if ((Reflex.findFieldObj(param.thisObject)
+                        .setReturnType(LinkedList::class.java)
+                        .get()[param.thisObject] as LinkedList<*>)
+                        .size
+                    == 1
                 ) return@hookAfterIfEnable
                 val app = HookEnv.hostActivity
                 // 创建basePreference对象
@@ -65,7 +81,7 @@ class SettingInject : SwitchHook(defaultEnabled = true), IFinder {
                     }
 
                 }
-                mCacheItem = preference
+                //mCacheItem = preference
             }
         }
 

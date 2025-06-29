@@ -7,6 +7,7 @@ import im.mingxi.miko.startup.HookInstaller
  * 真的看的懂吗
  *
  */
+@Deprecated("打回重做")
 object UISetUp {
     class Page(val name: String) {
         val wrappers = ArrayList<Wrapper>()
