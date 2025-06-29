@@ -14,7 +14,7 @@ android {
         applicationId = "im.mingxi.miko"
         minSdk = 26
         targetSdk = 35
-        versionCode = 4
+        versionCode = 5
         versionName = "1.0.0"
 
         vectorDrawables {
@@ -59,7 +59,7 @@ android {
     android.applicationVariants.all {
         outputs.all {
             if (this is ApkVariantOutputImpl)
-                outputFileName = "NewMiko(1.0.0)-4-output.APK"
+                outputFileName = "NewMiko(1.0.0)-5-output.APK"
         }
     }
 

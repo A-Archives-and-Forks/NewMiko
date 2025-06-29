@@ -12,10 +12,11 @@ object DebugUtil {
     }
 
     fun printAllField(obj: Any) {
-        obj.javaClass.declaredFields.forEach {
+        obj.javaClass.superclass.superclass.declaredFields.forEach {
             it.isAccessible = true
             XPBridge.log("${it.name}->${it.get(obj)}")
         }
+
     }
 
 
