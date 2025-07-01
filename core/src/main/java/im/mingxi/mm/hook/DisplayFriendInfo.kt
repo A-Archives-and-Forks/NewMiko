@@ -3,6 +3,7 @@ package im.mingxi.mm.hook
 import android.app.Activity
 import android.content.Context
 import android.widget.AdapterView
+import im.mingxi.loader.bridge.XPBridge
 import im.mingxi.loader.bridge.XPHelper
 import im.mingxi.miko.annotation.FunctionHookEntry
 import im.mingxi.miko.hook.SwitchHook
@@ -14,11 +15,11 @@ import im.mingxi.miko.util.dexkit.DexMethodDescriptor
 import im.mingxi.miko.util.hookAfterIfEnable
 import im.mingxi.mm.struct.MMPreferenceAdapter
 import im.mingxi.mm.struct.preferenceClass
+import java.util.LinkedList
 
 @FunctionHookEntry
 class DisplayFriendInfo : SwitchHook() {
     private lateinit var friendInfo: String
-    private var mCacheItem: Any? = null
     override val name: String
         get() = "展示好友详细信息"
     override val uiItemLocation: Array<String>
@@ -31,15 +32,23 @@ class DisplayFriendInfo : SwitchHook() {
         hookAfterIfEnable(Reflex.findMethod(Activity::class.java).setMethodName("onCreate").get()) {
             val intent = (it.thisObject as Activity).intent
             val user = intent.getStringExtra("Contact_User")
+            XPBridge.log(intent.extras)
             if (user != null) friendInfo = user
         }
         // 创建入口
         val ctors = MMPreferenceAdapter.hostClass.declaredConstructors
         ctors.forEach {
             it.hookAfterIfEnable { param ->
-                if (mCacheItem != null) return@hookAfterIfEnable
+                //XPBridge.log(XPHelper.getStackData())
                 if (!XPHelper.getStackData()
                         .contains("com.tencent.mm.plugin.profile.ui.ProfileSettingUI.onCreate")
+                )
+                    return@hookAfterIfEnable
+                if ((Reflex.findFieldObj(param.thisObject)
+                        .setReturnType(LinkedList::class.java)
+                        .get()[param.thisObject] as LinkedList<*>)
+                        .size
+                    == 1
                 ) return@hookAfterIfEnable
                 val app = HookEnv.hostActivity
 
@@ -66,7 +75,6 @@ class DisplayFriendInfo : SwitchHook() {
 
                 }
 
-                mCacheItem = preference
             }
         }
 
