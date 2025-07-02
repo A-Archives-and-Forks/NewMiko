@@ -10,4 +10,12 @@
         android:icon="@drawable/hide_icon"
         android:key="hide_desktop_icon"
         android:title="隐藏桌面图标" />
+
+    <PreferenceCategory android:title="超级用户设置">
+
+        <Preference
+            android:key="clear_cache"
+            android:title="清理模块缓存" />
+    </PreferenceCategory>
+
 </PreferenceScreen>

@@ -4,19 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import im.mingxi.core.R
-import im.mingxi.miko.ui.adapter.CustomiseAdapter
-import im.mingxi.miko.ui.util.UISetUp
+import im.mingxi.miko.startup.HookInstaller
+import im.mingxi.miko.ui.adapter.MainAdapter
 
 
 class CustomiseFragment : Fragment() {
-    companion object {
-        var isInSubPage = false
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,28 +24,13 @@ class CustomiseFragment : Fragment() {
             container,
             false
         ) as RecyclerView
-        val adapter = CustomiseAdapter(root, UISetUp.pageNames)
+
+        val adapter = MainAdapter(HookInstaller.uiList)
         root.adapter = adapter
         root.layoutManager = LinearLayoutManager(requireContext())
 
         return root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (isInSubPage) {
-                    isInSubPage = false
-                    (view as RecyclerView).adapter =
-                        CustomiseAdapter(view, UISetUp.pageNames)
-                } else {
-                    requireActivity().finish()
-                }
-            }
-        }
-        // 注册回调到activity的OnBackPressedDispatcher
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
-    }
 }

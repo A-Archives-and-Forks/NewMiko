@@ -9,7 +9,7 @@ import im.mingxi.miko.util.hookAfterIfEnable
 
 @FunctionHookEntry(itemName = "mm加号菜单注入", itemType = FunctionHookEntry.WECHAT_ITEM)
 class PlusMenuInject : SwitchHook(defaultEnabled = true) {
-    override val name: String = "注入加号菜单长按"
+    override val name: String = "长按加号进入菜单"
     override val uiItemLocation: Array<String>
         get() = arrayOf("模块设置及调试", "注入")
 
