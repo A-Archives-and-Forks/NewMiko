@@ -148,9 +148,16 @@ class DexMethodDescriptor : Serializable {
                 }
             }
 
-
+            if (baseFuncHook is IFinder) {
+                (baseFuncHook as IFinder).dexFind(DexFinder())
+                return toMethod(classLoader)
+            }
             throw NoSuchMethodException("$declaringClass->$name$signature")
         } catch (e: ClassNotFoundException) {
+            if (baseFuncHook is IFinder) {
+                (baseFuncHook as IFinder).dexFind(DexFinder())
+                return toMethod(classLoader)
+            }
             throw NoSuchMethodException(
                 "$declaringClass->$name$signature"
             ).initCause(e) as NoSuchMethodException

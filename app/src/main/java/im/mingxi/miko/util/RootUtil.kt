@@ -7,7 +7,7 @@ object RootUtil {
         try {
             val exec = Runtime.getRuntime().exec("su")
             val outputStream = exec.outputStream
-            outputStream.write("rm -rf $path\n".toByteArray())
+            outputStream.write("rm -rf ${path}\nexit\n".toByteArray(Charsets.UTF_8))
             outputStream.flush()
             outputStream.close()
 

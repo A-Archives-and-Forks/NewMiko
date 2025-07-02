@@ -10,7 +10,8 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import im.mingxi.miko.R
 import im.mingxi.miko.util.AppUtil
-import im.mingxi.miko.util.RootUtil.deleteAsRoot
+import im.mingxi.miko.util.JniBridge
+
 
 
 class SettingFragment : PreferenceFragmentCompat() {
@@ -63,7 +64,8 @@ class SettingFragment : PreferenceFragmentCompat() {
         clearCache.setOnPreferenceClickListener { _ ->
             if (AppUtil.isRoot()) {
                 var tip = "清除缓存失败"
-                if (deleteAsRoot("/data/data/com.tencent.mm/files/Miko_MMKV/")) tip = "缓存已清除"
+                if (JniBridge.cmd("su\nrm -rf /data/data/com.tencent.mm/files/Miko_MMKV/\nexit\n")) tip =
+                    "缓存已清除"
                 Toast.makeText(app, tip, Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(app, "请先授予超级用户权限", Toast.LENGTH_SHORT).show()
