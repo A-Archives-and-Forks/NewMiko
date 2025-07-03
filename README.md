@@ -15,7 +15,7 @@
 - 下载正式版：
 [![GitHub release](https://img.shields.io/github/release/dartcv/Miko-Public.svg)](https://github.com/dartcv/Miko-Public/releases/latest)
 
-- 下载CI版：[点我跳转电报CI频道](http://t.me/MikoCIBuild)
+- 下载**CI版**：[点我跳转电报CI频道](http://t.me/MikoCIBuild)
 
 - 建议您使用 **[LSPosed](https://github.com/LSPosed/LSPosed)** ，请勾选模块作用域 **QQ/TIM/微信**
 
@@ -44,9 +44,10 @@
 - [QAuxiliary](https://github.com/cinit/QAuxiliary)
 - [TimTool](https://github.com/suzhelan/TimTool)
 - [QTool](https://github.com/Hicores/QTool)
+- 电报@coolia_cc [8.0.61]消息左滑引用
 
 ## 交流讨论
 
 - 电报讨论组 [@MikoBuild](https://t.me/MikoBuild)
 - 电报通知组 [@mingxi235](https://t.me/mingxi235)
-- 电报CI构建 [MikoCIBuild](http://t.me/MikoCIBuild)
+- 电报CI构建 [@MikoCIBuild](http://t.me/MikoCIBuild)

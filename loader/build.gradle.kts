@@ -37,5 +37,6 @@ android {
 }
 
 dependencies {
+    implementation(libs.appcompat)
     compileOnly(fileTree("libs") { include("*.jar") })
 }
