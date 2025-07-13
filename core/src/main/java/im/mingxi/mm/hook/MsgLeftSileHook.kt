@@ -144,7 +144,7 @@ class MsgLeftSileHook : SwitchHook(), IFinder {
                             XPBridge.invoke(
                                 param.method,
                                 param.thisObject,
-                                arrayOf<Any>(cancelEvent)
+                                arrayOf<MotionEvent>(cancelEvent)
                             )
 
                             cancelEvent.recycle()

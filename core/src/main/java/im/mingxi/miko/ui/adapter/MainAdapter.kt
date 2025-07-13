@@ -71,6 +71,9 @@ class MainAdapter(private val dataSet: List<BaseComponentHook>) :
                     description.text = currentItem.description
                     description.visibility = View.VISIBLE
                 }
+                if (currentItem.onClick != null) {
+                    itemView.setOnClickListener(currentItem.onClick!!::invoke)
+                }
                 switch.isChecked = currentItem.isEnabled()
                 switch.setOnCheckedChangeListener { _, isChecked ->
                     with(currentItem) {

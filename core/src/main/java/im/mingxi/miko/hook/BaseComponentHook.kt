@@ -1,5 +1,7 @@
 package im.mingxi.miko.hook
 
+import android.view.View
+
 abstract class BaseComponentHook(defaultEnabled: Boolean = false) : BaseFuncHook(defaultEnabled) {
 
     /**
@@ -13,4 +15,6 @@ abstract class BaseComponentHook(defaultEnabled: Boolean = false) : BaseFuncHook
     open val description: CharSequence? = null
 
     abstract val uiItemLocation: Array<String>
+
+    open val onClick: ((v: View) -> Unit)? = null
 }

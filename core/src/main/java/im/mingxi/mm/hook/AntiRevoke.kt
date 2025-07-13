@@ -6,16 +6,23 @@ import im.mingxi.debug.DebugUtil
 import im.mingxi.miko.annotation.FunctionHookEntry
 import im.mingxi.miko.hook.SwitchHook
 import im.mingxi.miko.util.Reflex
+import im.mingxi.miko.util.dexkit.DexFinder
+import im.mingxi.miko.util.dexkit.DexMethodDescriptor
+import im.mingxi.miko.util.dexkit.IFinder
 import im.mingxi.miko.util.toAppClass
 
 @FunctionHookEntry(itemName = "防撤回", itemType = FunctionHookEntry.WECHAT_ITEM)
-class AntiRevoke : SwitchHook() {
+class AntiRevoke : SwitchHook(), IFinder {
     val msgCacheMap = HashMap<Long, Any>()
     lateinit var msgInfoStorage: Any
     override val name: String
         get() = "消息防撤回"
     override val uiItemLocation: Array<String>
         get() = arrayOf("聊天", "消息")
+
+
+    private val getSendTip =
+        DexMethodDescriptor(this, "${simpleTAG}.Method.getSendTip")
 
     override fun initOnce(): Boolean {
         val sqliteClass = "com.tencent.wcdb.database.SQLiteDatabase".toAppClass()!!
@@ -33,15 +40,16 @@ class AntiRevoke : SwitchHook() {
             }
             .self
 
-        val getSendTip = Reflex.findMethod(Reflex.loadClass("com.tencent.mm.storage.s9")).setParams(
+        /*val getSendTip = Reflex.findMethod(Reflex.loadClass("com.tencent.mm.storage.s9")).setParams(
             Reflex.loadClass("Lcom/tencent/mm/storage/q9;"),
             Boolean::class.java,
             Boolean::class.java
-        )
-            .get()//Reflex.findMethod(Reflex.loadClass("com.tencent.mm.storage.s9")).setMethodName("a9").get()
+        )*/
+        //    .get()//Reflex.findMethod(Reflex.loadClass("com.tencent.mm.storage.s9")).setMethodName("a9").get()
 
 
-        getSendTip.hookAfterIfEnable {
+        getSendTip.toMethod(loader)
+            .hookAfterIfEnable {
             val msgInfo = it.args[0]
             this.msgInfoStorage = it.thisObject
 
@@ -85,7 +93,8 @@ class AntiRevoke : SwitchHook() {
                         Reflex.findFieldObj(msgInfo).setFieldName("x0").get()
                             .set(msgInfo, "已阻止一条消息撤回")
 
-                        getSendTip.invoke(this.msgInfoStorage, msgInfo, false, false)
+                        getSendTip.toMethod(loader)
+                            .invoke(this.msgInfoStorage, msgInfo, false, false)
                     }
                     param.result = 1
                 }
@@ -94,5 +103,17 @@ class AntiRevoke : SwitchHook() {
 
 
         return true
+    }
+
+    override fun dexFind(finder: DexFinder) {
+        with(finder) {
+            getSendTip.findDexMethod {
+                searchPackages("com.tencent.mm.storage")
+
+                matcher {
+                    usingStrings("check table name from id:%d table:%s getTableNameByLocalId:%s")
+                }
+            }
+        }
     }
 }
