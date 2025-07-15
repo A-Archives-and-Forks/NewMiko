@@ -11,11 +11,9 @@ import im.mingxi.mm.struct.pullDownListViewClass
 
 @FunctionHookEntry(itemName = "微信服务按钮注入", itemType = FunctionHookEntry.WECHAT_ITEM)
 class ServiceBtnInject(
-    override val name: String = "长按服务进入菜单",
-    override val uiItemLocation: Array<String> = arrayOf(
-        "模块设置及调试",
-        "注入"
-    )
+    override val name: String = "允许长按服务进入菜单",
+    override val uiItemLocation: String =
+        "模块设置及调试"
 ) : SwitchHook(defaultEnabled = true) {
     override fun initOnce(): Boolean {
 

@@ -2,6 +2,7 @@ package im.mingxi.mm.hook
 
 import im.mingxi.miko.annotation.FunctionHookEntry
 import im.mingxi.miko.hook.SwitchHook
+import im.mingxi.miko.ui.util.FuncRouter
 import im.mingxi.miko.util.dexkit.DexFinder
 import im.mingxi.miko.util.dexkit.DexMethodDescriptor
 import im.mingxi.miko.util.dexkit.IFinder
@@ -12,8 +13,8 @@ class FocusPadMode : SwitchHook(), IFinder {
         DexMethodDescriptor(mConfig = "${simpleTAG}.Method.isPadDevice", mBaseFuncHook = this)
     override val name: String
         get() = "强制平板模式"
-    override val uiItemLocation: Array<String>
-        get() = arrayOf("娱乐", "实验性功能")
+    override val uiItemLocation: String
+        get() = FuncRouter.EXPERIMENTAL
 
     override fun initOnce(): Boolean {
         isPadDevice.toMethod(loader).hookBeforeIfEnable {

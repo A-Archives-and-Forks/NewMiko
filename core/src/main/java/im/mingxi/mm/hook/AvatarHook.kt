@@ -10,6 +10,7 @@ import android.graphics.RectF
 import android.graphics.Shader
 import im.mingxi.miko.annotation.FunctionHookEntry
 import im.mingxi.miko.hook.SwitchHook
+import im.mingxi.miko.ui.util.FuncRouter
 import im.mingxi.miko.util.dexkit.DexFinder
 import im.mingxi.miko.util.dexkit.DexMethodDescriptor
 import im.mingxi.miko.util.dexkit.IFinder
@@ -21,8 +22,8 @@ class AvatarHook : SwitchHook(), IFinder {
         DexMethodDescriptor(this, "${simpleTAG}.Method.getRoundedCornerBitmap")
     override val name: String
         get() = "启用圆形头像"
-    override val uiItemLocation: Array<String>
-        get() = arrayOf("美化", "其他")
+    override val uiItemLocation: String
+        get() = FuncRouter.BEAUTIFY
 
 
     override fun initOnce(): Boolean {

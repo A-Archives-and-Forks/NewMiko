@@ -5,6 +5,7 @@ import android.view.animation.LinearInterpolator
 import android.widget.ImageView
 import im.mingxi.miko.annotation.FunctionHookEntry
 import im.mingxi.miko.hook.SwitchHook
+import im.mingxi.miko.ui.util.FuncRouter
 import im.mingxi.miko.util.HookEnv
 import im.mingxi.miko.util.toAppClass
 
@@ -13,8 +14,8 @@ import im.mingxi.miko.util.toAppClass
 class ChattingAvatarRevolve(defaultEnabled: Boolean = false) : SwitchHook(defaultEnabled) {
     override val name: String
         get() = "聊天头像旋转"
-    override val uiItemLocation: Array<String>
-        get() = arrayOf("聊天", "其他")
+    override val uiItemLocation: String
+        get() = FuncRouter.BEAUTIFY
 
     override fun initOnce(): Boolean {
         "com.tencent.mm.ui.chatting.view.ChattingAvatarImageView".toAppClass()!!.constructors.forEach {

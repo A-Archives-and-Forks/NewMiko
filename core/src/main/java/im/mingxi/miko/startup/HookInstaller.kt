@@ -2,7 +2,6 @@ package im.mingxi.miko.startup
 
 import im.mingxi.miko.hook.BaseComponentHook
 import im.mingxi.miko.hook.BaseFuncHook
-import im.mingxi.miko.ui.util.UISetUp
 
 object HookInstaller {
     private val mItems = ArrayList<BaseFuncHook>()
@@ -38,7 +37,6 @@ object HookInstaller {
         mItems.forEach {
             if (it is BaseComponentHook) uiList.add(it)
         }
-        UISetUp.setUp()
     }
 
 }

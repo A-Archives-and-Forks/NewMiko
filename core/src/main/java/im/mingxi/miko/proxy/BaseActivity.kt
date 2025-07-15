@@ -74,10 +74,10 @@ open class BaseActivity : AppCompatActivity() {
               return mBaseReferencer.loadClass(name)
 
          */
-            try {
-                return mBaseReferencer.loadClass(name)
+            return try {
+                mBaseReferencer.loadClass(name)
             } catch (_: Exception) {
-                return mHostReferencer?.loadClass(name)
+                mHostReferencer?.loadClass(name)
             }
 
         }

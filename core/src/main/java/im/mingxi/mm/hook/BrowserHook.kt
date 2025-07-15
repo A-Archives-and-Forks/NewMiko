@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.core.net.toUri
 import im.mingxi.miko.annotation.FunctionHookEntry
 import im.mingxi.miko.hook.SwitchHook
+import im.mingxi.miko.ui.util.FuncRouter
 import im.mingxi.miko.util.Reflex
 import im.mingxi.miko.util.hookAfterIfEnable
 
@@ -13,8 +14,8 @@ import im.mingxi.miko.util.hookAfterIfEnable
 class BrowserHook : SwitchHook() {
     override val name: String
         get() = "浏览Link默认启用系统浏览器"
-    override val uiItemLocation: Array<String>
-        get() = arrayOf("娱乐", "其他")
+    override val uiItemLocation: String
+        get() = FuncRouter.AMUSEMENT
 
     override fun initOnce(): Boolean {
         hookAfterIfEnable(

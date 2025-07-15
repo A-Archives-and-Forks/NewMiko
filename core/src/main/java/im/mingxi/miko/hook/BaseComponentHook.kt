@@ -14,7 +14,7 @@ abstract class BaseComponentHook(defaultEnabled: Boolean = false) : BaseFuncHook
      */
     open val description: CharSequence? = null
 
-    abstract val uiItemLocation: Array<String>
+    abstract val uiItemLocation: String
 
     open val onClick: ((v: View) -> Unit)? = null
 }

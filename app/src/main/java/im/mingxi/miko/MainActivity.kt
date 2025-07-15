@@ -12,6 +12,7 @@ import com.google.android.material.color.DynamicColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import im.mingxi.miko.databinding.ActivityMainBinding
 import im.mingxi.miko.ui.activity.SettingActivity
+import im.mingxi.miko.util.IntentUtil
 import io.github.libxposed.service.XposedService
 import io.github.libxposed.service.XposedServiceHelper
 
@@ -85,28 +86,34 @@ class MainActivity : AppCompatActivity() {
             if (isFastClick()) return@setOnClickListener
             val builder = MaterialAlertDialogBuilder(this)
             val items = arrayOf(
-                "Telegram Notification Channel", "Telegram Chat Group", "Github Discussion"
+                "Telegram CI Channel", "Telegram Chat Group", "Github Discussion", "QQ Group", "QQ Notification Group"
             )
             builder.setTitle("交流讨论")
                 .setItems(items) { _, which ->
                     when (which) {
                         0 -> {
                             val intent = Intent(Intent.ACTION_VIEW)
-                            intent.setData("https://t.me/mingxi235".toUri())
+                            intent.setData("https://t.me/MikoCIBuilds".toUri())
                             startActivity(intent)
                         }
 
                         1 -> {
                             val intent = Intent(Intent.ACTION_VIEW)
-                            intent.setData("https://t.me/MikoBuild".toUri())
+                            intent.setData("https://t.me/MikoChatGroup".toUri())
                             startActivity(intent)
                         }
-
                         2 -> {
                             val intent = Intent(Intent.ACTION_VIEW)
                             intent.setData("https://github.com/dartcv/Miko-Public/discussions".toUri())
                             startActivity(intent)
                         }
+                        3 -> {
+                            IntentUtil.openQQGroup(this, "902327702")
+                        }
+                        4 -> {
+                            IntentUtil.openQQGroup(this , "837012640")
+                        }
+
                     }
                 }.show()
         }

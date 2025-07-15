@@ -9,7 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import im.mingxi.core.R
 import im.mingxi.miko.startup.HookInstaller
+import im.mingxi.miko.ui.adapter.CustomiseAdapter
+import im.mingxi.miko.ui.adapter.HomeAdapter
 import im.mingxi.miko.ui.adapter.MainAdapter
+import im.mingxi.miko.ui.util.FuncRouter
 
 
 class CustomiseFragment : Fragment() {
@@ -25,7 +28,8 @@ class CustomiseFragment : Fragment() {
             false
         ) as RecyclerView
 
-        val adapter = MainAdapter(HookInstaller.uiList)
+        val adapter = CustomiseAdapter(FuncRouter.wrappers())
+            //MainAdapter(HookInstaller.uiList)
         root.adapter = adapter
         root.layoutManager = LinearLayoutManager(requireContext())
 

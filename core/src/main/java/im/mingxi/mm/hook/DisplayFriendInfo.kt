@@ -7,6 +7,7 @@ import im.mingxi.loader.bridge.XPBridge
 import im.mingxi.loader.bridge.XPHelper
 import im.mingxi.miko.annotation.FunctionHookEntry
 import im.mingxi.miko.hook.SwitchHook
+import im.mingxi.miko.ui.util.FuncRouter
 import im.mingxi.miko.util.HookEnv
 import im.mingxi.miko.util.Reflex
 import im.mingxi.miko.util.Reflex.findMethodObj
@@ -22,9 +23,8 @@ class DisplayFriendInfo : SwitchHook() {
     private lateinit var friendInfo: String
     override val name: String
         get() = "展示好友详细信息"
-    override val uiItemLocation: Array<String>
-        get() = arrayOf("联系人", "信息")
-    override val description: String = "如题"
+    override val uiItemLocation: String
+        get() = FuncRouter.CONTACTS
 
     override fun initOnce(): Boolean {
         // 建一个钩子去获取最近打开的联系人信息

@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import com.tencent.mmkv.MMKV
+import im.mingxi.common.DPIHook
 import im.mingxi.core.R
 import im.mingxi.loader.HookInit
 import im.mingxi.loader.XposedPackage
@@ -97,6 +98,7 @@ object StartUp {
             }
         }
         }
+       // DPIHook().initialize()
     }
 
     private fun initializeMMKV(ctx: Context) {

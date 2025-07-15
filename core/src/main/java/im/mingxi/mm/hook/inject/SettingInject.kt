@@ -31,9 +31,9 @@ class SettingInject : SwitchHook(defaultEnabled = true), IFinder {
     // private var mCacheItem: Any? = null
     private val settingTip = Beans.getBean(ModuleInfo::class.java).versionName
     override val name: String
-        get() = "设置界面创建入口"
-    override val uiItemLocation: Array<String>
-        get() = arrayOf("模块设置及调试", "注入")
+        get() = "允许在设置界面创建入口"
+    override val uiItemLocation: String
+        get() = "模块设置及调试"
 
     override fun initOnce(): Boolean {
 

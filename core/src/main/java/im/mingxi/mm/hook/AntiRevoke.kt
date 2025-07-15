@@ -17,8 +17,8 @@ class AntiRevoke : SwitchHook(), IFinder {
     lateinit var msgInfoStorage: Any
     override val name: String
         get() = "消息防撤回"
-    override val uiItemLocation: Array<String>
-        get() = arrayOf("聊天", "消息")
+    override val uiItemLocation: String
+        get() = "聊天"
 
 
     private val getSendTip =
@@ -111,6 +111,7 @@ class AntiRevoke : SwitchHook(), IFinder {
                 searchPackages("com.tencent.mm.storage")
 
                 matcher {
+                    returnType(Long::class.java)
                     usingStrings("check table name from id:%d table:%s getTableNameByLocalId:%s")
                 }
             }

@@ -3,6 +3,7 @@ package im.mingxi.mm.hook
 import android.app.Activity
 import im.mingxi.miko.annotation.FunctionHookEntry
 import im.mingxi.miko.hook.SwitchHook
+import im.mingxi.miko.ui.util.FuncRouter
 import im.mingxi.miko.util.Reflex
 import im.mingxi.miko.util.hookBeforeIfEnable
 import im.mingxi.mm.struct.albumPreviewUIClass
@@ -11,8 +12,8 @@ import im.mingxi.mm.struct.albumPreviewUIClass
 class AutoSendRawPic : SwitchHook() {
     override val name: String
         get() = "自动原图/跳过视频大小限制"
-    override val uiItemLocation: Array<String>
-        get() = arrayOf("聊天", "图片视频")
+    override val uiItemLocation: String
+        get() = FuncRouter.CHAT
 
     override fun initOnce(): Boolean {
         val targetMet = Reflex.findMethod(albumPreviewUIClass).setMethodName("onCreate").get()

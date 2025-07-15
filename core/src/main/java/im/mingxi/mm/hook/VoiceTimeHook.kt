@@ -12,9 +12,9 @@ import im.mingxi.miko.util.dexkit.IFinder
 class VoiceTimeHook : SwitchHook(), IFinder {
     private val voiceStorageSym = DexMethodDescriptor(this, "${simpleTAG}.Method.voiceStorageSym")
     override val name: String
-        get() = "劫持语音时长"
-    override val uiItemLocation: Array<String>
-        get() = arrayOf("聊天", "语音")
+        get() = "修改语音时长"
+    override val uiItemLocation: String
+        get() = "聊天"
 
     override fun initOnce(): Boolean {
         voiceStorageSym.toMethod(loader).hookBeforeIfEnable {

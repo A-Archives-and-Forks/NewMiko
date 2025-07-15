@@ -4,6 +4,7 @@ import android.app.Activity
 import android.widget.Button
 import im.mingxi.miko.annotation.FunctionHookEntry
 import im.mingxi.miko.hook.SwitchHook
+import im.mingxi.miko.ui.util.FuncRouter
 import im.mingxi.miko.util.Reflex
 import im.mingxi.miko.util.hookAfterIfEnable
 
@@ -14,8 +15,10 @@ import im.mingxi.miko.util.hookAfterIfEnable
 class AutoClickWinLogin : SwitchHook() {
     override val name: String
         get() = "自动点击电脑登录"
-    override val uiItemLocation: Array<String>
-        get() = arrayOf("娱乐", "实验性功能")
+    override val uiItemLocation: String
+        get() = FuncRouter.EXPERIMENTAL
+    override val description: CharSequence?
+        get() = "微信请求登录时自动勾选项及点击按钮"
 
     override fun initOnce(): Boolean {
         val clazz = Reflex.loadClass("com.tencent.mm.plugin.webwx.ui.ExtDeviceWXLoginUI")

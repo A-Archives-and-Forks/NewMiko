@@ -14,7 +14,7 @@ android {
         applicationId = "im.mingxi.miko"
         minSdk = 26
         targetSdk = 35
-        versionCode = 12
+        versionCode = 17
         versionName = "1.0.1"
 
         vectorDrawables {
@@ -32,6 +32,29 @@ android {
 
     kotlinOptions {
         jvmTarget = "17"
+    }
+
+    signingConfigs {
+        getByName("debug") {
+            keyAlias = "NewMiko2025"
+            keyPassword = "NewMiko2025"
+            storePassword = "NewMiko2025"
+            storeFile = file("NewMiko2025.jks")
+            enableV1Signing = false
+            enableV2Signing = true
+            enableV3Signing = true
+            enableV4Signing = false
+        }
+        create("release") {
+            keyAlias = "NewMiko2025"
+            keyPassword = "NewMiko2025"
+            storePassword = "NewMiko2025"
+            storeFile = file("NewMiko2025.jks")
+            enableV1Signing = false
+            enableV2Signing = true
+            enableV3Signing = true
+            enableV4Signing = false
+        }
     }
 
     buildTypes {
@@ -59,7 +82,7 @@ android {
     android.applicationVariants.all {
         outputs.all {
             if (this is ApkVariantOutputImpl)
-                outputFileName = "NewMiko(1.0.1)-12-output.APK"
+                outputFileName = "NewMiko(1.0.1)-17-output.APK"
         }
     }
 

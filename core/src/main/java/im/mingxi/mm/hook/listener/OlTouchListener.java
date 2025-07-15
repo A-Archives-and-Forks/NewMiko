@@ -5,7 +5,10 @@ import android.view.View;
 import android.view.ViewConfiguration;
 
 import im.mingxi.core.R;
+import im.mingxi.loader.bridge.XPBridge;
+import im.mingxi.miko.util.Reflex;
 import im.mingxi.miko.util.xpcompat.XPHelpers;
+import im.mingxi.mm.hook.MsgLeftSileHook;
 
 public class OlTouchListener implements View.OnTouchListener {
 
@@ -23,7 +26,15 @@ public class OlTouchListener implements View.OnTouchListener {
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        boolean isMultiSelectMode = XPHelpers.getBooleanField(v, "d");
+        boolean isMultiSelectMode = false;
+        try {
+            isMultiSelectMode = (Boolean) Reflex.findFieldObj(v)
+                    .setReturnType(Boolean.TYPE).get().get(v);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+
+        //XPHelpers.getBooleanField(v, "d");
         if (isMultiSelectMode) {
             return false;
         }
@@ -77,7 +88,7 @@ public class OlTouchListener implements View.OnTouchListener {
                         //  Toast.makeText(v.getContext(), "左滑动作触发!", Toast.LENGTH_SHORT).show();
                         // XPBridge.log("左滑动作触发! 距离: " + finalDeltaX);
                         // if (MsgLeftSileHook.chatFooter != null && Q9 != null && classLoader != null) {
-                        //     XPHelpers.callMethod(MsgLeftSileHook.chatFooter, "A", Q9);
+                       //      XPHelpers.callMethod(MsgLeftSileHook.chatFooter, "A", Q9);
                         // } else {
                         //     XPBridge.log("存在参数为Null，左滑逻辑不执行");
                         // }
