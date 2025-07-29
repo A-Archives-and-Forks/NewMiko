@@ -10,6 +10,7 @@ import im.mingxi.loader.util.HttpUtil
 import im.mingxi.loader.util.HttpUtil.sendDataRequest
 import im.mingxi.loader.util.PathUtil
 import java.io.File
+import kotlin.system.exitProcess
 
 object HotPatch {
     val hotPatchPath: String = PathUtil.dataPath + "HotPatch/"
@@ -36,9 +37,7 @@ object HotPatch {
         if (!signFile.exists()) signFile.createNewFile()
         signFile.writeText(cloudVersionSign)
         /*懒得获取Context来调用 {@link im.mingxi.loader.util.ActivityUtil#killAppProcess(Context)}，所以我们暴力点*/
-        System.exit(0)
-
-
+        exitProcess(0)
         return false
     }
 
@@ -48,10 +47,10 @@ object HotPatch {
         try {
             val startupClass: Class<*> = Class.forName("im.mingxi.miko.startup.StartUp")
             val initMet = startupClass.getDeclaredMethod("doLoad")
-            true.also {
-                initMet.isAccessible = it
-            }
+            initMet.isAccessible = true
+            // MethodHandles.lookup().findStatic(startupClass, "doLoad", MethodType.methodType(Void.TYPE)).invokeExact()
             initMet.invoke(null)
+
         } catch (err: Exception) {
             XPBridge.log(Log.getStackTraceString(err))
         }

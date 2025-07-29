@@ -3,6 +3,7 @@ package im.mingxi.common
 import android.app.Activity
 import android.content.res.Configuration
 import android.content.res.Resources
+import android.text.InputType
 import android.text.TextUtils
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
@@ -26,7 +27,7 @@ class DPIHook : SwitchHook() {
     override val uiItemLocation: String
         get() = FuncRouter.AMUSEMENT
     override val description: CharSequence?
-        get() = "危险功能"
+        get() = "危险功能，点击进行详细设置"
     override val onClick: ((View) -> Unit) = { v ->
         XDialog.create(v.context).apply {
             title = "修改dpi"
@@ -38,6 +39,7 @@ class DPIHook : SwitchHook() {
                 val result = text.toString()
                 if (!TextUtils.isEmpty(result)) mConfig.encode("DPI", result.toInt())
             }
+            binding.dpiEdit.inputType = InputType.TYPE_CLASS_NUMBER
 
             confirmButtonClickListener = View.OnClickListener {
                 MikoToast.makeToast(app as Activity, "重启微信生效")

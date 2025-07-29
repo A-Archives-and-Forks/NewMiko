@@ -14,6 +14,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.navigation.NavigationView
 import im.mingxi.core.R
+import im.mingxi.loader.util.ActivityUtil
 import im.mingxi.miko.proxy.BaseActivity
 import im.mingxi.miko.ui.util.ProxyActUtil
 
@@ -66,6 +67,7 @@ class HomeActivity : BaseActivity() {
         backBtn = findViewById(R.id.back_btn)
 
 
+
         mAppBarConfiguration = AppBarConfiguration.Builder(
             R.id.nav_home,
             R.id.nav_function,
@@ -78,12 +80,14 @@ class HomeActivity : BaseActivity() {
         //  NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration)
         NavigationUI.setupWithNavController(navView, navController)
 
+        requestHideNavigationBar()
 
         imageBtn.setOnClickListener {
             drawerLayout.openDrawer(navView)
         }
+
         backBtn.setOnClickListener {
-            finish()
+            ActivityUtil.killAppProcess(this)
         }
     }
 

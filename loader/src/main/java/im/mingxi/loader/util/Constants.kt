@@ -14,4 +14,6 @@ object Constants {
     const val QQ_ITEM = 2
     const val TIM_ITEM = 3
     const val COMMON_QQ_TIM_ITEM = 4
+
+    const val mWeb = "https://miku.yuexinya.top"
 }

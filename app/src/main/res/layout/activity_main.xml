@@ -12,8 +12,7 @@
         android:layout_marginTop="80dp"
         app:cardCornerRadius="12dp"
         app:cardElevation="4dp"
-        app:strokeColor="#000000"
-        app:strokeWidth="1dp"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -115,7 +114,7 @@
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Authed by 小明Github@dartcv" />
+            android:text="Written by 小明Github@dartcv" />
 
     </LinearLayout>
 

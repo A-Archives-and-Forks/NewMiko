@@ -3,18 +3,18 @@ package im.mingxi.mm.hook
 import android.app.Activity
 import android.content.Context
 import android.widget.AdapterView
-import im.mingxi.loader.bridge.XPBridge
 import im.mingxi.loader.bridge.XPHelper
 import im.mingxi.miko.annotation.FunctionHookEntry
 import im.mingxi.miko.hook.SwitchHook
 import im.mingxi.miko.ui.util.FuncRouter
 import im.mingxi.miko.util.HookEnv
 import im.mingxi.miko.util.Reflex
+import im.mingxi.miko.util.Reflex.findMethod
 import im.mingxi.miko.util.Reflex.findMethodObj
+import im.mingxi.miko.util.Reflex.loadClass
 import im.mingxi.miko.util.dexkit.DexKit
 import im.mingxi.miko.util.dexkit.DexMethodDescriptor
 import im.mingxi.miko.util.hookAfterIfEnable
-import im.mingxi.mm.struct.MMPreferenceAdapter
 import im.mingxi.mm.struct.preferenceClass
 import java.util.LinkedList
 
@@ -32,14 +32,16 @@ class DisplayFriendInfo : SwitchHook() {
         hookAfterIfEnable(Reflex.findMethod(Activity::class.java).setMethodName("onCreate").get()) {
             val intent = (it.thisObject as Activity).intent
             val user = intent.getStringExtra("Contact_User")
-            XPBridge.log(intent.extras)
+            // XPBridge.log(intent.extras)
             if (user != null) friendInfo = user
         }
         // 创建入口
-        val ctors = MMPreferenceAdapter.hostClass.declaredConstructors
+        val ctors = findMethod(loadClass("com.tencent.mm.ui.base.preference.MMPreference"))
+            .setMethodName("createAdapter")
+            .get()
+            .returnType.declaredConstructors
         ctors.forEach {
             it.hookAfterIfEnable { param ->
-                //XPBridge.log(XPHelper.getStackData())
                 if (!XPHelper.getStackData()
                         .contains("com.tencent.mm.plugin.profile.ui.ProfileSettingUI.onCreate")
                 )
@@ -58,7 +60,7 @@ class DisplayFriendInfo : SwitchHook() {
                 findMethodObj(preference).setReturnType(Void.TYPE).setParams(String::class.java)
                     .get().invoke(preference, "new_miko_friend_hook")
 
-                DexKit.requireMethodFromCache("SettingInject.Method.preferenceTitle")
+                DexKit.requireMethodFromCache("SettingInject.MethodPreferenceTitle")
                     .toMethod(loader).invoke(preference, friendInfo)
 
                 // 通过反射添加进适配器
@@ -88,7 +90,7 @@ class DisplayFriendInfo : SwitchHook() {
             val preference = findMethodObj(adapter).setMethodName("getItem").get()
             val preferenceInst = preference.invoke(adapter, position)
             if (preferenceInst != null) {
-                if ("展示好友信息" == preferenceInst.toString()) {
+                if (name == preferenceInst.toString()) {
                     it.resultNull()
                 }
             }

@@ -17,7 +17,7 @@ class BlockGreyTip : SwitchHook() {
 
     override fun initOnce(): Boolean {
         "com.tencent.mm.view.x2c.X2CTextView"
-            .toAppClass()!!
+            .toAppClass()
             .resolve()
             .firstMethod {
                 superclass()

@@ -9,6 +9,8 @@ import im.mingxi.miko.hook.BaseFuncHook
 import java.lang.reflect.Member
 
 val config = MMKV.mmkvWithID("global_config")
+val cache = MMKV.mmkvWithID("global_cache")
+
 
 fun BaseFuncHook.hookBeforeIfEnable(member: Member, callback: HookCallback) {
     hookBefore(member) {

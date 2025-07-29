@@ -8,21 +8,23 @@ import im.mingxi.miko.controller.HomeController
 import im.mingxi.miko.hook.SwitchHook
 import im.mingxi.miko.util.HookEnv
 import im.mingxi.miko.util.Reflex
+import im.mingxi.miko.util.Reflex.findMethod
 import im.mingxi.miko.util.Reflex.findMethodObj
-import im.mingxi.miko.util.dexkit.DexFinder
+import im.mingxi.miko.util.Reflex.loadClass
+import im.mingxi.miko.util.dexkit.DexDesc
 import im.mingxi.miko.util.dexkit.DexMethodDescriptor
 import im.mingxi.miko.util.dexkit.IFinder
-import im.mingxi.mm.struct.MMPreferenceAdapter
 import im.mingxi.mm.struct.preferenceClass
 import im.mingxi.net.Beans
 import im.mingxi.net.bean.ModuleInfo
+import org.luckypray.dexkit.DexKitBridge
 import java.lang.reflect.Method
 import java.util.LinkedList
 
 
 @FunctionHookEntry(itemName = "设置注入", itemType = FunctionHookEntry.WECHAT_ITEM)
 class SettingInject : SwitchHook(defaultEnabled = true), IFinder {
-    private val preferenceTitle = DexMethodDescriptor(this, "${simpleTAG}.Method.preferenceTitle")
+    private val MethodPreferenceTitle = DexDesc("${simpleTAG}.MethodPreferenceTitle")
     private val settingName = "NewMiko"
 
     /**
@@ -38,7 +40,10 @@ class SettingInject : SwitchHook(defaultEnabled = true), IFinder {
     override fun initOnce(): Boolean {
 
         // 创建入口
-        val ctors = MMPreferenceAdapter.hostClass.declaredConstructors
+        val ctors = findMethod(loadClass("com.tencent.mm.ui.base.preference.MMPreference"))
+            .setMethodName("createAdapter")
+            .get()
+            .returnType.declaredConstructors
         ctors.forEach {
             it.hookAfterIfEnable { param ->
                 //if (mCacheItem != null) return@hookAfterIfEnable
@@ -65,7 +70,7 @@ class SettingInject : SwitchHook(defaultEnabled = true), IFinder {
                 findMethodObj(preference).setReturnType(Void.TYPE).setParams(String::class.java)
                     .get().invoke(preference, "new_miko_entry")
                 // 设置标题
-                preferenceTitle.toMethod(loader).invoke(preference, settingName)
+                MethodPreferenceTitle.toMethod().invoke(preference, settingName)
                 // 设置右侧提示
                 findTipMethod().invoke(preference, settingTip)
                 // 通过反射添加进适配器
@@ -105,9 +110,8 @@ class SettingInject : SwitchHook(defaultEnabled = true), IFinder {
         return true
     }
 
-    override fun dexFind(finder: DexFinder) {
-        with(finder) {
-            preferenceTitle.findDexMethod {
+    override fun dexFind(finder: DexKitBridge) {
+        MethodPreferenceTitle.findDexMethod(finder) {
                 searchPackages("com.tencent.mm.ui.base.preference")
 
                 matcher {
@@ -117,16 +121,15 @@ class SettingInject : SwitchHook(defaultEnabled = true), IFinder {
                     paramTypes(CharSequence::class.java)
                 }
 
-            }
         }
 
     }
 
     private fun findTipMethod(): Method {
-        val tipCls = preferenceTitle.toMethod(loader).declaringClass
+        val tipCls = MethodPreferenceTitle.toMethod().declaringClass
         tipCls.declaredMethods.forEach {
             if (it.parameterCount == 1 && it.parameterTypes[0] == CharSequence::class.java) {
-                if (it != preferenceTitle.toMethod(loader)) {
+                if (it != MethodPreferenceTitle.toMethod()) {
                     it.isAccessible = true
                     return it
                 }

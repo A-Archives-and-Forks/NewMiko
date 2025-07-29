@@ -17,7 +17,7 @@ class ProcessDialog(val appContext: Context, val message: String) : Dialog(appCo
      private val binding: DialogWaitBinding
          get() = checkNotNull(_binding) { "Activity has been destroyed" }
  */
-    private lateinit var textView: TextView
+    lateinit var textView: TextView
 
 
     constructor(message: String) : this(HookEnv.hostActivity, message)

@@ -25,10 +25,13 @@ abstract class BaseFuncHook(val defaultEnabled: Boolean = false) {
         return mConfig.decodeBool(TAG, defaultEnabled)
     }
 
+
     fun initialize() {
         if (isInitialize) return
         if (!isEnabled()) return
         this.isInitialize = true
+
+
 
         try {
             initOnce()
@@ -49,4 +52,13 @@ abstract class BaseFuncHook(val defaultEnabled: Boolean = false) {
 
     fun Member.hookAfterIfEnable(callback: HookCallback) =
         this.hookAfterIfEnable(this@BaseFuncHook, callback)
+
+    fun d(msg: Any): Any {
+        return msg.also { XPBridge.log(it.toString()) }
+    }
+
+    fun Any.d() {
+        this.also { XPBridge.log(it.toString()) }
+    }
+
 }

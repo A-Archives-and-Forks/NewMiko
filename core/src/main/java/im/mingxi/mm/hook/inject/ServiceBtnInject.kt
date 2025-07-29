@@ -14,7 +14,7 @@ class ServiceBtnInject(
     override val name: String = "允许长按服务进入菜单",
     override val uiItemLocation: String =
         "模块设置及调试"
-) : SwitchHook(defaultEnabled = true) {
+) : SwitchHook(defaultEnabled = false) {
     override fun initOnce(): Boolean {
 
         hookAfterIfEnable(

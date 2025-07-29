@@ -1,15 +1,17 @@
 package im.mingxi.loader.util;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.nio.charset.StandardCharsets;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 
 
 public abstract class FileUtil {
-    
+    public static synchronized void writeToFile(File file, String FileContent) {
+        writeToFile(file.getAbsolutePath(), FileContent);
+    }
     public static synchronized void writeToFile(String File, String FileContent) {
         try {
             File parent = new File(File).getParentFile();

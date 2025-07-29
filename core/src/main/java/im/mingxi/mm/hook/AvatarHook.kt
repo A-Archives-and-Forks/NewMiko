@@ -11,15 +11,15 @@ import android.graphics.Shader
 import im.mingxi.miko.annotation.FunctionHookEntry
 import im.mingxi.miko.hook.SwitchHook
 import im.mingxi.miko.ui.util.FuncRouter
-import im.mingxi.miko.util.dexkit.DexFinder
-import im.mingxi.miko.util.dexkit.DexMethodDescriptor
+import im.mingxi.miko.util.dexkit.DexDesc
 import im.mingxi.miko.util.dexkit.IFinder
+import org.luckypray.dexkit.DexKitBridge
 
 
 @FunctionHookEntry
 class AvatarHook : SwitchHook(), IFinder {
     private val getRoundedCornerBitmap =
-        DexMethodDescriptor(this, "${simpleTAG}.Method.getRoundedCornerBitmap")
+        DexDesc("${simpleTAG}.Method.getRoundedCornerBitmap")
     override val name: String
         get() = "启用圆形头像"
     override val uiItemLocation: String
@@ -27,22 +27,22 @@ class AvatarHook : SwitchHook(), IFinder {
 
 
     override fun initOnce(): Boolean {
-        getRoundedCornerBitmap.toMethod(loader).hookAfterIfEnable {
+        getRoundedCornerBitmap.toMethod().hookAfterIfEnable {
             val bitmap = it.result as Bitmap
             it.result = createRoundedBitmap(bitmap, 100f)
         }
         return true
     }
 
-    override fun dexFind(finder: DexFinder) {
-        with(finder) {
-            getRoundedCornerBitmap.findDexMethod {
+    override fun dexFind(finder: DexKitBridge) {
+
+        getRoundedCornerBitmap.findDexMethod(finder) {
                 searchPackages("com.tencent.mm.sdk.platformtools")
                 matcher {
                     usingStrings("getRoundedCornerBitmap bitmap recycle %s")
                     paramCount(5)
                 }
-            }
+
         }
     }
 

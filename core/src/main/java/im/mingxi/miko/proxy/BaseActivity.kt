@@ -7,6 +7,7 @@ import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
 import im.mingxi.miko.startup.util.XRes
 
 
@@ -31,6 +32,7 @@ open class BaseActivity : AppCompatActivity() {
     protected open fun requestHideNavigationBar() {
         // WindowInsetsController 这个东西只有系统API大于 30 才有
         val insetsController = window.insetsController
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         if (insetsController != null && Build.VERSION.SDK_INT >= 30) {
             insetsController.hide(WindowInsets.Type.navigationBars())
             insetsController.systemBarsBehavior =

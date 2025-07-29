@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
         binding.btnUsage.setOnClickListener {
             if (isFastClick()) return@setOnClickListener
             val intent = Intent(Intent.ACTION_VIEW)
-            intent.setData("https://github.com/dartcv/Miko-Public?tab=readme-ov-file#-newmiko-".toUri())
+            intent.setData("https://github.com/Xposed-Modules-Repo/im.mingxi.miko?tab=readme-ov-file#%E6%8F%90%E7%A4%BA".toUri())
             startActivity(intent)
         }
 
@@ -86,7 +86,11 @@ class MainActivity : AppCompatActivity() {
             if (isFastClick()) return@setOnClickListener
             val builder = MaterialAlertDialogBuilder(this)
             val items = arrayOf(
-                "Telegram CI Channel", "Telegram Chat Group", "Github Discussion", "QQ Group", "QQ Notification Group"
+                "Telegram CI Channel",
+                "Telegram Chat Group",
+                "Github Issue",
+                "QQ Group",
+                "QQ Notification Group"
             )
             builder.setTitle("交流讨论")
                 .setItems(items) { _, which ->
@@ -104,7 +108,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         2 -> {
                             val intent = Intent(Intent.ACTION_VIEW)
-                            intent.setData("https://github.com/dartcv/Miko-Public/discussions".toUri())
+                            intent.setData("https://github.com/Xposed-Modules-Repo/im.mingxi.miko/issues".toUri())
                             startActivity(intent)
                         }
                         3 -> {
@@ -118,7 +122,7 @@ class MainActivity : AppCompatActivity() {
                 }.show()
         }
 
-        // 更新日志
+        // 更多设置
         binding.btnChangelog.setOnClickListener {
             if (isFastClick()) return@setOnClickListener
             val intent = Intent(this, SettingActivity::class.java)

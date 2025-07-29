@@ -20,5 +20,10 @@ object XPHelper {
         return sb.toString()
     }
 
+    fun getClassLoader(name: String): ClassLoader {
+
+        throw RuntimeException("class loader not found")
+    }
+
 
 }

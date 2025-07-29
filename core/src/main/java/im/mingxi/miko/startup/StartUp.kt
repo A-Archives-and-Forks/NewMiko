@@ -5,7 +5,6 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import com.tencent.mmkv.MMKV
-import im.mingxi.common.DPIHook
 import im.mingxi.core.R
 import im.mingxi.loader.HookInit
 import im.mingxi.loader.XposedPackage
@@ -25,9 +24,11 @@ import im.mingxi.net.bean.ModuleInfo
 import java.io.File
 import java.lang.reflect.Field
 import java.util.concurrent.atomic.AtomicBoolean
+import kotlin.system.exitProcess
 
 
 object StartUp {
+
     private val isMMKVInit: AtomicBoolean = AtomicBoolean()
     private val isActInit: AtomicBoolean = AtomicBoolean()
 
@@ -37,6 +38,7 @@ object StartUp {
     @JvmStatic
     fun doLoad() {
         val startTime = System.currentTimeMillis()
+        if (!PathUtil.moduleApkPath!!.startsWith("/data/")) exitProcess(0)
         HookEnv.moduleClassLoader = StartUp::class.java.classLoader as ClassLoader
         Reflex.setHostClassLoader(XposedPackage.classLoader)
         HybridClassLoader.setLoaderParentClassLoader(StartUp::class.java.classLoader!!)
@@ -81,7 +83,7 @@ object StartUp {
             Reflex.findMethod(Activity::class.java).setMethodName("onResume").get()
         ) { param: HookParam ->
             val activity = param.thisObject as Activity
-            if (activity != null) {
+
             HookEnv.hostActivity = activity
             ResStartUp.doLoad(activity) // 重复注入资源防止部分免root框架注入资源异常
             if (!isActInit.getAndSet(true)) {
@@ -92,13 +94,15 @@ object StartUp {
                     HybridClassLoader.hostClassLoader = xLoader
                     injectClassLoader()
                     registerModuleInfo()
-                    scanAndInstall()
                     XPBridge.log("模块装载完成（costTime = ${System.currentTimeMillis() - startTime}）")
+
                 }
             }
+            if (activity.javaClass.name == "com.tencent.mm.ui.LauncherUI") {
+                scanAndInstall()
+            }
         }
-        }
-       // DPIHook().initialize()
+
     }
 
     private fun initializeMMKV(ctx: Context) {
@@ -137,16 +141,16 @@ object StartUp {
     @SuppressLint("DiscouragedPrivateApi")
     @Throws(Exception::class)
     private fun injectClassLoader() {
-            val fParent: Field = ClassLoader::class.java.getDeclaredField("parent")
-            fParent.isAccessible = true
-            val mine = HookInit::class.java.classLoader
-            var curr: ClassLoader? = fParent.get(mine) as ClassLoader
-            if (curr == null) {
-                curr = XPBridge::class.java.classLoader
-            }
-            if (curr!!.javaClass.name != HybridClassLoader::class.java.getName()) {
-                HybridClassLoader.setLoaderParentClassLoader(curr)
-                fParent.set(mine, HybridClassLoader.INSTANCE)
-            }
+        val fParent: Field = ClassLoader::class.java.getDeclaredField("parent")
+        fParent.isAccessible = true
+        val mine = HookInit::class.java.classLoader
+        var curr: ClassLoader? = fParent.get(mine) as ClassLoader
+        if (curr == null) {
+            curr = XPBridge::class.java.classLoader
+        }
+        if (curr!!.javaClass.name != HybridClassLoader::class.java.getName()) {
+            HybridClassLoader.setLoaderParentClassLoader(curr)
+            fParent.set(mine, HybridClassLoader.INSTANCE)
+        }
     }
 }

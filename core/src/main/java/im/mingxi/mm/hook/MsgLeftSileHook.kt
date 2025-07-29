@@ -9,15 +9,14 @@ import im.mingxi.miko.annotation.FunctionHookEntry
 import im.mingxi.miko.hook.SwitchHook
 import im.mingxi.miko.ui.util.FuncRouter
 import im.mingxi.miko.util.Reflex
-import im.mingxi.miko.util.dexkit.DexFinder
-import im.mingxi.miko.util.dexkit.DexKit
-import im.mingxi.miko.util.dexkit.DexMethodDescriptor
+import im.mingxi.miko.util.dexkit.DexDesc
 import im.mingxi.miko.util.dexkit.IFinder
 import im.mingxi.miko.util.toAppClass
 import im.mingxi.miko.util.xpcompat.XPHelpers
 import im.mingxi.mm.hook.listener.OlTouchListener
 import im.mingxi.mm.hook.listener.SwipeState
 import org.jetbrains.annotations.Nullable
+import org.luckypray.dexkit.DexKitBridge
 import kotlin.math.abs
 import kotlin.math.min
 
@@ -39,13 +38,13 @@ class MsgLeftSileHook : SwitchHook(), IFinder {
     lateinit var mdy7: Any
 
     override fun initOnce(): Boolean {
-        "com.tencent.mm.pluginsdk.ui.chat.ChatFooter".toAppClass()!!.constructors.forEach {
+        "com.tencent.mm.pluginsdk.ui.chat.ChatFooter".toAppClass().constructors.forEach {
             it.hookAfterIfEnable {
                 chatFooter = it.thisObject
                 //XPBridge.log(chatFooter.toString())
             }
         }
-        Component.toMethod(loader).declaringClass
+        Component.toMethod().declaringClass
         .constructors.forEach {
             it.hookAfterIfEnable {
                 mdy7 = it.thisObject
@@ -80,10 +79,11 @@ class MsgLeftSileHook : SwitchHook(), IFinder {
            // XPBridge.log(mdy7)
         }*/
         /*"com.tencent.mm.ui.chatting.adapter.j".toAppClass()!!.resolve()
-            .firstMethod { name = "B" }.self*/Adapter.toMethod(loader).hookAfterIfEnable {
+            .firstMethod { name = "B" }.self*/Adapter.toMethod().hookAfterIfEnable {
+            //if (true) return@hookAfterIfEnable
 
-                val holder: Any = it.args.get(0)
-                val position = it.args.get(1) as Int
+            val holder: Any = it.args[0]
+            val position = it.args[1] as Int
 
                 val adapterInstance: Any = it.thisObject
                 // val itemView = XPHelpers.getObjectField(holder, "itemView") as View
@@ -111,11 +111,11 @@ class MsgLeftSileHook : SwitchHook(), IFinder {
 
                 }
             }
-        val desc = cache.decodeString("${simpleTAG}.Method.ViewItems_Container")!!
+        val desc = cache.decodeString("${simpleTAG}.Method.ViewItemsContainer")!!
         val olClass: Class<*> =// DexKit.requireClassFromCache("${simpleTAG}.Class.ViewItems_Container").toAppClass()!!
             //ViewItemContainer.name.toAppClass()!!
             //XPHelpers.getClass("com.tencent.mm.ui.chatting.viewitems.ml")
-            desc.substring(0, desc.indexOf(";") + 1).toAppClass()!!
+            desc.substring(0, desc.indexOf(";") + 1).toAppClass()
         val relativeLayoutClass: Class<*> =
             XPHelpers.getClass("android.view.ViewGroup")
 
@@ -129,7 +129,7 @@ class MsgLeftSileHook : SwitchHook(), IFinder {
             }
 
             val olView = param.thisObject as View
-            val event = param.args.get(0) as MotionEvent
+            val event = param.args[0] as MotionEvent
 
             @Nullable
             var state: SwipeState? = olView.getTag(SWIPE_STATE_KEY) as SwipeState?
@@ -137,8 +137,8 @@ class MsgLeftSileHook : SwitchHook(), IFinder {
                 MotionEvent.ACTION_DOWN -> {
                     // ... ACTION_DOWN 部分代码保持不变 ...
                     state = SwipeState()
-                    state.initialRawX = event.getRawX()
-                    state.initialRawY = event.getRawY()
+                    state.initialRawX = event.rawX
+                    state.initialRawY = event.rawY
                     state.touchSlop = ViewConfiguration.get(olView.context).scaledTouchSlop
                     olView.setTag(SWIPE_STATE_KEY, state)
                 }
@@ -149,8 +149,8 @@ class MsgLeftSileHook : SwitchHook(), IFinder {
                     }
 
                     if (!state.isDragging) {
-                        val deltaX: Float = event.getRawX() - state.initialRawX
-                        val deltaY: Float = event.getRawY() - state.initialRawY
+                        val deltaX: Float = event.rawX - state.initialRawX
+                        val deltaY: Float = event.rawY - state.initialRawY
 
                         if (deltaX < 0 && abs(deltaX.toDouble()) > state.touchSlop && abs(deltaX.toDouble()) > abs(
                                 deltaY.toDouble()
@@ -179,7 +179,7 @@ class MsgLeftSileHook : SwitchHook(), IFinder {
 
                     // 如果正在拖动，更新UI并消费事件
                     if (state.isDragging) {
-                        val currentDeltaX: Float = event.getRawX() - state.initialRawX
+                        val currentDeltaX: Float = event.rawX - state.initialRawX
                         olView.translationX = min(0.0, currentDeltaX.toDouble()).toFloat()
 
                         // 消费掉这个 MOVE 事件
@@ -197,8 +197,8 @@ class MsgLeftSileHook : SwitchHook(), IFinder {
                     olView.setTag(SWIPE_STATE_KEY, null)
 
                     if (wasDragging) {
-                        val finalDeltaX: Float = event.getRawX() - state.initialRawX
-                        if (event.getAction() === MotionEvent.ACTION_UP && finalDeltaX < -200) {
+                        val finalDeltaX: Float = event.rawX - state.initialRawX
+                        if (event.action === MotionEvent.ACTION_UP && finalDeltaX < -200) {
 //                                    XposedBridge.log("左滑动作触发! 距离: " + finalDeltaX);
 //                                    Toast.makeText(olView.getContext(), "左滑动作触发!", Toast.LENGTH_SHORT).show();
                             if (mdy7 != null && olView.getTag(im.mingxi.core.R.id.your_q9) != null) {
@@ -249,14 +249,14 @@ class MsgLeftSileHook : SwitchHook(), IFinder {
  //   private val Chat_Manager =
    //     DexMethodDescriptor(this, "${simpleTAG}.Method.Chat_Manager")
     private val ViewItemContainer =
-        DexMethodDescriptor(this, "${simpleTAG}.Method.ViewItems_Container")
+      DexDesc("${simpleTAG}.Method.ViewItemsContainer")
     private val Adapter =
-        DexMethodDescriptor(this, "${simpleTAG}.Method.Adapter")
-    private val Component = DexMethodDescriptor(this, "${simpleTAG}.Method.Component")
+        DexDesc("${simpleTAG}.Method.Adapter")
+    private val Component = DexDesc("${simpleTAG}.Method.Component")
 
 
-    override fun dexFind(finder: DexFinder) {
-        with(finder) {
+    override fun dexFind(finder: DexKitBridge) {
+
 //            ChattingItem_onMMMenuItemSelected.findDexMethod {
 //
 //                searchPackages("com.tencent.mm.ui.chatting.viewitems")
@@ -274,17 +274,7 @@ class MsgLeftSileHook : SwitchHook(), IFinder {
 //                }
 //            }
 
-        ViewItemContainer.findDexMethod {
-             searchPackages("com.tencent.mm.ui.chatting")
 
-               matcher {
-                declaredClass {
-                     usingStrings("x2c.X2CCheckBox")
-                    methodCount(1)
-                    }
-
-                }
-            }
           //  DexKit.findDexClass("${simpleTAG}.Class.ViewItems_Container") {
           //      searchPackages("com.tencent.mm.ui.chatting.viewitems")
             //   matcher {
@@ -295,23 +285,39 @@ class MsgLeftSileHook : SwitchHook(), IFinder {
             //    }
           //  }
 
-            Adapter.findDexMethod {
-                searchPackages("com.tencent.mm.ui.chatting.adapter")
+        Component.findDexMethod(finder) {
+            searchPackages("com.tencent.mm.ui.chatting.component")
+            matcher {
+                usingStrings("clear video generate callback")
+            }
+
+        }
+
+        ViewItemContainer.findDexMethod(finder) {
+            searchPackages("com.tencent.mm.ui.chatting")
+
+            matcher {
+                declaredClass {
+                    usingStrings("x2c.X2CCheckBox")
+                    methodCount(1..3)
+                }
+
+            }
+        }
+
+
+
+        Adapter.findDexMethod(finder) {
+            searchPackages("com.tencent.mm.ui.chatting.adapter")
                 matcher {
                     usingStrings("_onBindViewHolder[","MicroMsg.ChattingDataAdapterV3")
                 }
             }
 
-            Component.findDexMethod {
-                searchPackages("com.tencent.mm.ui.chatting.component")
-                matcher {
-                    usingStrings("unCertainEnter.iconUrl is null")
-                }
-            }
-
-        }
 
     }
+
+
 
 
 }

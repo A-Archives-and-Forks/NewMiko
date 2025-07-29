@@ -40,7 +40,13 @@ class MMEnvManagerImpl : MMEnvManager {
             "${nPackage}_preferences",
             Context.MODE_MULTI_PROCESS
         )
-            .getString("login_weixin_username", "") ?: ""
+            .getString(
+                "login_weixin_username", HookEnv.hostContext.getSharedPreferences(
+                    "notify_key_pref_no_account",
+                    Context.MODE_MULTI_PROCESS
+                )
+                    .getString("login_weixin_name", "")!!
+            ).toString()
     }
 
     override fun isLogin(): Boolean {

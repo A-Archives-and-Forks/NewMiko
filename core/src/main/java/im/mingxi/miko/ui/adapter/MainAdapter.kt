@@ -1,7 +1,6 @@
 package im.mingxi.miko.ui.adapter
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,18 +13,12 @@ import im.mingxi.core.R
 import im.mingxi.miko.hook.BaseComponentHook
 import im.mingxi.miko.hook.CommonHook
 import im.mingxi.miko.hook.SwitchHook
-import im.mingxi.miko.ui.dialog.ProcessDialog
-import im.mingxi.miko.ui.util.ProxyActUtil
 import im.mingxi.miko.util.AppUtil
 import im.mingxi.miko.util.HookEnv
-import im.mingxi.miko.util.dexkit.DexFinder
 import im.mingxi.miko.util.dexkit.IFinder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class MainAdapter(private val dataSet: List<BaseComponentHook>) :
     RecyclerView.Adapter<ViewHolder>() {
@@ -49,12 +42,17 @@ class MainAdapter(private val dataSet: List<BaseComponentHook>) :
     }
 
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         if (viewType == SWITCH_ITEM) {
             val itemView = LayoutInflater.from(parent.context)
                 .inflate(R.layout.switch_item, parent, false)
             return SwitchViewHolder(itemView)
+        } else if (viewType == COMMON_ITEM) {
+            val itemView = LayoutInflater.from(parent.context)
+                .inflate(R.layout.common_item, parent, false)
+            return CommonViewHolder(itemView)
         }
         throw RuntimeException("Unknown view type")
     }
@@ -92,16 +90,8 @@ class MainAdapter(private val dataSet: List<BaseComponentHook>) :
                                         "${currentItem.TAG}.SIGN",
                                         AppUtil.getVersionCode(HookEnv.hostContext)
                                     )
-                                    val dialog = showProcessDialog()
-                                    activityScope.launch {
-                                        delay(500)
-                                        val result = withContext(Dispatchers.IO) {
-                                            onDexFinder(currentItem)
-                                            dialog.dismiss()
-                                            initialize()
-                                            "混淆方法查找完成"
-                                        }
-                                    }
+                                    initialize()
+
                                 }
                             } else initialize()
 
@@ -131,17 +121,5 @@ class MainAdapter(private val dataSet: List<BaseComponentHook>) :
         return super.getItemViewType(position)
     }
 
-    private fun onDexFinder(finder: IFinder) {
-        finder.dexFind(DexFinder())
-    }
 
-    private fun showProcessDialog(): ProcessDialog {
-        val dialog =
-            ProcessDialog(
-                ProxyActUtil.mApp as Context,
-                "正在通过DexKit查找混淆方法，预计每个方法不超过30s，请耐心等待"
-            )
-        dialog.show()
-        return dialog
-    }
 }

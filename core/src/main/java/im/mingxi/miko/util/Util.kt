@@ -3,6 +3,7 @@ package im.mingxi.miko.util
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import im.mingxi.miko.startup.StartUp
 
 
 object Util {
@@ -12,4 +13,8 @@ object Util {
         val data = ClipData.newPlainText("text", str)
         manager.setPrimaryClip(data)
     }
+
+    fun isQQ(): Boolean = StartUp.hostType == 2
+
+    fun isWeChat(): Boolean = StartUp.hostType == 1
 }
