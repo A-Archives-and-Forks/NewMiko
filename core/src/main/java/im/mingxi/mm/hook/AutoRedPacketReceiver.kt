@@ -184,6 +184,8 @@ class AutoRedPacketReceiver : SwitchHook(), IFinder {
     ) true
     else false
 
+    private fun getMsgType(sender: String) = if (sender.contains("wxid")) 1 else 2
+
 
     fun receiveRedPacket() {
         // 静默逻辑
@@ -198,7 +200,7 @@ class AutoRedPacketReceiver : SwitchHook(), IFinder {
                 String::class.java,
                 String::class.java
             ).newInstance(
-                1,
+                getMsgType(redPacketBody.sender!!),
                 1,
                 redPacketBody.sendId,
                 redPacketBody.mNativeUrl,
@@ -238,10 +240,8 @@ class AutoRedPacketReceiver : SwitchHook(), IFinder {
     override fun initOnce(): Boolean {
 
         onMsgInsertWithOnConflict.hookAfterIfEnable { param ->
-
             val contentValues = param.args[2] as ContentValues
             // 简单判断是否为红包消息
-            // XPBridge.log(contentValues.toString())
             if (contentValues.containsKey("mNativeUrl")) {
                 this.redPacketBody = RedPacketBody(contentValues)
                 if (sendIds.contains(redPacketBody.sendId)) return@hookAfterIfEnable
@@ -288,6 +288,7 @@ class AutoRedPacketReceiver : SwitchHook(), IFinder {
         this.NetSceneReceiveLuckyMoney.toMethod().hookBeforeIfEnable { param ->
             if (!isTarget()) return@hookBeforeIfEnable
             if (sendIds.contains(redPacketBody.sendId)) return@hookBeforeIfEnable
+            sendIds.add(redPacketBody.sendId!!)
             if (MMEnvManagerImpl().getWxId() == redPacketBody.sender) return@hookBeforeIfEnable
             val json = param.args[2] as JSONObject
             this.timingIdentifier = json.optString("timingIdentifier")
@@ -305,7 +306,7 @@ class AutoRedPacketReceiver : SwitchHook(), IFinder {
                     String::class.java,
                     String::class.java
                 ).newInstance(
-                    1,
+                    getMsgType(redPacketBody.sender!!),
                     1,
                     redPacketBody.sendId,
                     redPacketBody.mNativeUrl,
@@ -338,7 +339,6 @@ class AutoRedPacketReceiver : SwitchHook(), IFinder {
                     o
                 )
             if (mConfig.decodeBool("$TAG.config.isShowToastAfterReceive")) {
-                sendIds.add(redPacketBody.sendId!!)
                 MikoToast.makeToast(
                     HookEnv.hostActivity,
                     "-----已抢到红包-----\n来源: ${redPacketBody.sender}"

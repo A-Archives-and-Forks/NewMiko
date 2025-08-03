@@ -16,7 +16,6 @@ import im.mingxi.miko.util.config
 import im.mingxi.miko.util.dexkit.DexKit
 import im.mingxi.miko.util.dexkit.IFinder
 import im.mingxi.miko.util.dexkit.NativeLoader
-import im.mingxi.miko.util.dexkit.OFinder
 import im.mingxi.miko.util.toAppClass
 import im.mingxi.mm.api.AutoFinder
 import im.mingxi.mm.manager.impl.MMEnvManagerImpl
@@ -91,7 +90,11 @@ object HookInstaller {
                 }
 
                 // 挂起一些需要抢时间的钩子
-                if (config.decodeString("Miko.AllConfig", "NO_SIGN") == SignUtil.sign) {
+                if (Util.isWeChat() && config.decodeString(
+                        "Miko.AllConfig",
+                        "NO_SIGN"
+                    ) == SignUtil.sign
+                ) {
                     DexKit.requireClassFromCache("ConversationStorage")
                         .toAppClass().declaredConstructors.forEach {
                             XPBridge.hookAfter(it) { param ->
@@ -105,7 +108,6 @@ object HookInstaller {
                 // 筛选ui条目
                 mItems.forEach {
                     if (it is BaseComponentHook) uiList.add(it)
-                    if (it is OFinder) it.onInstance()
                     // 加载可用条目
                     it.initialize()
                 }

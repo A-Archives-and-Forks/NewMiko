@@ -14,6 +14,7 @@ navigationFragmentKtx = "2.9.0"
 blurView = "version-3.0.0"
 kavaref-core = "1.0.0"
 preferenceKtx = "1.2.1"
+zygisk = "v1.1.0"
 
 [plugins]
 agp-lib = { id = "com.android.library", version.ref = "agp" }
@@ -21,6 +22,7 @@ agp-app = { id = "com.android.application", version.ref = "agp" }
 kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "symbolProcessingApi" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+java-zygisk = { id = "com.github.vova7878.ZygoteLoader", version.ref = "zygisk" }
 
 [libraries]
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }

@@ -75,20 +75,20 @@ class AntiMomentsRevoke : SwitchHook(), IFinder {
                     str = str.replace("(snsId >=", "(1=1 or snsId >=")
                 }
 
-                if ((str.contains("from SnsInfo  where") || str.contains(
-                        "FROM SnsInfo WHERE"
-                    ))
-                ) {
-                    val sb = StringBuilder("where username not in(wxid_99999999999922")
-
-
-                    sb.append(") AND ")
-                    if (str.contains("where")) {
-                        str = str.replace("where", sb.toString())
-                    } else if (str.contains("WHERE")) {
-                        str = str.replace("WHERE", sb.toString())
-                    }
-                }
+//                if ((str.contains("from SnsInfo  where") || str.contains(
+//                        "FROM SnsInfo WHERE"
+//                    ))
+//                ) {
+//                    val sb = StringBuilder("where username not in(wxid_99999999999922")
+//
+//
+//                    sb.append(") AND ")
+//                    if (str.contains("where")) {
+//                        str = str.replace("where", sb.toString())
+//                    } else if (str.contains("WHERE")) {
+//                        str = str.replace("WHERE", sb.toString())
+//                    }
+//                }
                 param.args[0] = str
             } catch (e: Exception) {
                 Log.getStackTraceString(e).d()

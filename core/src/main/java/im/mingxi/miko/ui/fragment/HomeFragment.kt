@@ -1,5 +1,6 @@
 package im.mingxi.miko.ui.fragment
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -35,11 +36,12 @@ class HomeFragment : Fragment() {
     private lateinit var userInfoContainer: LinearLayout
 
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val root = inflater.inflate(R.layout.home_fragment, container, false)
         recyclerView = root.findViewById(R.id.home_recyclerview)
         loginNameText = root.findViewById(R.id.user_info)
@@ -57,13 +59,15 @@ class HomeFragment : Fragment() {
         loginNameText.text = "登录账号：${intent.getStringExtra("name")}\n用户状态：白嫖用户"
 
         if (System.getProperty("Miko.isLogin") == "true") {
-            val userData = JSONObject(System.getProperty("Miko.userData"))
+            @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS") val userData =
+                JSONObject(System.getProperty("Miko.userData"))
             if (userData.optString("isBan", "false") == "true") requireActivity().finishAffinity()
             loginNameText.text = "登录账号：${intent.getStringExtra("name")}\n用户状态：${
-                if (userData.optString("Tag") == "null") "捐赠用户" else userData.optString("Tag")
+                if (userData.optString("Tag") == "null") "赞助用户" else userData.optString("Tag")
             }"
 
         }
+
         loginNameText.setOnClickListener {
             Util.setTextClipboard(intent.getStringExtra("wxid")!!)
             Snackbar.make(root, "已复制wxid到剪切板", Snackbar.LENGTH_SHORT).show()

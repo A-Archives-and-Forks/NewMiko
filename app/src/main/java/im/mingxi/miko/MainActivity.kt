@@ -8,7 +8,6 @@ import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
-import com.google.android.material.color.DynamicColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import im.mingxi.miko.databinding.ActivityMainBinding
 import im.mingxi.miko.ui.activity.SettingActivity
@@ -29,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DynamicColors.applyToActivityIfAvailable(this)
+        // DynamicColors.applyToActivityIfAvailable(this)
 
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

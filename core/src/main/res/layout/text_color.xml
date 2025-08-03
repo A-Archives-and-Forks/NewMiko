@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:background="@drawable/custom_edit"
-        android:hint="使用十六进制，不修改请留空"
+        android:hint="文本颜色/使用十六进制，不修改请留空"
         android:padding="5dp" />
 
     <EditText
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:background="@drawable/custom_edit"
-        android:hint="使用十六进制，不修改请留空"
+        android:hint="链接颜色/使用十六进制，不修改请留空"
         android:padding="5dp" />
 
 </LinearLayout>

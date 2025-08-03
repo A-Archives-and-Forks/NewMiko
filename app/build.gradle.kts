@@ -3,6 +3,7 @@ import com.android.build.gradle.internal.api.ApkVariantOutputImpl
 plugins {
     alias(libs.plugins.agp.app)
     alias(libs.plugins.kotlin)
+//    alias(libs.plugins.java.zygisk)
 }
 
 android {
@@ -14,7 +15,7 @@ android {
         applicationId = "im.mingxi.miko"
         minSdk = 26
         targetSdk = 35
-        versionCode = 41
+        versionCode = 42
         versionName = "1.0.4"
 
         vectorDrawables {
@@ -68,6 +69,31 @@ android {
         }
     }
 
+//    flavorDimensions += "target"
+//
+//    productFlavors {
+//        create("applications") {
+//            dimension = "target"
+//
+//           zygisk {
+//               packages(ZygoteLoader.ALL_PACKAGES)
+//           }
+//
+//            buildConfigField("Boolean", "RUN_FOR_APPLICATIONS", "true")
+//            buildConfigField("Boolean", "RUN_FOR_SYSTEM_SERVER", "false")
+//        }
+//        create("system_server") {
+//            dimension = "target"
+//
+//            zygisk {
+//                packages(ZygoteLoader.PACKAGE_SYSTEM_SERVER)
+//            }
+//
+//            buildConfigField("Boolean", "RUN_FOR_APPLICATIONS", "false")
+//            buildConfigField("Boolean", "RUN_FOR_SYSTEM_SERVER", "true")
+//        }
+//    }
+
     buildFeatures {
         viewBinding = true
         buildConfig = true
@@ -82,7 +108,7 @@ android {
     android.applicationVariants.all {
         outputs.all {
             if (this is ApkVariantOutputImpl)
-                outputFileName = "NewMiko(1.0.4)-41-output.APK"
+                outputFileName = "NewMiko(1.0.4)-42-output.APK"
         }
     }
 
@@ -98,3 +124,13 @@ dependencies {
     implementation(project(":service"))
     implementation(libs.preference.ktx)
 }
+
+
+//zygisk {
+//    id = "io_curl_zygisk_miko"
+//    name = "MikoZygisk"
+//    archiveName = "MikoZygisk"
+//    author = "curl"
+//    description = "深行红尘里，所思在远道。"
+//    entrypoint = "im.mingxi.loader.zygisk.HookEntry"
+//}

@@ -5,6 +5,7 @@ import com.tencent.mmkv.MMKV
 import im.mingxi.loader.bridge.XPBridge
 import im.mingxi.loader.bridge.XPBridge.HookCallback
 import im.mingxi.miko.util.HookEnv
+import im.mingxi.miko.util.dexkit.OFinder
 import im.mingxi.miko.util.hookAfterIfEnable
 import im.mingxi.miko.util.hookBeforeIfEnable
 import java.lang.reflect.Member
@@ -34,6 +35,7 @@ abstract class BaseFuncHook(val defaultEnabled: Boolean = false) {
 
 
         try {
+            if (this is OFinder) onInstance()
             initOnce()
         } catch (e: Throwable) {
             mErrors.add(e)

@@ -98,7 +98,7 @@ object StartUp {
 
                 }
             }
-            if (activity.javaClass.name == "com.tencent.mm.ui.LauncherUI") {
+            if (activity.javaClass.name == "com.tencent.mm.ui.LauncherUI" || activity.javaClass.name == "com.tencent.mobileqq.activity.SplashActivity") {
                 scanAndInstall()
             }
         }

@@ -27,6 +27,7 @@ class TextColorHook : SwitchHook() {
         XDialog.create(v.context).apply {
             title = name
             val binding = TextColorBinding.inflate(layoutInflater)
+            binding.colorText.setText(mConfig.decodeString("$TAG.config.text", ""))
             binding.colorText.doAfterTextChanged { text ->
                 if (TextUtils.isEmpty(text)) {
                     mConfig.encode("$TAG.config.text", "")
@@ -34,6 +35,7 @@ class TextColorHook : SwitchHook() {
                 }
                 mConfig.encode("$TAG.config.text", text.toString())
             }
+            binding.colorLink.setText(mConfig.decodeString("$TAG.config.link", ""))
             binding.colorLink.doAfterTextChanged { text ->
                 if (TextUtils.isEmpty(text)) {
                     mConfig.encode("$TAG.config.link", "")
