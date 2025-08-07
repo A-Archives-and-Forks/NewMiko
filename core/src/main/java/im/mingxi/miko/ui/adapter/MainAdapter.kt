@@ -16,14 +16,10 @@ import im.mingxi.miko.hook.SwitchHook
 import im.mingxi.miko.util.AppUtil
 import im.mingxi.miko.util.HookEnv
 import im.mingxi.miko.util.dexkit.IFinder
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 
-class MainAdapter(private val dataSet: List<BaseComponentHook>) :
+class MainAdapter(val dataSet: List<BaseComponentHook>) :
     RecyclerView.Adapter<ViewHolder>() {
 
-    private val activityScope = CoroutineScope(Dispatchers.Main + Job())
     private val SWITCH_ITEM = 1
     private val COMMON_ITEM = 2
 
@@ -57,17 +53,14 @@ class MainAdapter(private val dataSet: List<BaseComponentHook>) :
         throw RuntimeException("Unknown view type")
     }
 
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
-        val currentItem = dataSet[position]
+    override fun onBindViewHolder(holder: ViewHolder, position1: Int) {
+        val currentItem = dataSet[holder.adapterPosition]
         if (holder is SwitchViewHolder) {
             with(holder)
             {
                 name.text = currentItem.name
                 if (currentItem.description != null) {
                     description.text = currentItem.description
-                    description.visibility = View.VISIBLE
                 }
                 if (currentItem.onClick != null) {
                     itemView.setOnClickListener(currentItem.onClick!!::invoke)

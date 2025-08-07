@@ -31,4 +31,6 @@ object FuncRouter {
     fun items(wrapper: String): List<BaseComponentHook> {
         return HookInstaller.uiList.filter { it.uiItemLocation == wrapper }
     }
+
+    fun mItems(): List<BaseComponentHook> = HookInstaller.uiList
 }

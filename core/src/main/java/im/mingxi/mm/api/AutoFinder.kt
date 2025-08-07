@@ -70,6 +70,24 @@ object AutoFinder {
         }
     })
 
+    val NetSceneUploadMsgImg =
+        Struct(name = "NetSceneUploadMsgImg", type = Struct.TYPE_CLASS, findClass = {
+            searchPackages("com.tencent.mm.modelimage")
+            matcher {
+                usingStrings("task_NetSceneUploadMsgImg", "field_sendmsg_viacdn")
+            }
+        })
+
+    val MvvmNetSceneObserverOwner =
+        Struct(name = "MvvmNetSceneObserverOwner", type = Struct.TYPE_MEMBER, findMethod = {
+            matcher {
+                paramCount = 4
+                usingStrings("MicroMsg.Mvvm.NetSceneObserverOwner")
+            }
+        })
+
+
+
     val structs: List<Struct> by lazy {
         return@lazy listOf(
             AppMgr,
@@ -77,7 +95,9 @@ object AutoFinder {
             NetSceneQueue,
             ContactStorage,
             ConversationStorage,
-            AvatarStorage
+            AvatarStorage,
+            NetSceneUploadMsgImg,
+            MvvmNetSceneObserverOwner
         )
     }
 

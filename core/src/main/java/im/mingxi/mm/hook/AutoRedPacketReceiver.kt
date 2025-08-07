@@ -184,7 +184,7 @@ class AutoRedPacketReceiver : SwitchHook(), IFinder {
     ) true
     else false
 
-    private fun getMsgType(sender: String) = if (sender.contains("wxid")) 1 else 2
+    private fun getMsgType(sender: String) = if (sender.contains("wxid")) 1 else 1
 
 
     fun receiveRedPacket() {

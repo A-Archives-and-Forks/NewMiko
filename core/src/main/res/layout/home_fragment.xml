@@ -5,20 +5,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:id="@+id/home_main_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-
+        style="?attr/cardElevation"
+        android:alpha="0.95"
+        android:background="#FFFFFF"
+        android:clickable="true"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp"
         android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/head_bar"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:alpha="0.8"
-            android:background="@drawable/recyclerview_shape"
             android:padding="10dp">
 
             <TextView
@@ -27,6 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="登录账号：小明(2*******02)"
+                android:lineSpacingExtra="3dp"
                 android:textColor="#1A1A1A"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -45,7 +49,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 
     <androidx.recyclerview.widget.RecyclerView

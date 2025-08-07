@@ -55,6 +55,7 @@ abstract class BaseFuncHook(val defaultEnabled: Boolean = false) {
     fun Member.hookAfterIfEnable(callback: HookCallback) =
         this.hookAfterIfEnable(this@BaseFuncHook, callback)
 
+
     fun d(msg: Any): Any {
         return msg.also { XPBridge.log(it.toString()) }
     }

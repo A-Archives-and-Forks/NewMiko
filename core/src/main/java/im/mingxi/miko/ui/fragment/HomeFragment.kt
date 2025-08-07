@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -33,7 +33,7 @@ class HomeFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var loginNameText: TextView
     private lateinit var avatarImage: ImageView
-    private lateinit var userInfoContainer: LinearLayout
+    private lateinit var userInfoContainer: CardView
 
 
     @SuppressLint("SetTextI18n")
@@ -100,7 +100,7 @@ class HomeFragment : Fragment() {
                 HomeAdapter.Data("设备SDK", Build.VERSION.SDK_INT.toString()),
                 HomeAdapter.Data("设备ABI", abi),
 
-            )
+                )
         )
 
 
