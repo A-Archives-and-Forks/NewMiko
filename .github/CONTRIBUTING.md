@@ -45,6 +45,6 @@ class FuckPicCountLimit : BaseFuncHook(defaultEnabled = true)/*目前你继承im
 
 ## 最后
 1.感谢你的支持，本人高二学生，学业压力较大，回应可能较慢，代码水平也怎么样，多多包涵。
-2.不要release，没配置好混淆
+~~2.不要release，没配置好混淆~~
 3.代码请务必格式化
 4.玩的开心

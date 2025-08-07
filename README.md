@@ -4,7 +4,7 @@
 
 ## 提示
 
-右边有安装包，勿扰开发者。暂时不支持QQ/TIM，请手动取消勾选其作用域。
+右边有安装包，勿扰开发者。暂时不支持QQ/TIM，请手动取消勾选其作用域。我暂无时间维护此项目，贡献指南也已年久失修。若你对本项目抱有期望的话可以自行离开了。
 
 ## 简介
 
@@ -13,16 +13,16 @@
 ## 使用方法
 
 - 下载正式版：
-[![GitHub release](https://img.shields.io/github/release/dartcv/Miko-Public.svg)](https://github.com/dartcv/Miko-Public/releases/latest)
+  [![GitHub release](https://img.shields.io/github/release/dartcv/NewMiko.svg)](https://github.com/dartcv/NewMiko/releases/latest)
 
-- 下载**CI版**：[点我跳转电报CI频道](http://t.me/MikoCIBuild)
+- 下载**CI版**：[点我跳转电报CI频道](http://t.me/MikoCIBuilds)
 
 - 建议您使用 **[LSPosed](https://github.com/LSPosed/LSPosed)** ，请勾选模块作用域 **QQ/TIM/微信**
 
 ## 编译
 
 - JDK >= 17
-- 贡献请参考 [贡献指南](https://github.com/hiatus169/Miko-Public/blob/main/.github/CONTRIBUTING.md)
+- 贡献请参考 [贡献指南](https://github.com/hiatus169/NewMiko/blob/main/.github/CONTRIBUTING.md)
 
 ## 额外说明
 
@@ -32,7 +32,7 @@
 
 ## 问题反馈/功能请求
 
-- 在[Issue](https://github.com/dartcv/Miko-Public/issues)中提出，请遵守Issue规则
+- 在[Issue](https://github.com/dartcv/NewMiko/issues)中提出，请遵守Issue规则
 - 模块目前不具备主动发送日志能力，所有问题反馈请在能找到我的地方或在此仓库Issue下详细描述问题+附上模块/框架日志。
 - 不接受违法功能请求，比如抢红包，群发等。
 - 遇到问题时无法提供日志的免ROOT框架勿扰。
@@ -40,7 +40,7 @@
 
 ## 特别鸣谢
 
-- [Miko Contributors](https://github.com/hiatus169/Miko-Public/graphs/contributors)
+- [Miko Contributors](https://github.com/hiatus169/NewMiko/graphs/contributors)
 - [QAuxiliary](https://github.com/cinit/QAuxiliary)
 - [TimTool](https://github.com/suzhelan/TimTool)
 - [QTool](https://github.com/Hicores/QTool)
@@ -48,6 +48,6 @@
 
 ## 交流讨论
 
-- 电报讨论组 [@MikoBuild](https://t.me/MikoBuild)
+- 电报讨论组 [@MikoBuild](https://t.me/MikoChatGroup)
 - 电报通知组 [@mingxi235](https://t.me/mingxi235)
-- 电报CI构建 [@MikoCIBuild](http://t.me/MikoCIBuild)
+- 电报CI构建 [@MikoCIBuild](http://t.me/MikoCIBuilds)
