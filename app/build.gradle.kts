@@ -35,28 +35,7 @@ android {
         jvmTarget = "17"
     }
 
-    signingConfigs {
-        getByName("debug") {
-            keyAlias = "NewMiko2025"
-            keyPassword = "NewMiko2025"
-            storePassword = "NewMiko2025"
-            storeFile = file("NewMiko2025.jks")
-            enableV1Signing = false
-            enableV2Signing = true
-            enableV3Signing = true
-            enableV4Signing = false
-        }
-        create("release") {
-            keyAlias = "NewMiko2025"
-            keyPassword = "NewMiko2025"
-            storePassword = "NewMiko2025"
-            storeFile = file("NewMiko2025.jks")
-            enableV1Signing = false
-            enableV2Signing = true
-            enableV3Signing = true
-            enableV4Signing = false
-        }
-    }
+
 
     buildTypes {
         release {
@@ -65,7 +44,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("debug")
+           
         }
     }
 
