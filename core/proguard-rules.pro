@@ -1,2 +1,0 @@
--keep class im.** {*;}
--dontwarn java.lang.invoke.StringConcatFactory
