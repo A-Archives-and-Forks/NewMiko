@@ -1,6 +1,7 @@
 <div align="center">
     <h1> NewMiko </h1>
   <h3> Make MicroMsg Great Agian！ </h3>
+    <a href="https://github.com/Xposed-Modules-Repo/im.mingxi.miko/releases"><img alt="GitHub all releases" src="https://img.shields.io/github/downloads/Xposed-Modules-Repo/im.mingxi.miko/total?label=Downloads"></a>
 </div>
 
 ## ⚠️ 声明
