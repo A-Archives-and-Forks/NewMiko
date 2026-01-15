@@ -1,0 +1,78 @@
+name: 问题反馈
+description: 问题反馈
+labels: [ "Bug" ]
+title: "[问题反馈] "
+body:
+  - type: textarea
+    attributes:
+      label: 复现步骤
+      placeholder: |
+        1. 
+        2. 
+        3.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: 预期行为
+      placeholder: "正常应该发生什么"
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: 实际行为
+      placeholder: "实际上发生了什么"
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: 模块版本(模块关于页查看)
+      placeholder: "如: 1.2.2.r623.655c448"
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: 微信版本(模块关于页查看)
+      placeholder: "如: 8.0.45(2521)_0x28002D34"
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: 框架版本
+      placeholder: "如: LSPosed IT v1.9.2(7376)"
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: 系统版本
+      placeholder: "如: 12"
+    validations:
+      required: true
+
+  - type: checkboxes
+    attributes:
+      label: 其他要求
+      options:
+        - label: 我在 [Issue](https://github.com/dartcv/NewMiko/issues) 没有发现相同问题
+          required: true
+        - label: 我已知晓汇报的不是模块本身导致的问题, 则我的 Issue 可能会被无条件关闭
+          required: true
+        - label: 我已知晓不按照模板提供的指示进行填写, 则我的 Issue 可能会被无条件删除
+          required: true
+
+  - type: textarea
+    attributes:
+      label: 相关日志(无日志提交可能会被无条件关闭)
+      description: 请先关闭同类模块, 然后复现一次错误, 最后在 LSPosed 日志页保存日志压缩包上传
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: 补充说明(可选)
