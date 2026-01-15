@@ -1,0 +1,45 @@
+name: 功能请求
+description: 功能请求
+labels: [ "Feature" ]
+title: "[功能请求] "
+body:
+  - type: input
+    attributes:
+      label: 模块版本(模块关于页查看)
+      placeholder: "如: 1.2.2.r623.655c448"
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: 微信版本(模块关于页查看)
+      placeholder: "如: 8.0.45(2521)_0x28002D34"
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: 功能描述(更具体的描述可加快开发)
+      placeholder: "如: 可在当前设备登录另一台设备的微信号"
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: 你为什么需要此功能
+      placeholder: "如: 我为了方便在不同设备上使用同一微信号"
+    validations:
+      required: true
+
+  - type: checkboxes
+    attributes:
+      label: 其他要求
+      options:
+        - label: 我在 [Issue](https://github.com/dartcv/NewMiko/issues) 没有发现相同请求
+          required: true
+        - label: 我已知晓不按照模板提供的指示进行填写, 则我的 Issue 可能会被无条件删除
+          required: true
+
+  - type: textarea
+    attributes:
+      label: 补充说明(可选)
